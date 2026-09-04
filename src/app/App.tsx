@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Fragment } from "react";
+import { createPortal } from "react-dom";
 import {
   motion,
   AnimatePresence,
@@ -8,16 +9,23 @@ import {
   useMotionValue,
   useMotionValueEvent,
   useMotionTemplate,
+  useReducedMotion,
   type MotionValue,
 } from "motion/react";
-import { ArrowUpRight, ArrowDown } from "lucide-react";
+import { ArrowUpRight, ArrowDown, ArrowRight } from "lucide-react";
+import resumePdf from "../imports/FAVOUR_UPDATED_RESUME.pdf";
+import villamCover from "../imports/6shots_so.png";
+import praizzCouture from "../imports/176shots_so.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
 /* ------------------------------------------------------------------ */
 
-const img = (id: string, w = 1400) =>
-  `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
+/* Unsplash IDs become full URLs; local asset URLs pass through as-is. */
+const img = (src: string, w = 1400) =>
+  src.startsWith("http") || src.startsWith("/")
+    ? src
+    : `https://images.unsplash.com/photo-${src}?w=${w}&q=80&auto=format&fit=crop`;
 
 const NAV = [
   { label: "Home", id: "home" },
@@ -25,6 +33,7 @@ const NAV = [
   { label: "Work", id: "work" },
   { label: "Playground", id: "playground" },
   { label: "About", id: "about" },
+  { label: "Contact", id: "contact" },
 ];
 
 const STEPS = [
@@ -34,6 +43,23 @@ const STEPS = [
   { n: "04", word: "Design", body: "Creating thoughtful, accessible, and intuitive experiences.", color: "var(--pop-violet)" },
   { n: "05", word: "Refine", body: "Testing, learning, iterating, and improving.", color: "var(--pop-pink)" },
 ];
+
+type CaseStudySection = {
+  title: string;
+  body: string;
+  flow?: string[];
+  steps?: string[];
+};
+
+type CaseStudyData = {
+  intro: string;
+  liveUrl?: string;
+  meta: { role: string; focus: string; year: string };
+  metric?: string;
+  metricLabel?: string;
+  sections: CaseStudySection[];
+  closing?: string;
+};
 
 const PROJECTS = [
   {
@@ -60,81 +86,185 @@ const PROJECTS = [
     title: "Nkwado",
     desc: "A trustless marketplace connecting buyers, sellers, and businesses across a single commerce layer.",
     role: "UX · Visual Design",
-    year: "2025",
-    tags: ["Marketplace", "Web", "Brand"],
+    year: "2026",
+    tags: ["Marketplace", "Mobile", "Brand"],
     color: "#5ad1ff",
     image: "1659469377768-4f42f2f091c5",
-    metric: "+31%",
-    metricLabel: "Completed transactions",
-    overview:
-      "Nkwado connects buyers and sellers who have no reason to trust each other yet. The product had to make safety legible without drowning people in policy.",
-    challenge:
-      "Trust signals were buried and inconsistent, so both sides hesitated at the exact moments money changed hands.",
-    solution:
-      "I designed a shared trust layer with clear states for escrow, verification, and dispute, plus a calmer visual system that let listings breathe and made the next safe action obvious.",
-    outcome:
-      "Completed transactions rose 31% and seller onboarding drop-off fell by nearly a third.",
     gallery: ["1659469377768-4f42f2f091c5", "1654198340681-a2e0fc449f1b"],
+    caseStudy: {
+      intro:
+        "I designed the seller experience for Nkwado, a mobile-first marketplace built around negotiation, proximity, logistics, and trust.",
+      liveUrl: "https://www.nkwado.com",
+      meta: {
+        role: "Product Designer",
+        focus: "UX Research · UX Design · Mobile",
+        year: "2026",
+      },
+      metric: "+31%",
+      metricLabel: "Completed transactions",
+      sections: [
+        {
+          title: "The Problem",
+          body: "Selling online isn't always as straightforward as adding something to a cart. For Nkwado, sellers needed a way to showcase products, negotiate with buyers, manage orders, coordinate delivery, and build trust without losing the flexibility of how they already sell.",
+        },
+        {
+          title: "My Role",
+          body: "I focused on the seller experience across the product, from setting up a storefront and adding products to managing orders and fulfillment.",
+        },
+        {
+          title: "The Experience",
+          body: "Each part had to connect, because what a seller does affects the buyer and logistics experience too.",
+          flow: ["Storefront", "Products", "Negotiation", "Orders", "Fulfillment", "Reputation"],
+        },
+        {
+          title: "Designing for Real Commerce",
+          body: "One of the interesting parts of Nkwado was negotiation. Instead of treating price as fixed, negotiation became part of the product, rather than something happening outside it.",
+          steps: ["Buyer makes an offer", "Seller responds", "Price is agreed", "Cart updates", "Payment"],
+        },
+        {
+          title: "The Result",
+          body: "A seller experience designed to make a complicated commerce system feel clear, flexible, and manageable on mobile.",
+        },
+      ] as CaseStudySection[],
+      closing:
+        "Good products don't just support the happy path. They account for how people actually behave.",
+    } as CaseStudyData,
   },
   {
     title: "Villam Hub",
     desc: "An AgriTech platform focused on hydroponics, farming solutions, and sustainability.",
     role: "Product Design · Frontend",
-    year: "2024",
+    year: "2025",
     tags: ["AgriTech", "Platform", "Systems"],
     color: "#e8ff59",
-    image: "1655841439659-0afc60676b70",
-    metric: "4",
-    metricLabel: "Months to market",
-    overview:
-      "Villam Hub had to make sustainable farming tools, training, and marketplace access feel simple for real growers, not agronomists.",
-    challenge:
-      "The domain was technical and the audience wasn't. Every screen risked becoming a manual instead of a next step.",
-    solution:
-      "I built the platform around three plain jobs (understand services, learn a method, reach the market) and shipped an approachable component system I could take straight into frontend.",
-    outcome:
-      "The team moved from concept to a live, coherent platform in four months.",
-    gallery: ["1655841439659-0afc60676b70", "1620641788421-7a1c342ea42e"],
+    image: villamCover,
+    gallery: [villamCover, "1620641788421-7a1c342ea42e"],
+    caseStudy: {
+      intro:
+        "Villam Hub is an agri-tech platform connecting people with hydroponic farming, farm services, and tree planting, making it easier to participate in more sustainable agriculture.",
+      meta: {
+        role: "Product Designer",
+        focus: "Product Design · UX/UI · Brand Design",
+        year: "2025",
+      },
+      metric: "4",
+      metricLabel: "Months to market",
+      sections: [
+        {
+          title: "The Idea",
+          body: "Villam Hub brings different parts of the agricultural ecosystem into one experience. From buying hydroponic kits to accessing farming services and planting trees, the platform was designed to make sustainable agriculture feel more accessible.",
+        },
+        {
+          title: "My Role",
+          body: "I worked across both product and brand, shaping the visual identity and translating the concept into a digital product experience.",
+        },
+        {
+          title: "The Experience",
+          body: "The goal was to make the journey from interest to action feel simple, approachable, and clear.",
+          flow: ["Discover", "Choose", "Get Started", "Grow"],
+        },
+        {
+          title: "Designing the Brand",
+          body: "The visual direction needed to feel earthy, modern, and optimistic without falling into the usual agricultural visual clichés. The identity, colours, and interface were designed to connect technology with nature.",
+        },
+        {
+          title: "The Result",
+          body: "A digital experience that positions agriculture as something people can participate in, not just observe.",
+        },
+      ] as CaseStudySection[],
+      closing:
+        "Technology can help us grow more than products. It can help us grow possibilities.",
+    } as CaseStudyData,
   },
   {
     title: "Good Governance Hub",
     desc: "A digital learning platform making governance education more accessible and genuinely engaging.",
     role: "Experience Design",
-    year: "2024",
+    year: "2025",
     tags: ["EdTech", "Web", "Content"],
     color: "#ff8fd6",
     image: "1654198340681-a2e0fc449f1b",
-    metric: "+58%",
-    metricLabel: "Return visits",
-    overview:
-      "A rich archive of governance content had no obvious reason for people to come back after a single visit.",
-    challenge:
-      "The material was valuable but passive: a library, not a path. Readers finished one piece and left.",
-    solution:
-      "I turned it into an active journey: saved threads, intentional recommendations, and a slower, more legible reading surface built on a system that's simple to keep alive.",
-    outcome:
-      "Return visits climbed 58% and average session depth roughly doubled.",
     gallery: ["1654198340681-a2e0fc449f1b", "1709377058964-929af7f2d02f"],
+    caseStudy: {
+      intro:
+        "Good Governance Hub is an educational platform designed to make governance learning more accessible, structured, and engaging.",
+      meta: {
+        role: "Product Designer",
+        focus: "UX Research · UX Design",
+        year: "2025",
+      },
+      metric: "+58%",
+      metricLabel: "Return visits",
+      sections: [
+        {
+          title: "The Challenge",
+          body: "Governance education can be complex, information-heavy, and difficult to navigate. The goal was to create an experience where learners could discover courses, understand their progress, and engage with governance content without feeling overwhelmed.",
+        },
+        {
+          title: "My Role",
+          body: "I focused primarily on UX research and experience design, translating user needs and complex content structures into a clearer learning experience.",
+        },
+        {
+          title: "The Experience",
+          body: "The experience was structured around helping learners understand where they are, what comes next, and why it matters.",
+          flow: ["Discover", "Learn", "Track", "Complete"],
+        },
+        {
+          title: "Designing for Clarity",
+          body: "A major focus was reducing cognitive load. Instead of presenting users with everything at once, the experience uses clear information hierarchy, progressive disclosure, and straightforward navigation to make complex content easier to approach.",
+        },
+        {
+          title: "The Result",
+          body: "A learning experience that makes governance education feel less intimidating and more approachable.",
+        },
+      ] as CaseStudySection[],
+      closing:
+        "Because good governance starts with people being able to understand it.",
+    } as CaseStudyData,
   },
   {
     title: "FocusFlow",
     desc: "A productivity experience designed to help people focus and work with real intention.",
     role: "Product · Interaction",
-    year: "2023",
-    tags: ["Productivity", "App", "Motion"],
+    year: "2025",
+    tags: ["Productivity", "Web", "Motion"],
     color: "#ff5c4d",
     image: "1710438399422-2fca27686bcd",
-    metric: "−22%",
-    metricLabel: "Task-switching",
-    overview:
-      "FocusFlow set out to help people protect attention in a world engineered to fragment it.",
-    challenge:
-      "Most focus tools add friction and guilt. The product needed to feel like a calm ally, not a stern timer.",
-    solution:
-      "I designed intention-first sessions, gentle motion that signals state without nagging, and a review that celebrates what got done instead of what didn't.",
-    outcome:
-      "Measured task-switching dropped 22% across a four-week pilot.",
     gallery: ["1710438399422-2fca27686bcd", "1655841439659-0afc60676b70"],
+    caseStudy: {
+      intro:
+        "FocusFlow is a productivity landing page designed to help people organize their tasks, focus on what matters, and make progress without the overwhelm.",
+      meta: {
+        role: "Product Designer",
+        focus: "UX/UI · Product Design · Interaction Design",
+        year: "2025",
+      },
+      metric: "−22%",
+      metricLabel: "Task-switching",
+      sections: [
+        {
+          title: "The Problem",
+          body: "Productivity tools can give you more to look at instead of helping you get things done. The goal was to create an experience that feels calm, focused, and intentional, while still giving users enough structure to stay on track.",
+        },
+        {
+          title: "My Role",
+          body: "I designed the product experience from information architecture and user flows to the interface and interactions.",
+        },
+        {
+          title: "The Experience",
+          body: "The experience centres the user's next action, rather than overwhelming them with everything on their plate.",
+          flow: ["Capture", "Prioritize", "Focus", "Complete"],
+        },
+        {
+          title: "Designing for Focus",
+          body: "Every interaction was designed to reduce unnecessary friction and visual noise. Clear hierarchy, intentional spacing, and focused states help the interface stay quiet when it needs to be.",
+        },
+        {
+          title: "The Result",
+          body: "A productivity experience built around a simple idea: Less managing. More doing.",
+        },
+      ] as CaseStudySection[],
+    } as CaseStudyData,
   },
 ];
 
@@ -254,7 +384,7 @@ function FloatingNav() {
               key={n.id}
               onClick={() => go(n.id)}
               data-cursor="hover"
-              className="relative shrink-0 whitespace-nowrap rounded-full px-2.5 py-1.5 text-[11px] font-medium tracking-tight transition-colors sm:px-4 sm:py-2 sm:text-[13px]"
+              className="relative shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-[11px] font-medium tracking-tight transition-colors sm:px-4 sm:text-[13px]"
             >
               {active === n.id && (
                 <motion.span
@@ -330,17 +460,28 @@ function HeroWord({
   total,
   progress,
   accent,
+  reduce,
 }: {
   word: string;
   index: number;
   total: number;
   progress: import("motion/react").MotionValue<number>;
   accent: boolean;
+  reduce: boolean;
 }) {
   const start = (index / total) * 0.85;
   const end = start + 0.15;
   const opacity = useTransform(progress, [start, end], [1, 0]);
   const y = useTransform(progress, [start, end], [0, -60]);
+
+  if (reduce) {
+    return (
+      <span className={`mr-[0.22em] inline-block ${accent ? "text-accent" : ""}`}>
+        {word}
+      </span>
+    );
+  }
+
   return (
     <motion.span style={{ opacity, y }} className="mr-[0.22em] inline-block">
       <motion.span
@@ -357,6 +498,7 @@ function HeroWord({
 
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yText = useTransform(scrollYProgress, [0, 1], [0, -40]);
   const indicatorOpacity = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
@@ -378,9 +520,9 @@ function Hero() {
     <section id="home" ref={ref} onMouseMove={onMove} style={{ position: "relative" }} className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-24">
       <FloatingBlobs mx={smx} my={smy} />
 
-      <motion.div style={{ y: yText }} className="relative z-10 mx-auto max-w-6xl text-center">
+      <motion.div style={{ y: reduce ? 0 : yText }} className="relative z-10 mx-auto max-w-6xl text-center">
         <motion.p
-          initial={{ opacity: 0, y: 14 }}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="mb-8 font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground"
@@ -402,6 +544,7 @@ function Hero() {
                       total={HERO_WORD_COUNT}
                       progress={scrollYProgress}
                       accent={word.startsWith("feel")}
+                      reduce={reduce}
                     />
                   );
                 })}
@@ -413,22 +556,25 @@ function Hero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
+          transition={{ delay: reduce ? 0.1 : 1 }}
           className="mx-auto mt-10 max-w-md text-balance text-sm leading-relaxed text-muted-foreground md:text-base"
         >
           I design products, brands, and experiences for people, not just screens.
         </motion.p>
       </motion.div>
 
-      <motion.div style={{ opacity: indicatorOpacity }} className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
+      <motion.div
+        style={{ opacity: reduce ? 1 : indicatorOpacity }}
+        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+      >
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.3 }}
+          transition={{ delay: reduce ? 0.2 : 1.3 }}
           className="flex flex-col items-center gap-2 text-muted-foreground"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-          <motion.span animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>
+          <motion.span animate={reduce ? undefined : { y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>
             <ArrowDown size={16} />
           </motion.span>
         </motion.div>
@@ -522,6 +668,7 @@ function ProcessWord({
 
 function Approach() {
   const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const [index, setIndex] = useState(0);
 
@@ -531,6 +678,30 @@ function Approach() {
   });
 
   const barWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  // Reduced motion: skip the 500vh pinned scrub and show a static list.
+  if (reduce) {
+    return (
+      <section id="approach" className="relative border-t border-border px-5 py-24 md:py-32">
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-16 text-center font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+            The Approach
+          </p>
+          <div className="space-y-20">
+            {STEPS.map((step) => (
+              <div key={step.word} className="flex flex-col items-center text-center">
+                <span className="font-mono text-[11px] tracking-[0.3em] text-muted-foreground">{step.n} / 05</span>
+                <h2 className="display-xl mt-4 text-[clamp(3rem,14vw,10rem)] leading-none" style={{ color: step.color }}>
+                  {step.word}
+                </h2>
+                <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">{step.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="approach" ref={ref} style={{ height: `${STEPS.length * 100}vh`, position: "relative" }} className="relative">
@@ -613,7 +784,7 @@ function Work() {
               <div className="flex items-baseline gap-4 md:gap-8">
                 <span className="font-mono text-xs text-muted-foreground">0{i + 1}</span>
                 <h3
-                  className="font-display text-4xl uppercase leading-none tracking-tight transition-all duration-300 group-hover:translate-x-2 md:text-7xl"
+                  className="font-display text-4xl uppercase leading-none tracking-tight transition-all duration-300 group-hover:translate-x-2 md:text-6xl lg:text-7xl"
                   style={{ color: hovered === i ? p.color : undefined }}
                 >
                   {p.title}
@@ -682,7 +853,58 @@ function Work() {
 /*  Case study view                                                    */
 /* ------------------------------------------------------------------ */
 
+/* Modal behaviour: move focus in, trap Tab, make the page inert, and
+   restore focus to the trigger when the modal unmounts. */
+function useModalFocus(ref: React.RefObject<HTMLDivElement>) {
+  const restore = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    restore.current = document.activeElement as HTMLElement | null;
+    const main = document.querySelector("main");
+    main?.setAttribute("inert", "");
+
+    const focusables = () =>
+      Array.from(
+        el.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+      );
+
+    (focusables()[0] ?? el).focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Tab") return;
+      const nodes = focusables();
+      if (nodes.length === 0) {
+        e.preventDefault();
+        return;
+      }
+      const firstEl = nodes[0];
+      const lastEl = nodes[nodes.length - 1];
+      if (e.shiftKey && document.activeElement === firstEl) {
+        e.preventDefault();
+        lastEl.focus();
+      } else if (!e.shiftKey && document.activeElement === lastEl) {
+        e.preventDefault();
+        firstEl.focus();
+      }
+    };
+
+    el.addEventListener("keydown", onKey);
+    return () => {
+      el.removeEventListener("keydown", onKey);
+      main?.removeAttribute("inert");
+      restore.current?.focus();
+    };
+  }, [ref]);
+}
+
 function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[number]; index: number; onClose: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  useModalFocus(ref);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -693,8 +915,11 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
     };
   }, [onClose]);
 
-  return (
+  const cs = "caseStudy" in project ? project.caseStudy : undefined;
+
+  return createPortal(
     <motion.div
+      ref={ref}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -705,9 +930,9 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
       aria-label={`${project.title} case study`}
     >
       <motion.article
-        initial={{ y: 40, opacity: 0 }}
+        initial={reduce ? { opacity: 0 } : { y: 40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 30, opacity: 0 }}
+        exit={reduce ? { opacity: 0 } : { y: 30, opacity: 0 }}
         transition={{ type: "spring", stiffness: 200, damping: 28 }}
         className="mx-auto min-h-full max-w-5xl px-5 pb-28 pt-24 md:px-8"
       >
@@ -729,45 +954,138 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
         <h2 className="display-xl mt-4 text-[clamp(3rem,13vw,10rem)] leading-[0.98]" style={{ color: project.color }}>
           {project.title}
         </h2>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground md:text-xl">
-          {project.overview}
-        </p>
 
-        {/* meta */}
-        <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-4">
-          <Meta label="Role" value={project.role} />
-          <Meta label="Year" value={project.year} />
-          <Meta label="Focus" value={project.tags.join(", ")} />
-          <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Impact</p>
-            <p className="mt-2 font-display text-4xl leading-none" style={{ color: project.color }}>{project.metric}</p>
-            <p className="mt-1 text-xs text-muted-foreground">{project.metricLabel}</p>
-          </div>
-        </div>
+        {cs ? (
+          <>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">{cs.intro}</p>
 
-        {/* hero image */}
-        <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
-          <img src={img(project.gallery[0], 1600)} alt={`${project.title} key visual`} className="size-full object-cover" />
-        </div>
+            {cs.liveUrl && (
+              <a
+                href={cs.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                data-cursor="hover"
+                className="mt-8 inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-accent hover:text-accent"
+              >
+                View live site
+                <ArrowUpRight size={16} />
+              </a>
+            )}
 
-        {/* narrative */}
-        <div className="mt-14 grid gap-10 md:grid-cols-2">
-          <Block title="The challenge" body={project.challenge} />
-          <Block title="What I did" body={project.solution} />
-        </div>
+            {/* meta */}
+            <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-4">
+              <Meta label="Role" value={cs.meta.role} />
+              <Meta label="Focus" value={cs.meta.focus} />
+              <Meta label="Year" value={cs.meta.year} />
+              {cs.metric && (
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Impact</p>
+                  <p className="mt-2 font-display text-4xl leading-none" style={{ color: project.color }}>
+                    {cs.metric}
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">{cs.metricLabel}</p>
+                </div>
+              )}
+            </div>
 
-        {/* second image */}
-        <div className="mt-12 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
-          <img src={img(project.gallery[1], 1400)} alt={`${project.title} detail`} className="size-full object-cover" />
-        </div>
+            {/* hero image */}
+            <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
+              <img src={img(project.gallery[0], 1600)} alt={`${project.title} key visual`} className="size-full object-cover" />
+            </div>
 
-        {/* outcome */}
-        <div className="mt-14 rounded-2xl border border-border p-8 md:p-12">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">The outcome</p>
-          <p className="mt-5 max-w-3xl text-balance font-display text-3xl uppercase leading-tight tracking-tight md:text-5xl">
-            {project.outcome}
-          </p>
-        </div>
+            {/* sections */}
+            <div className="mt-16 space-y-20">
+              {cs.sections.map((section, si) => (
+                <div key={section.title}>
+                  <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">{section.title}</h3>
+                  <p className="mt-4 max-w-3xl text-lg leading-relaxed text-foreground md:text-2xl">{section.body}</p>
+
+                  {section.flow && (
+                    <div className="mt-8 flex flex-wrap items-center gap-2">
+                      {section.flow.map((f, i) => (
+                        <Fragment key={f}>
+                          {i > 0 && <ArrowRight size={14} className="shrink-0 text-muted-foreground" aria-hidden />}
+                          <span className="rounded-full border border-border bg-card px-3.5 py-2 font-mono text-[11px] uppercase tracking-widest text-foreground">
+                            {f}
+                          </span>
+                        </Fragment>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.steps && (
+                    <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                      {section.steps.map((s, i) => (
+                        <li key={s} className="rounded-xl border border-border p-4">
+                          <span className="font-mono text-[10px] uppercase tracking-widest text-accent">0{i + 1}</span>
+                          <p className="mt-2 text-sm leading-snug text-foreground">{s}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+
+                  {si === 2 && (
+                    <div className="mt-10 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
+                      <img src={img(project.gallery[1], 1400)} alt={`${project.title} detail`} className="size-full object-cover" />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* closing */}
+            {cs.closing && (
+              <div className="mt-16 rounded-2xl border border-border p-8 md:p-12">
+                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">In short</p>
+                <p className="mt-5 max-w-3xl text-balance font-display text-2xl uppercase leading-tight tracking-tight md:text-4xl">
+                  {cs.closing}
+                </p>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground md:text-xl">
+              {project.overview}
+            </p>
+
+            {/* meta */}
+            <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-4">
+              <Meta label="Role" value={project.role} />
+              <Meta label="Year" value={project.year} />
+              <Meta label="Focus" value={project.tags.join(", ")} />
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Impact</p>
+                <p className="mt-2 font-display text-4xl leading-none" style={{ color: project.color }}>{project.metric}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{project.metricLabel}</p>
+              </div>
+            </div>
+
+            {/* hero image */}
+            <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
+              <img src={img(project.gallery[0], 1600)} alt={`${project.title} key visual`} className="size-full object-cover" />
+            </div>
+
+            {/* narrative */}
+            <div className="mt-14 grid gap-10 md:grid-cols-2">
+              <Block title="The challenge" body={project.challenge} />
+              <Block title="What I did" body={project.solution} />
+            </div>
+
+            {/* second image */}
+            <div className="mt-12 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
+              <img src={img(project.gallery[1], 1400)} alt={`${project.title} detail`} className="size-full object-cover" />
+            </div>
+
+            {/* outcome */}
+            <div className="mt-14 rounded-2xl border border-border p-8 md:p-12">
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">The outcome</p>
+              <p className="mt-5 max-w-3xl text-balance font-display text-3xl uppercase leading-tight tracking-tight md:text-5xl">
+                {project.outcome}
+              </p>
+            </div>
+          </>
+        )}
 
         <button
           onClick={onClose}
@@ -777,7 +1095,8 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
           ← Back to all work
         </button>
       </motion.article>
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 }
 
@@ -846,6 +1165,7 @@ function StickerWall() {
 }
 
 function ParallaxSticker({ s, i, mx, my }: { s: Sticker; i: number; mx: MotionValue<number>; my: MotionValue<number> }) {
+  const reduce = useReducedMotion();
   const x = useTransform(mx, (v) => v * s.depth);
   const y = useTransform(my, (v) => v * s.depth);
   const color = STICKER_COLORS[i % STICKER_COLORS.length];
@@ -853,8 +1173,8 @@ function ParallaxSticker({ s, i, mx, my }: { s: Sticker; i: number; mx: MotionVa
   if (s.kind === "shape") {
     return (
       <motion.div
-        style={{ x, y, left: s.x, top: s.y, rotate: s.r, color }}
-        animate={{ y: [0, -10, 0] }}
+        style={{ x: reduce ? 0 : x, y: reduce ? 0 : y, left: s.x, top: s.y, rotate: s.r, color }}
+        animate={reduce ? undefined : { y: [0, -10, 0] }}
         transition={{ repeat: Infinity, duration: 4 + i * 0.3, ease: "easeInOut" }}
         className="pointer-events-none absolute z-0 text-5xl md:text-7xl"
         aria-hidden
@@ -867,8 +1187,8 @@ function ParallaxSticker({ s, i, mx, my }: { s: Sticker; i: number; mx: MotionVa
   const isText = s.c.length > 2;
   return (
     <motion.div
-      style={{ x, y, left: s.x, top: s.y, rotate: s.r }}
-      animate={{ y: [0, -8, 0] }}
+      style={{ x: reduce ? 0 : x, y: reduce ? 0 : y, left: s.x, top: s.y, rotate: s.r }}
+      animate={reduce ? undefined : { y: [0, -8, 0] }}
       transition={{ repeat: Infinity, duration: 5 + i * 0.25, ease: "easeInOut" }}
       className="pointer-events-none absolute z-0"
       aria-hidden
@@ -893,16 +1213,18 @@ function ParallaxSticker({ s, i, mx, my }: { s: Sticker; i: number; mx: MotionVa
 
 function About() {
   const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
 
   return (
     <section id="about" ref={ref} style={{ position: "relative" }} className="relative min-h-screen overflow-hidden border-t border-border">
-      <motion.div style={{ scale }} className="absolute inset-0 z-0">
+      <motion.div style={{ scale: reduce ? 1 : scale }} className="absolute inset-0 z-0">
         <img
           src={img("1709377058964-929af7f2d02f", 1600)}
           alt="Abstract flowing texture"
           className="size-full object-cover"
+          loading="lazy"
         />
       </motion.div>
       <div className="absolute inset-0 z-10 bg-background/80" />
@@ -960,7 +1282,7 @@ function About() {
 /*  Contact                                                            */
 /* ------------------------------------------------------------------ */
 
-const LINKS = [
+const LINKS: { label: string; href: string }[] = [
   { label: "Email", href: "mailto:favourndodo@gmail.com" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/favour-jasmine-ndodo-9206a5274" },
   { label: "GitHub", href: "https://github.com/jasinit" },
@@ -991,7 +1313,7 @@ function Contact() {
           Let's make something people will <span className="text-accent">actually</span> want to use.
         </motion.h2>
 
-        <div className="mt-16 flex justify-center">
+        <div className="mt-16 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Magnetic strength={0.5}>
             <a
               href="mailto:favourndodo@gmail.com"
@@ -1000,6 +1322,17 @@ function Contact() {
             >
               favourndodo@gmail.com
               <ArrowUpRight size={22} />
+            </a>
+          </Magnetic>
+          <Magnetic strength={0.35}>
+            <a
+              href={resumePdf}
+              download
+              data-cursor="hover"
+              className="inline-flex items-center gap-3 rounded-full border border-border px-8 py-5 text-lg font-medium text-foreground transition-colors hover:border-accent hover:text-accent"
+            >
+              Download résumé
+              <ArrowDown size={22} />
             </a>
           </Magnetic>
         </div>
@@ -1049,17 +1382,17 @@ const PIECES = [
     assets: ["1620641788421-7a1c342ea42e", "1659469377768-4f42f2f091c5", "1654198340681-a2e0fc449f1b", "1710438399422-2fca27686bcd", "1655841439659-0afc60676b70"],
   },
   {
-    id: "kanso",
-    name: "Kanso",
+    id: "praizz-couture",
+    name: "Praizz Couture",
     kind: "Brand Identity",
     cat: "Branding",
     year: "2025",
     role: "Brand Design · Systems",
     color: "#9b7bff",
-    desc: "A calm, considered identity for a Japanese-inspired homeware studio, with logotype, palette, and a flexible layout system.",
-    image: "1659469377768-4f42f2f091c5",
+    desc: "A fashion brand identity for Praizz Couture, spanning logotype, palette, and a flexible visual system.",
+    image: praizzCouture,
     home: { left: 58, top: 3, rot: 5, w: 340 },
-    assets: ["1659469377768-4f42f2f091c5", "1655841439659-0afc60676b70", "1709377058964-929af7f2d02f", "1620641788421-7a1c342ea42e"],
+    assets: [praizzCouture, "1655841439659-0afc60676b70", "1709377058964-929af7f2d02f", "1620641788421-7a1c342ea42e"],
   },
   {
     id: "bloomfest",
@@ -1259,11 +1592,28 @@ function PlaygroundPiece({
           if (!dragged.current) onOpen();
           dragged.current = false;
         }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onOpen();
+          }
+        }}
+        onFocus={() => setHovered(true)}
+        onBlur={() => {
+          setHovered(false);
+          tiltX.set(0);
+          tiltY.set(0);
+          onInfo(null);
+        }}
         whileHover={{ scale: 1.07, y: -12, boxShadow: "0 34px 70px rgba(0,0,0,0.55)" }}
         whileTap={{ scale: 1.12 }}
+        whileFocus={{ scale: 1.07, y: -12, boxShadow: "0 34px 70px rgba(0,0,0,0.55)" }}
         data-cursor="hover"
+        role="button"
+        tabIndex={0}
+        aria-label={`Open ${item.name} — ${item.kind}`}
         style={{ rotateX: rX, rotateY: rY, transformPerspective: 900 }}
-        className="group relative cursor-grab overflow-hidden rounded-xl border border-border bg-card shadow-lg active:cursor-grabbing"
+        className="group relative cursor-grab overflow-hidden rounded-xl border border-border bg-card shadow-lg outline-none focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing"
       >
         <img
           src={img(item.image, 700)}
@@ -1286,6 +1636,10 @@ function PlaygroundPiece({
 }
 
 function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  useModalFocus(ref);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -1298,13 +1652,17 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
 
   const isCampaign = item.cat === "Campaigns" || item.cat === "Social";
 
-  return (
+  return createPortal(
     <motion.div
+      ref={ref}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
       className="fixed inset-0 z-[9500] overflow-y-auto bg-background"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${item.name} project detail`}
     >
       <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background/85 px-5 py-4 backdrop-blur md:px-10">
         <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
@@ -1321,7 +1679,7 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
       </div>
 
       <motion.div
-        initial={{ y: 24, opacity: 0 }}
+        initial={reduce ? { opacity: 0 } : { y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.05, duration: 0.5 }}
         className="mx-auto max-w-6xl px-5 py-16 md:px-10 md:py-24"
@@ -1397,7 +1755,8 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
           </button>
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body,
   );
 }
 
@@ -1415,6 +1774,17 @@ function Playground() {
     mx.set(e.clientX);
     my.set(e.clientY);
   };
+
+  // Keep the cursor-following info card inside the viewport.
+  const [viewport, setViewport] = useState({ w: 1200, h: 800 });
+  useEffect(() => {
+    const sync = () => setViewport({ w: window.innerWidth, h: window.innerHeight });
+    sync();
+    window.addEventListener("resize", sync);
+    return () => window.removeEventListener("resize", sync);
+  }, []);
+  const infoX = useTransform(lx, (v) => Math.min(Math.max(v, 12), viewport.w - 250));
+  const infoY = useTransform(ly, (v) => Math.min(Math.max(v, 12), viewport.h - 120));
 
   // Freeform drag wall is a desktop delight; phones get a clean tap grid.
   const [isMobile, setIsMobile] = useState(false);
@@ -1535,7 +1905,7 @@ function Playground() {
 
       {/* Cursor-following info card */}
       <motion.div
-        style={{ x: lx, y: ly }}
+        style={{ x: infoX, y: infoY }}
         className="pointer-events-none fixed left-0 top-0 z-[60] hidden md:block"
         aria-hidden
       >
@@ -1570,16 +1940,24 @@ function Playground() {
 
 export default function App() {
   return (
-    <main className="cursor-none-fine grain relative min-h-screen bg-background text-foreground">
-      <CustomCursor />
-      <FloatingNav />
-      <Hero />
-      <Approach />
-      <Work />
-      <Playground />
-      <StickerWall />
-      <About />
-      <Contact />
-    </main>
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[10000] focus:rounded-full focus:border focus:border-border focus:bg-card focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-foreground"
+      >
+        Skip to content
+      </a>
+      <main id="main" className="cursor-none-fine grain relative min-h-screen bg-background text-foreground">
+        <CustomCursor />
+        <FloatingNav />
+        <Hero />
+        <Approach />
+        <Work />
+        <Playground />
+        <StickerWall />
+        <About />
+        <Contact />
+      </main>
+    </>
   );
 }
