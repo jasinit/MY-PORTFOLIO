@@ -39,3 +39,9 @@ src/
 ## Design
 
 Dark editorial theme with a lime accent. Colors and typography tokens live in `src/styles/theme.css`.
+
+## Deployment
+
+The site deploys automatically to GitHub Pages on every push to `master`:
+https://jasinit.github.io/MY-PORTFOLIO/
+
