@@ -29,8 +29,8 @@ const img = (src: string, w = 1400) =>
 
 const NAV = [
   { label: "Home", id: "home" },
-  { label: "Approach", id: "approach" },
   { label: "Work", id: "work" },
+  { label: "Approach", id: "approach" },
   { label: "Playground", id: "playground" },
   { label: "About", id: "about" },
   { label: "Contact", id: "contact" },
@@ -64,23 +64,49 @@ type CaseStudyData = {
 const PROJECTS = [
   {
     title: "Zenya",
-    desc: "A cross-platform investment experience designed to make investing feel approachable and human.",
+    desc: "A fintech investment app redesign focused on making investing feel clearer, simpler, and more approachable.",
     role: "Product Design · Prototyping",
-    year: "2025",
-    tags: ["Fintech", "iOS", "Design System"],
+    year: "2026",
+    tags: ["Fintech", "App", "Design System"],
     color: "#9b7bff",
     image: "1620641788421-7a1c342ea42e",
-    metric: "2.4×",
-    metricLabel: "Weekly activation",
-    overview:
-      "Zenya wanted investing to feel less like a spreadsheet and more like a decision anyone could feel confident making. New users understood the pitch but stalled before building a first useful portfolio.",
-    challenge:
-      "The onboarding read as a wall of financial forms. People bounced before reaching their first meaningful moment: a plan that actually felt like theirs.",
-    solution:
-      "I rebuilt activation as a guided, one-decision-at-a-time plan with progressive disclosure, plain language, and a live forecast that paid off the effort before setup even finished.",
-    outcome:
-      "Weekly activation grew 2.4× and support tickets about ‘where do I start’ effectively disappeared.",
     gallery: ["1620641788421-7a1c342ea42e", "1659469377768-4f42f2f091c5"],
+    caseStudy: {
+      intro:
+        "Zenya is a fintech investment app redesign focused on making investing feel clearer, simpler, and more approachable.",
+      meta: {
+        role: "Product Designer",
+        focus: "UX/UI · Product Design · Design Systems",
+        year: "2026",
+      },
+      metric: "2.4×",
+      metricLabel: "Weekly activation",
+      sections: [
+        {
+          title: "The Problem",
+          body: "Investment products can quickly become overwhelming, especially when users are faced with unfamiliar terms, complex flows, and too much information at once. The redesign focused on making the experience easier to understand and easier to navigate.",
+        },
+        {
+          title: "My Role",
+          body: "I worked across the product experience, from onboarding and core user flows to localization, accessibility, and the design system.",
+        },
+        {
+          title: "The Experience",
+          body: "The goal was to make each step feel intentional, with users always understanding what they're doing and what happens next.",
+          flow: ["Onboard", "Explore", "Invest", "Track"],
+        },
+        {
+          title: "Designing for Everyone",
+          body: "Accessibility was considered throughout the redesign, from typography and contrast to language support, RTL layouts, and clear interaction states.",
+        },
+        {
+          title: "The Result",
+          body: "A cleaner investment experience designed to feel simple without feeling simplistic.",
+        },
+      ] as CaseStudySection[],
+      closing:
+        "Investing is already complicated. The interface doesn't need to be.",
+    } as CaseStudyData,
   },
   {
     title: "Nkwado",
@@ -915,7 +941,7 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
     };
   }, [onClose]);
 
-  const cs = "caseStudy" in project ? project.caseStudy : undefined;
+  const cs = project.caseStudy;
 
   return createPortal(
     <motion.div
@@ -955,9 +981,7 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
           {project.title}
         </h2>
 
-        {cs ? (
-          <>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">{cs.intro}</p>
+        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">{cs.intro}</p>
 
             {cs.liveUrl && (
               <a
@@ -1042,50 +1066,6 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
                 </p>
               </div>
             )}
-          </>
-        ) : (
-          <>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground md:text-xl">
-              {project.overview}
-            </p>
-
-            {/* meta */}
-            <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-4">
-              <Meta label="Role" value={project.role} />
-              <Meta label="Year" value={project.year} />
-              <Meta label="Focus" value={project.tags.join(", ")} />
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Impact</p>
-                <p className="mt-2 font-display text-4xl leading-none" style={{ color: project.color }}>{project.metric}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{project.metricLabel}</p>
-              </div>
-            </div>
-
-            {/* hero image */}
-            <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
-              <img src={img(project.gallery[0], 1600)} alt={`${project.title} key visual`} className="size-full object-cover" />
-            </div>
-
-            {/* narrative */}
-            <div className="mt-14 grid gap-10 md:grid-cols-2">
-              <Block title="The challenge" body={project.challenge} />
-              <Block title="What I did" body={project.solution} />
-            </div>
-
-            {/* second image */}
-            <div className="mt-12 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
-              <img src={img(project.gallery[1], 1400)} alt={`${project.title} detail`} className="size-full object-cover" />
-            </div>
-
-            {/* outcome */}
-            <div className="mt-14 rounded-2xl border border-border p-8 md:p-12">
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">The outcome</p>
-              <p className="mt-5 max-w-3xl text-balance font-display text-3xl uppercase leading-tight tracking-tight md:text-5xl">
-                {project.outcome}
-              </p>
-            </div>
-          </>
-        )}
 
         <button
           onClick={onClose}
@@ -1105,15 +1085,6 @@ function Meta({ label, value }: { label: string; value: string }) {
     <div>
       <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">{label}</p>
       <p className="mt-2 text-sm leading-snug text-foreground">{value}</p>
-    </div>
-  );
-}
-
-function Block({ title, body }: { title: string; body: string }) {
-  return (
-    <div>
-      <h3 className="font-display text-xl uppercase tracking-tight text-foreground">{title}</h3>
-      <p className="mt-4 text-base leading-relaxed text-muted-foreground">{body}</p>
     </div>
   );
 }
@@ -1951,8 +1922,8 @@ export default function App() {
         <CustomCursor />
         <FloatingNav />
         <Hero />
-        <Approach />
         <Work />
+        <Approach />
         <Playground />
         <StickerWall />
         <About />
