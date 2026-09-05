@@ -1839,7 +1839,7 @@ function Playground() {
               Play<span className="text-accent">ground</span>
             </h2>
           </div>
-          <p className="max-w-xs pb-3 text-sm leading-relaxed text-muted-foreground">
+          <p className="pb-3 text-sm leading-relaxed text-muted-foreground md:whitespace-nowrap">
             A collection of things I made because I wanted to. Grab a piece, throw it around, open it up.
           </p>
         </div>
