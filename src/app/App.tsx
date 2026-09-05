@@ -30,18 +30,16 @@ const img = (src: string, w = 1400) =>
 const NAV = [
   { label: "Home", id: "home" },
   { label: "Work", id: "work" },
-  { label: "Approach", id: "approach" },
   { label: "Playground", id: "playground" },
   { label: "About", id: "about" },
-  { label: "Contact", id: "contact" },
 ];
 
 const STEPS = [
-  { n: "01", word: "Listen", body: "Understanding people, problems, and the context behind them.", color: "var(--pop-lime)" },
-  { n: "02", word: "Explore", body: "Researching possibilities, asking questions, and identifying opportunities.", color: "var(--pop-sky)" },
-  { n: "03", word: "Focus", body: "Turning complexity into clear product decisions.", color: "var(--pop-coral)" },
-  { n: "04", word: "Design", body: "Creating thoughtful, accessible, and intuitive experiences.", color: "var(--pop-violet)" },
-  { n: "05", word: "Refine", body: "Testing, learning, iterating, and improving.", color: "var(--pop-pink)" },
+  { n: "01", word: "Listen", body: "Understand the people before designing for them.", color: "var(--pop-lime)" },
+  { n: "02", word: "Question", body: "Challenge assumptions. Find the real problem.", color: "var(--pop-sky)" },
+  { n: "03", word: "Design", body: "Turn complexity into something people can actually use.", color: "var(--pop-coral)" },
+  { n: "04", word: "Build", body: "Make it real. Test it. Break it. Improve it.", color: "var(--pop-violet)" },
+  { n: "05", word: "Care", body: "Accessibility isn't an afterthought.", color: "var(--pop-pink)" },
 ];
 
 type CaseStudySection = {
@@ -52,205 +50,225 @@ type CaseStudySection = {
 };
 
 type CaseStudyData = {
+  opening?: string[];
   intro: string;
   liveUrl?: string;
   meta: { role: string; focus: string; year: string };
-  metric?: string;
-  metricLabel?: string;
   sections: CaseStudySection[];
-  closing?: string;
 };
 
 const PROJECTS = [
   {
-    title: "Zenya",
-    desc: "A fintech investment app redesign focused on making investing feel clearer, simpler, and more approachable.",
-    role: "Product Design · Prototyping",
-    year: "2026",
-    tags: ["Fintech", "App", "Design System"],
-    color: "var(--proj-violet)",
-    image: "1620641788421-7a1c342ea42e",
-    gallery: ["1620641788421-7a1c342ea42e", "1659469377768-4f42f2f091c5"],
-    caseStudy: {
-      intro:
-        "Zenya is a fintech investment app redesign focused on making investing feel clearer, simpler, and more approachable.",
-      meta: {
-        role: "Product Designer",
-        focus: "UX/UI · Product Design · Design Systems",
-        year: "2026",
-      },
-      metric: "2.4×",
-      metricLabel: "Weekly activation",
-      sections: [
-        {
-          title: "The Problem",
-          body: "Investment products can quickly become overwhelming, especially when users are faced with unfamiliar terms, complex flows, and too much information at once. The redesign focused on making the experience easier to understand and easier to navigate.",
-        },
-        {
-          title: "My Role",
-          body: "I worked across the product experience, from onboarding and core user flows to localization, accessibility, and the design system.",
-        },
-        {
-          title: "The Experience",
-          body: "The goal was to make each step feel intentional, with users always understanding what they're doing and what happens next.",
-          flow: ["Onboard", "Explore", "Invest", "Track"],
-        },
-        {
-          title: "Designing for Everyone",
-          body: "Accessibility was considered throughout the redesign, from typography and contrast to language support, RTL layouts, and clear interaction states.",
-        },
-        {
-          title: "The Result",
-          body: "A cleaner investment experience designed to feel simple without feeling simplistic.",
-        },
-      ] as CaseStudySection[],
-      closing:
-        "Investing is already complicated. The interface doesn't need to be.",
-    } as CaseStudyData,
-  },
-  {
     title: "Nkwado",
-    desc: "A trustless marketplace connecting buyers, sellers, and businesses across a single commerce layer.",
-    role: "UX · Visual Design",
+    desc: "A mobile-first marketplace built around negotiation, proximity, logistics, and trust.",
+    role: "Product Design · Seller Experience",
     year: "2026",
-    tags: ["Marketplace", "Mobile", "Brand"],
+    tags: ["Marketplace", "Mobile", "Systems"],
     color: "var(--proj-sky)",
     image: "1659469377768-4f42f2f091c5",
     gallery: ["1659469377768-4f42f2f091c5", "1654198340681-a2e0fc449f1b"],
     caseStudy: {
+      opening: [
+        "Commerce doesn't always happen with a “Buy Now” button.",
+        "Sometimes it starts with “How much last?”",
+      ],
       intro:
-        "I designed the seller experience for Nkwado, a mobile-first marketplace built around negotiation, proximity, logistics, and trust.",
+        "I designed the seller experience for Nkwado — a mobile-first marketplace built around negotiation, proximity, logistics, and trust.",
       liveUrl: "https://www.nkwado.com",
       meta: {
-        role: "Product Designer",
-        focus: "UX Research · UX Design · Mobile",
+        role: "Product (Design) Engineer",
+        focus: "Product Design · Seller Experience · UX · Systems",
         year: "2026",
       },
-      metric: "+31%",
-      metricLabel: "Completed transactions",
       sections: [
         {
           title: "The Problem",
-          body: "Selling online isn't always as straightforward as adding something to a cart. For Nkwado, sellers needed a way to showcase products, negotiate with buyers, manage orders, coordinate delivery, and build trust without losing the flexibility of how they already sell.",
+          body: "Sellers needed more than a place to list products. They needed to negotiate, manage orders, coordinate delivery, and build trust — without losing the flexibility of how they already sell.",
         },
         {
           title: "My Role",
-          body: "I focused on the seller experience across the product, from setting up a storefront and adding products to managing orders and fulfillment.",
+          body: "I designed the seller experience end to end: storefronts, product listing, negotiation, orders, and fulfillment — while keeping the buyer and logistics experiences connected.",
         },
         {
           title: "The Experience",
-          body: "Each part had to connect, because what a seller does affects the buyer and logistics experience too.",
+          body: "Each part connects. What a seller does affects the buyer, and the logistics behind every order.",
           flow: ["Storefront", "Products", "Negotiation", "Orders", "Fulfillment", "Reputation"],
         },
         {
-          title: "Designing for Real Commerce",
-          body: "One of the interesting parts of Nkwado was negotiation. Instead of treating price as fixed, negotiation became part of the product, rather than something happening outside it.",
+          title: "The Design Challenge",
+          body: "Negotiation. Price isn't fixed, so the product had to turn back-and-forth haggling into a clear, traceable flow — without turning it into a form.",
           steps: ["Buyer makes an offer", "Seller responds", "Price is agreed", "Cart updates", "Payment"],
         },
         {
+          title: "The Solution",
+          body: "One shared system across roles: clear states for every order, plain language, and flows designed for small screens first. Commerce that feels like a conversation, not a checkout.",
+        },
+        {
           title: "The Result",
-          body: "A seller experience designed to make a complicated commerce system feel clear, flexible, and manageable on mobile.",
+          body: "A seller experience that makes a complicated system feel clear, flexible, and manageable on mobile.",
+        },
+        {
+          title: "Reflection",
+          body: "The best systems work when every role sees the same truth — and the interface gets out of the way.",
         },
       ] as CaseStudySection[],
-      closing:
-        "Good products don't just support the happy path. They account for how people actually behave.",
     } as CaseStudyData,
   },
   {
-    title: "Villam Hub",
-    desc: "An AgriTech platform focused on hydroponics, farming solutions, and sustainability.",
-    role: "Product Design · Frontend",
-    year: "2025",
-    tags: ["AgriTech", "Platform", "Systems"],
-    color: "var(--proj-lime)",
-    image: villamCover,
-    gallery: [villamCover, "1620641788421-7a1c342ea42e"],
+    title: "Zenya",
+    desc: "A fintech investment app redesign focused on making investing feel clearer, simpler, and more approachable.",
+    role: "Product Design · Design Systems",
+    year: "2026",
+    tags: ["Fintech", "App", "Accessibility"],
+    color: "var(--proj-violet)",
+    image: "1620641788421-7a1c342ea42e",
+    gallery: ["1620641788421-7a1c342ea42e", "1659469377768-4f42f2f091c5"],
     caseStudy: {
+      opening: ["Investing shouldn't feel like learning a new language."],
       intro:
-        "Villam Hub is an agri-tech platform connecting people with hydroponic farming, farm services, and tree planting, making it easier to participate in more sustainable agriculture.",
+        "Zenya is a fintech investment app redesign focused on making investing clearer, simpler, and more approachable.",
       meta: {
-        role: "Product Designer",
-        focus: "Product Design · UX/UI · Brand Design",
-        year: "2025",
+        role: "Product (Design) Engineer",
+        focus: "Product Design · UX/UI · Design Systems · Accessibility",
+        year: "2026",
       },
-      metric: "4",
-      metricLabel: "Months to market",
       sections: [
         {
-          title: "The Idea",
-          body: "Villam Hub brings different parts of the agricultural ecosystem into one experience. From buying hydroponic kits to accessing farming services and planting trees, the platform was designed to make sustainable agriculture feel more accessible.",
+          title: "The Problem",
+          body: "Financial products drown people in unfamiliar terms, dense flows, and information overload. The redesign aimed to make investing easier to understand and easier to navigate.",
         },
         {
           title: "My Role",
-          body: "I worked across both product and brand, shaping the visual identity and translating the concept into a digital product experience.",
+          body: "I worked across the product experience — onboarding, core investment flows, localization, accessibility, and the design system.",
         },
         {
           title: "The Experience",
-          body: "The goal was to make the journey from interest to action feel simple, approachable, and clear.",
-          flow: ["Discover", "Choose", "Get Started", "Grow"],
+          body: "Every step should feel intentional: users always know what they're doing and what happens next.",
+          flow: ["Onboard", "Explore", "Invest", "Track"],
         },
         {
-          title: "Designing the Brand",
-          body: "The visual direction needed to feel earthy, modern, and optimistic without falling into the usual agricultural visual clichés. The identity, colours, and interface were designed to connect technology with nature.",
+          title: "The Design Challenge",
+          body: "Making a complex product feel simple — without hiding the details people need to trust it with their money.",
+        },
+        {
+          title: "The Solution",
+          body: "Progressive disclosure, plain language, and clearer hierarchy. Accessibility is part of the system — contrast, typography, RTL layouts, and language support — not bolted on at the end.",
         },
         {
           title: "The Result",
-          body: "A digital experience that positions agriculture as something people can participate in, not just observe.",
+          body: "A cleaner investment experience that feels simple without feeling simplistic.",
+        },
+        {
+          title: "Reflection",
+          body: "Accessibility isn't a feature you add — it's a decision you make on every screen.",
         },
       ] as CaseStudySection[],
-      closing:
-        "Technology can help us grow more than products. It can help us grow possibilities.",
     } as CaseStudyData,
   },
   {
     title: "Good Governance Hub",
     desc: "A digital learning platform making governance education more accessible and genuinely engaging.",
-    role: "Experience Design",
+    role: "UX Research · UX Design",
     year: "2025",
     tags: ["EdTech", "Web", "Content"],
     color: "var(--proj-pink)",
     image: "1654198340681-a2e0fc449f1b",
     gallery: ["1654198340681-a2e0fc449f1b", "1709377058964-929af7f2d02f"],
     caseStudy: {
+      opening: ["What if learning about governance didn't feel like reading a government document?"],
       intro:
-        "Good Governance Hub is an educational platform designed to make governance learning more accessible, structured, and engaging.",
+        "Good Governance Hub is an educational platform making governance learning accessible, structured, and engaging.",
       meta: {
         role: "Product Designer",
-        focus: "UX Research · UX Design",
+        focus: "UX Research · UX Design · Information Architecture",
         year: "2025",
       },
-      metric: "+58%",
-      metricLabel: "Return visits",
       sections: [
         {
-          title: "The Challenge",
-          body: "Governance education can be complex, information-heavy, and difficult to navigate. The goal was to create an experience where learners could discover courses, understand their progress, and engage with governance content without feeling overwhelmed.",
+          title: "The Problem",
+          body: "Governance content is complex, information-heavy, and hard to navigate. Learners needed a way to discover courses, track progress, and engage without feeling overwhelmed.",
         },
         {
           title: "My Role",
-          body: "I focused primarily on UX research and experience design, translating user needs and complex content structures into a clearer learning experience.",
+          body: "UX research and experience design — turning user needs and complex content structures into a clearer learning experience.",
         },
         {
           title: "The Experience",
-          body: "The experience was structured around helping learners understand where they are, what comes next, and why it matters.",
+          body: "Structured around one question: where am I, what comes next, and why does it matter?",
           flow: ["Discover", "Learn", "Track", "Complete"],
         },
         {
-          title: "Designing for Clarity",
-          body: "A major focus was reducing cognitive load. Instead of presenting users with everything at once, the experience uses clear information hierarchy, progressive disclosure, and straightforward navigation to make complex content easier to approach.",
+          title: "The Design Challenge",
+          body: "Reducing cognitive load. Presenting the right thing at the right time, instead of everything at once.",
+        },
+        {
+          title: "The Solution",
+          body: "Clear information hierarchy, progressive disclosure, and straightforward navigation — informed by research with real learners.",
         },
         {
           title: "The Result",
           body: "A learning experience that makes governance education feel less intimidating and more approachable.",
         },
+        {
+          title: "Reflection",
+          body: "Complex doesn't have to feel complicated — clarity is a design decision.",
+        },
       ] as CaseStudySection[],
-      closing:
-        "Because good governance starts with people being able to understand it.",
+    } as CaseStudyData,
+  },
+  {
+    title: "Villam Hub",
+    desc: "An agri-tech platform connecting people with hydroponic farming, farm services, and tree planting.",
+    role: "Product & Brand Design",
+    year: "2025",
+    tags: ["AgriTech", "Platform", "Brand"],
+    color: "var(--proj-lime)",
+    image: villamCover,
+    gallery: [villamCover, "1620641788421-7a1c342ea42e"],
+    caseStudy: {
+      intro:
+        "Villam Hub is an agri-tech platform connecting people with hydroponic farming, farm services, and tree planting — making sustainable agriculture easier to join.",
+      meta: {
+        role: "Product (Design) Engineer",
+        focus: "Product Design · UX/UI · Brand Design",
+        year: "2025",
+      },
+      sections: [
+        {
+          title: "The Problem",
+          body: "Sustainable agriculture can feel technical and out of reach. Villam Hub needed to make it approachable — without losing credibility with people who know the land.",
+        },
+        {
+          title: "My Role",
+          body: "Product and brand: shaping the visual identity and translating the concept into a digital experience.",
+        },
+        {
+          title: "The Experience",
+          body: "From interest to action — simple, approachable, and clear.",
+          flow: ["Discover", "Choose", "Get Started", "Grow"],
+        },
+        {
+          title: "The Design Challenge",
+          body: "An identity that feels earthy, modern, and optimistic — without falling into agricultural clichés.",
+        },
+        {
+          title: "The Solution",
+          body: "Colours, type, and interface designed to connect technology with nature — one system from the first landing page to the last growing tip.",
+        },
+        {
+          title: "The Result",
+          body: "A digital experience that positions agriculture as something people can participate in, not just observe.",
+        },
+        {
+          title: "Reflection",
+          body: "When brand and product speak the same language, trust comes built in.",
+        },
+      ] as CaseStudySection[],
     } as CaseStudyData,
   },
   {
     title: "FocusFlow",
-    desc: "A productivity experience designed to help people focus and work with real intention.",
+    desc: "A productivity landing page designed to help people focus and work with real intention.",
     role: "Product · Interaction",
     year: "2025",
     tags: ["Productivity", "Web", "Motion"],
@@ -262,32 +280,38 @@ const PROJECTS = [
         "FocusFlow is a productivity landing page designed to help people organize their tasks, focus on what matters, and make progress without the overwhelm.",
       meta: {
         role: "Product Designer",
-        focus: "UX/UI · Product Design · Interaction Design",
+        focus: "Product Design · Interaction Design · UX/UI",
         year: "2025",
       },
-      metric: "−22%",
-      metricLabel: "Task-switching",
       sections: [
         {
           title: "The Problem",
-          body: "Productivity tools can give you more to look at instead of helping you get things done. The goal was to create an experience that feels calm, focused, and intentional, while still giving users enough structure to stay on track.",
+          body: "Productivity tools often add more to manage instead of helping you get things done. FocusFlow needed to feel calm and intentional — with enough structure to stay on track.",
         },
         {
           title: "My Role",
-          body: "I designed the product experience from information architecture and user flows to the interface and interactions.",
+          body: "Product experience and interaction design — from information architecture and flows to the interface itself.",
         },
         {
           title: "The Experience",
-          body: "The experience centres the user's next action, rather than overwhelming them with everything on their plate.",
+          body: "The experience centres the next action, not everything on your plate.",
           flow: ["Capture", "Prioritize", "Focus", "Complete"],
         },
         {
-          title: "Designing for Focus",
-          body: "Every interaction was designed to reduce unnecessary friction and visual noise. Clear hierarchy, intentional spacing, and focused states help the interface stay quiet when it needs to be.",
+          title: "The Design Challenge",
+          body: "Designing focus. Reducing visual noise so the interface stays quiet when it needs to.",
+        },
+        {
+          title: "The Solution",
+          body: "Clear hierarchy, intentional spacing, and considered interaction states — motion that signals, never nags.",
         },
         {
           title: "The Result",
-          body: "A productivity experience built around a simple idea: Less managing. More doing.",
+          body: "A productivity experience built around a simple idea: less managing, more doing.",
+        },
+        {
+          title: "Reflection",
+          body: "Good interface design is often invisible — calm is a feature.",
         },
       ] as CaseStudySection[],
     } as CaseStudyData,
@@ -553,7 +577,7 @@ function Hero() {
           transition={{ delay: 0.2 }}
           className="mb-8 font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground"
         >
-          Your neighborhood friendly Product Designer
+          Product (Design) Engineer
         </motion.p>
 
         <h1 className="display-xl text-[clamp(2.9rem,10.5vw,10rem)] leading-[1.05] text-foreground">
@@ -582,10 +606,19 @@ function Hero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: reduce ? 0.1 : 1 }}
-          className="mx-auto mt-10 max-w-md text-balance text-sm leading-relaxed text-muted-foreground md:text-base"
+          transition={{ delay: reduce ? 0.1 : 0.9 }}
+          className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground"
         >
-          I design products, brands, and experiences for people, not just screens.
+          Product · UX/UI · Systems · Accessibility · Frontend
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: reduce ? 0.1 : 1.1 }}
+          className="mx-auto mt-6 max-w-md text-balance text-sm leading-relaxed text-muted-foreground md:text-base"
+        >
+          I design and build digital products that are useful, accessible, and built to last.
         </motion.p>
       </motion.div>
 
@@ -788,7 +821,7 @@ function Work() {
             Selected<br />Work
           </h2>
           <p className="max-w-xs pb-3 text-sm leading-relaxed text-muted-foreground">
-            Five products where research, craft, and a clear point of view came together.
+            Real products. Real problems. Real people.
           </p>
         </div>
 
@@ -805,12 +838,16 @@ function Work() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.05 }}
-              className="group relative flex w-full flex-col gap-3 border-b border-border py-7 text-left transition-colors md:flex-row md:items-center md:justify-between md:py-9"
+              className={`group relative flex w-full flex-col gap-3 border-b border-border py-7 text-left transition-colors md:flex-row md:items-center md:justify-between ${
+                i < 2 ? "md:py-12" : "md:py-9"
+              }`}
             >
               <div className="flex items-baseline gap-4 md:gap-8">
                 <span className="font-mono text-xs text-muted-foreground">0{i + 1}</span>
                 <h3
-                  className="font-display text-4xl uppercase leading-none tracking-tight transition-all duration-300 group-hover:translate-x-2 md:text-6xl lg:text-7xl"
+                  className={`font-display uppercase leading-none tracking-tight transition-all duration-300 group-hover:translate-x-2 ${
+                    i < 2 ? "text-5xl md:text-7xl lg:text-8xl" : "text-4xl md:text-6xl lg:text-7xl"
+                  }`}
                   style={{ color: hovered === i ? p.color : undefined }}
                 >
                   {p.title}
@@ -981,6 +1018,21 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
           {project.title}
         </h2>
 
+        {cs.opening && (
+          <div className="mt-8 space-y-1">
+            {cs.opening.map((line, li) => (
+              <p
+                key={line}
+                className={`font-display text-[clamp(1.7rem,4vw,3.4rem)] uppercase leading-[1.05] tracking-tight ${
+                  li === cs.opening!.length - 1 ? "text-accent" : "text-foreground"
+                }`}
+              >
+                {line}
+              </p>
+            ))}
+          </div>
+        )}
+
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">{cs.intro}</p>
 
             {cs.liveUrl && (
@@ -997,19 +1049,10 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
             )}
 
             {/* meta */}
-            <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-4">
+            <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-3">
               <Meta label="Role" value={cs.meta.role} />
               <Meta label="Focus" value={cs.meta.focus} />
               <Meta label="Year" value={cs.meta.year} />
-              {cs.metric && (
-                <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">Impact</p>
-                  <p className="mt-2 font-display text-4xl leading-none" style={{ color: project.color }}>
-                    {cs.metric}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">{cs.metricLabel}</p>
-                </div>
-              )}
             </div>
 
             {/* hero image */}
@@ -1048,7 +1091,7 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
                     </ol>
                   )}
 
-                  {si === 2 && (
+                  {si === 4 && (
                     <div className="mt-10 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
                       <img src={img(project.gallery[1], 1400)} alt={`${project.title} detail`} className="size-full object-cover" />
                     </div>
@@ -1056,16 +1099,6 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
                 </div>
               ))}
             </div>
-
-            {/* closing */}
-            {cs.closing && (
-              <div className="mt-16 rounded-2xl border border-border p-8 md:p-12">
-                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">In short</p>
-                <p className="mt-5 max-w-3xl text-balance font-display text-2xl uppercase leading-tight tracking-tight md:text-4xl">
-                  {cs.closing}
-                </p>
-              </div>
-            )}
 
         <button
           onClick={onClose}
@@ -1206,10 +1239,11 @@ function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="display-xl max-w-4xl text-[clamp(2.4rem,7vw,6rem)] leading-[1.02]"
+          className="display-xl max-w-4xl text-[clamp(2.2rem,6.5vw,5.5rem)] leading-[1.02]"
         >
-          Connection is my goal.<br />
-          <span className="text-accent">Good design</span> is how I get there.
+          Design thinking.<br />
+          Engineering thinking.<br />
+          <span className="text-accent">Human thinking.</span>
         </motion.h2>
 
         <div className="mt-14 grid gap-10 md:grid-cols-[1.4fr_1fr]">
@@ -1221,10 +1255,13 @@ function About() {
             className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg"
           >
             <p className="text-foreground">
-              I'm Jasmine, a Product Designer who enjoys turning complicated ideas into experiences that feel simple, useful, and human.
+              I'm Jasmine — a Product (Design) Engineer. My background in engineering taught me how to think in systems. Design taught me how to think about people. Frontend training showed me the whole picture.
             </p>
             <p>
-              My background in engineering taught me how to think in systems. Design taught me how to think about people. Now I use both to build better products across product thinking, UX, visual design, brand storytelling, and systems.
+              Now I sit somewhere between design and engineering, building products that are useful, accessible, and built to last.
+            </p>
+            <p className="font-display text-xl uppercase leading-tight tracking-tight text-accent md:text-2xl">
+              I want to build products that outlive the portfolio they came from.
             </p>
           </motion.div>
 
@@ -1770,6 +1807,24 @@ function Playground() {
   const visible = PIECES.filter((p) => filter === "All" || p.cat === filter);
   const openItem = PIECES.find((p) => p.id === openId) ?? null;
 
+  // "Make a mess": scatter the wall; "Put it back": restore the layout.
+  const [messy, setMessy] = useState(false);
+  const messRef = useRef<Record<string, { left: number; top: number; rot: number }>>({});
+
+  const makeMess = () => {
+    const next: Record<string, { left: number; top: number; rot: number }> = {};
+    PIECES.forEach((p) => {
+      next[p.id] = {
+        left: 2 + Math.random() * 68,
+        top: 4 + Math.random() * 66,
+        rot: Math.round((Math.random() * 30 - 15) * 10) / 10,
+      };
+    });
+    messRef.current = next;
+    setMessy(true);
+  };
+  const putItBack = () => setMessy(false);
+
   return (
     <section
       id="playground"
@@ -1785,7 +1840,9 @@ function Playground() {
             </h2>
           </div>
           <p className="max-w-xs pb-3 text-sm leading-relaxed text-muted-foreground">
-            A collection of things I made because I wanted to. Grab a piece, throw it around, open it up.
+            Selected Work shows how I solve product problems.
+            <br />
+            <span className="text-foreground">Playground shows how I think visually.</span>
           </p>
         </div>
 
@@ -1809,6 +1866,14 @@ function Playground() {
               </button>
             );
           })}
+          <button
+            type="button"
+            onClick={messy ? putItBack : makeMess}
+            data-cursor="hover"
+            className="ml-auto hidden shrink-0 whitespace-nowrap rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-colors hover:border-accent hover:text-accent md:inline-flex"
+          >
+            {messy ? "✕ Put it back" : "✦ Make a mess"}
+          </button>
         </div>
       </div>
 
@@ -1858,7 +1923,13 @@ function Playground() {
           {PIECES.map((p) => {
             const idx = visible.findIndex((v) => v.id === p.id);
             const shown = idx !== -1;
-            const pos = filter === "All" ? p.home : shown ? curatedSlot(idx, visible.length) : p.home;
+            const pos = messy && messRef.current[p.id]
+              ? messRef.current[p.id]
+              : filter === "All"
+                ? p.home
+                : shown
+                  ? curatedSlot(idx, visible.length)
+                  : p.home;
             return (
               <PlaygroundPiece
                 key={p.id}
