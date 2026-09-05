@@ -577,7 +577,7 @@ function Hero() {
           transition={{ delay: 0.2 }}
           className="mb-8 font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground"
         >
-          Product (Design) Engineer
+          Your friendly neighborhood Product Engineer
         </motion.p>
 
         <h1 className="display-xl text-[clamp(2.9rem,10.5vw,10rem)] leading-[1.05] text-foreground">
