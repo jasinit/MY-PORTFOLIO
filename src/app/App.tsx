@@ -318,8 +318,6 @@ const PROJECTS = [
   },
 ];
 
-const INTERESTS = ["Design systems", "Internet culture", "Books", "Cats", "Pop culture", "Building things"];
-
 const reduceMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1263,22 +1261,6 @@ function About() {
             <p className="font-display text-xl uppercase leading-tight tracking-tight text-accent md:text-2xl">
               I want to build products that outlive the portfolio they came from.
             </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Off the clock</p>
-            <div className="flex flex-wrap gap-2">
-              {INTERESTS.map((it) => (
-                <span key={it} className="rounded-full border border-border bg-card/60 px-3.5 py-2 text-sm text-foreground backdrop-blur">
-                  {it}
-                </span>
-              ))}
-            </div>
           </motion.div>
         </div>
       </div>
