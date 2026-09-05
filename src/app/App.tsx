@@ -12,7 +12,7 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
-import { ArrowUpRight, ArrowDown, ArrowRight, Sun, Moon } from "lucide-react";
+import { ArrowUpRight, ArrowDown, ArrowRight } from "lucide-react";
 import resumePdf from "../imports/Favour+Ndodo.pdf";
 import villamCover from "../imports/6shots_so.png";
 import praizzCouture from "../imports/176shots_so.png";
@@ -357,34 +357,6 @@ function CustomCursor() {
 /*  Floating navigation                                                */
 /* ------------------------------------------------------------------ */
 
-function ThemeToggle() {
-  const [light, setLight] = useState(
-    () => typeof document !== "undefined" && document.documentElement.classList.contains("light"),
-  );
-
-  const toggle = () => {
-    const next = !light;
-    setLight(next);
-    document.documentElement.classList.toggle("light", next);
-    try {
-      localStorage.setItem("jasmine-theme", next ? "light" : "dark");
-    } catch {
-      /* private mode */
-    }
-  };
-
-  return (
-    <button
-      onClick={toggle}
-      data-cursor="hover"
-      aria-label={light ? "Switch to dark mode" : "Switch to light mode"}
-      className="flex size-9 shrink-0 items-center justify-center rounded-full border border-border bg-card/70 text-muted-foreground backdrop-blur transition-colors hover:border-accent hover:text-accent"
-    >
-      {light ? <Moon size={15} /> : <Sun size={15} />}
-    </button>
-  );
-}
-
 function FloatingNav() {
   const [active, setActive] = useState("home");
   const [hidden, setHidden] = useState(false);
@@ -461,8 +433,6 @@ function FloatingNav() {
         >
           favourndodo@gmail.com
         </a>
-
-        <ThemeToggle />
       </div>
     </motion.header>
   );
