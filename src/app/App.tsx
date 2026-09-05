@@ -1091,7 +1091,7 @@ function CaseStudy({
             {cs.opening.map((line, li) => (
               <p
                 key={line}
-                className={`font-display text-[clamp(1.7rem,4vw,3.4rem)] uppercase leading-[1.05] tracking-tight ${
+                className={`font-display text-[clamp(1.4rem,3vw,2.6rem)] uppercase leading-[1.05] tracking-tight ${
                   li === cs.opening!.length - 1 ? "text-accent" : "text-foreground"
                 }`}
               >
