@@ -13,6 +13,7 @@ import {
   type MotionValue,
 } from "motion/react";
 import { ArrowUpRight, ArrowDown, ArrowRight } from "lucide-react";
+import confetti from "canvas-confetti";
 import resumePdf from "../imports/Favour+Ndodo.pdf";
 import villamCover from "../imports/6shots_so.png";
 import praizzCouture from "../imports/176shots_so.png";
@@ -320,9 +321,56 @@ const PROJECTS = [
 
 const INTERESTS = ["Design systems", "Internet culture", "Books", "Cats", "Pop culture", "Building things"];
 
+const NOW_ITEMS = [
+  "Building accessible fintech",
+  "Learning motion systems",
+  "Reading about typography",
+  "Listening to amapiano",
+  "Collecting fonts",
+  "Watering plants, digitally",
+];
+
 const reduceMotion = () =>
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ------------------------------------------------------------------ */
+/*  Motion preference: OS setting + an on-site override.               */
+/* ------------------------------------------------------------------ */
+
+const MOTION_KEY = "jasmine-motion";
+
+const getStoredMotion = () => {
+  try {
+    return localStorage.getItem(MOTION_KEY) === "reduced";
+  } catch {
+    return false;
+  }
+};
+
+const setStoredMotion = (reduced: boolean) => {
+  try {
+    localStorage.setItem(MOTION_KEY, reduced ? "reduced" : "full");
+  } catch {
+    /* private mode */
+  }
+  document.documentElement.classList.toggle("reduce-motion", reduced);
+  window.dispatchEvent(new Event("jasmine-motion-changed"));
+};
+
+/* Respects prefers-reduced-motion AND the on-site toggle. */
+function useSiteReducedMotion() {
+  const osReduce = useReducedMotion();
+  const [forced, setForced] = useState(getStoredMotion);
+
+  useEffect(() => {
+    const sync = () => setForced(getStoredMotion());
+    window.addEventListener("jasmine-motion-changed", sync);
+    return () => window.removeEventListener("jasmine-motion-changed", sync);
+  }, []);
+
+  return forced || !!osReduce;
+}
 
 /* ------------------------------------------------------------------ */
 /*  Custom cursor                                                      */
@@ -333,7 +381,7 @@ function CustomCursor() {
   const y = useMotionValue(-100);
   const ringX = useSpring(x, { stiffness: 380, damping: 34, mass: 0.6 });
   const ringY = useSpring(y, { stiffness: 380, damping: 34, mass: 0.6 });
-  const [active, setActive] = useState(false);
+  const [mode, setMode] = useState<"hover" | "drag" | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -343,7 +391,9 @@ function CustomCursor() {
       y.set(e.clientY);
       setVisible(true);
       const t = e.target as HTMLElement;
-      setActive(!!t.closest("[data-cursor='hover']"));
+      if (t.closest("[data-cursor='drag']")) setMode("drag");
+      else if (t.closest("[data-cursor='hover']")) setMode("hover");
+      else setMode(null);
     };
     const leave = () => setVisible(false);
     window.addEventListener("mousemove", move);
@@ -356,6 +406,8 @@ function CustomCursor() {
 
   if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) return null;
 
+  const ringSize = mode === "drag" ? 72 : mode === "hover" ? 56 : 30;
+
   return (
     <div className="pointer-events-none fixed inset-0 z-[9999] hidden md:block" aria-hidden>
       <motion.div
@@ -363,14 +415,19 @@ function CustomCursor() {
         style={{ x: ringX, y: ringY, opacity: visible ? 1 : 0 }}
       >
         <motion.div
-          className="rounded-full border border-accent"
-          animate={{ width: active ? 56 : 30, height: active ? 56 : 30, opacity: active ? 1 : 0.7 }}
+          className={`rounded-full ${mode === "drag" ? "border-accent bg-accent/10" : "border-accent"}`}
+          animate={{ width: ringSize, height: ringSize, opacity: mode ? 1 : 0.7 }}
           transition={{ type: "spring", stiffness: 300, damping: 24 }}
           style={{ translateX: "-50%", translateY: "-50%" }}
-        />
+        >
+          {mode === "drag" && (
+            <span className="flex size-full items-center justify-center text-base text-accent">✦</span>
+          )}
+        </motion.div>
       </motion.div>
       <motion.div
-        className="fixed left-0 top-0 size-1.5 rounded-full bg-accent"
+        className={`fixed left-0 top-0 rounded-full bg-accent ${mode === "drag" ? "size-3" : "size-1.5"}`}
+        animate={{ scale: mode === "drag" ? 1.2 : 1 }}
         style={{ x, y, translateX: "-50%", translateY: "-50%", opacity: visible ? 1 : 0 }}
       />
     </div>
@@ -548,7 +605,7 @@ function HeroWord({
 
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSiteReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yText = useTransform(scrollYProgress, [0, 1], [0, -40]);
   const indicatorOpacity = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
@@ -727,7 +784,7 @@ function ProcessWord({
 
 function Approach() {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSiteReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const [index, setIndex] = useState(0);
 
@@ -905,6 +962,7 @@ function Work() {
             project={PROJECTS[selected]}
             index={selected}
             onClose={() => setSelected(null)}
+            onNavigate={(dir) => setSelected((selected + dir + PROJECTS.length) % PROJECTS.length)}
           />
         )}
       </AnimatePresence>
@@ -963,9 +1021,19 @@ function useModalFocus(ref: React.RefObject<HTMLDivElement>) {
   }, [ref]);
 }
 
-function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[number]; index: number; onClose: () => void }) {
+function CaseStudy({
+  project,
+  index,
+  onClose,
+  onNavigate,
+}: {
+  project: (typeof PROJECTS)[number];
+  index: number;
+  onClose: () => void;
+  onNavigate: (dir: 1 | -1) => void;
+}) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSiteReducedMotion();
   useModalFocus(ref);
 
   useEffect(() => {
@@ -1100,13 +1168,32 @@ function CaseStudy({ project, index, onClose }: { project: (typeof PROJECTS)[num
               ))}
             </div>
 
-        <button
-          onClick={onClose}
-          data-cursor="hover"
-          className="mt-14 inline-flex items-center gap-2 font-mono text-sm uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
-        >
-          ← Back to all work
-        </button>
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-4">
+          <button
+            onClick={onClose}
+            data-cursor="hover"
+            className="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+          >
+            ← Back to all work
+          </button>
+
+          <div className="flex items-center gap-3 font-mono text-sm uppercase tracking-wider">
+            <button
+              onClick={() => onNavigate(-1)}
+              data-cursor="hover"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2.5 text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+            >
+              ← {PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length].title}
+            </button>
+            <button
+              onClick={() => onNavigate(1)}
+              data-cursor="hover"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2.5 text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+            >
+              {PROJECTS[(index + 1) % PROJECTS.length].title} →
+            </button>
+          </div>
+        </div>
       </motion.article>
     </motion.div>,
     document.body,
@@ -1146,6 +1233,7 @@ function StickerWall() {
   const my = useMotionValue(0);
   const smx = useSpring(mx, { stiffness: 50, damping: 18 });
   const smy = useSpring(my, { stiffness: 50, damping: 18 });
+  const [burst, setBurst] = useState<number | null>(null);
 
   const onMove = (e: React.MouseEvent) => {
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -1153,10 +1241,15 @@ function StickerWall() {
     my.set((e.clientY - r.top - r.height / 2) / r.height);
   };
 
+  const onTap = (i: number) => {
+    setBurst(i);
+    window.setTimeout(() => setBurst((b) => (b === i ? null : b)), 650);
+  };
+
   return (
     <section onMouseMove={onMove} className="relative min-h-[80vh] overflow-hidden border-t border-border px-5 py-24">
       {STICKERS.map((s, i) => (
-        <ParallaxSticker key={i} s={s} i={i} mx={smx} my={smy} />
+        <ParallaxSticker key={i} s={s} i={i} mx={smx} my={smy} burst={burst === i} onTap={() => onTap(i)} />
       ))}
       <div className="relative z-10 mx-auto flex min-h-[60vh] max-w-3xl items-center justify-center text-center">
         <p className="text-balance font-display text-2xl uppercase leading-tight tracking-tight text-foreground md:text-4xl">
@@ -1168,8 +1261,22 @@ function StickerWall() {
   );
 }
 
-function ParallaxSticker({ s, i, mx, my }: { s: Sticker; i: number; mx: MotionValue<number>; my: MotionValue<number> }) {
-  const reduce = useReducedMotion();
+function ParallaxSticker({
+  s,
+  i,
+  mx,
+  my,
+  burst,
+  onTap,
+}: {
+  s: Sticker;
+  i: number;
+  mx: MotionValue<number>;
+  my: MotionValue<number>;
+  burst: boolean;
+  onTap: () => void;
+}) {
+  const reduce = useSiteReducedMotion();
   const x = useTransform(mx, (v) => v * s.depth);
   const y = useTransform(my, (v) => v * s.depth);
   const color = STICKER_COLORS[i % STICKER_COLORS.length];
@@ -1180,10 +1287,18 @@ function ParallaxSticker({ s, i, mx, my }: { s: Sticker; i: number; mx: MotionVa
         style={{ x: reduce ? 0 : x, y: reduce ? 0 : y, left: s.x, top: s.y, rotate: s.r, color }}
         animate={reduce ? undefined : { y: [0, -10, 0] }}
         transition={{ repeat: Infinity, duration: 4 + i * 0.3, ease: "easeInOut" }}
-        className="pointer-events-none absolute z-0 text-5xl md:text-7xl"
+        className="absolute z-0 cursor-pointer text-5xl md:text-7xl"
+        onClick={onTap}
+        data-cursor="hover"
         aria-hidden
       >
-        {s.c}
+        <motion.span
+          className="inline-block"
+          animate={burst ? { rotate: [0, 360], scale: [1, 1.6, 1] } : { rotate: 0, scale: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          {s.c}
+        </motion.span>
       </motion.div>
     );
   }
@@ -1194,19 +1309,27 @@ function ParallaxSticker({ s, i, mx, my }: { s: Sticker; i: number; mx: MotionVa
       style={{ x: reduce ? 0 : x, y: reduce ? 0 : y, left: s.x, top: s.y, rotate: s.r }}
       animate={reduce ? undefined : { y: [0, -8, 0] }}
       transition={{ repeat: Infinity, duration: 5 + i * 0.25, ease: "easeInOut" }}
-      className="pointer-events-none absolute z-0"
+      className="absolute z-0 cursor-pointer"
+      onClick={onTap}
+      data-cursor="hover"
       aria-hidden
     >
-      {isText ? (
-        <span
-          className="inline-block rounded-full border px-3 py-1.5 font-mono text-[11px] tracking-tight backdrop-blur-sm"
-          style={{ borderColor: color, color }}
-        >
-          {s.c}
-        </span>
-      ) : (
-        <span className="text-4xl md:text-6xl" style={{ color }}>{s.c}</span>
-      )}
+      <motion.span
+        className="inline-block"
+        animate={burst ? { rotate: [0, 360], scale: [1, 1.5, 1] } : { rotate: 0, scale: 1 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
+        {isText ? (
+          <span
+            className="inline-block rounded-full border px-3 py-1.5 font-mono text-[11px] tracking-tight backdrop-blur-sm"
+            style={{ borderColor: color, color }}
+          >
+            {s.c}
+          </span>
+        ) : (
+          <span className="text-4xl md:text-6xl" style={{ color }}>{s.c}</span>
+        )}
+      </motion.span>
     </motion.div>
   );
 }
@@ -1217,7 +1340,7 @@ function ParallaxSticker({ s, i, mx, my }: { s: Sticker; i: number; mx: MotionVa
 
 function About() {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSiteReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
 
@@ -1295,10 +1418,46 @@ const LINKS: { label: string; href: string }[] = [
   { label: "X", href: "https://x.com/jasvsdesign" },
 ];
 
+function MotionToggle() {
+  const [reduced, setReduced] = useState(getStoredMotion);
+
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        const next = !reduced;
+        setReduced(next);
+        setStoredMotion(next);
+      }}
+      data-cursor="hover"
+      aria-pressed={reduced}
+      className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-colors hover:border-accent hover:text-accent"
+    >
+      {reduced ? "✦ Motion: reduced" : "✦ Motion: full"}
+    </button>
+  );
+}
+
 function Contact() {
   return (
-    <section id="contact" className="relative border-t border-border px-5 py-28 md:py-40">
-      <div className="mx-auto max-w-6xl text-center">
+    <section id="contact" className="relative border-t border-border py-28 md:py-40">
+      {/* "Currently" ticker */}
+      <div className="mb-24 overflow-hidden border-y border-border py-4" aria-hidden>
+        <div className="marquee-track flex w-max items-center gap-10 whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+          {[0, 1].map((half) => (
+            <span key={half} className="flex items-center gap-10">
+              {NOW_ITEMS.map((item) => (
+                <span key={half + item} className="flex items-center gap-10">
+                  <span>{item}</span>
+                  <span className="text-accent">✦</span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-5 text-center">
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -1358,7 +1517,14 @@ function Contact() {
           ))}
         </div>
 
-        <p className="mt-16 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+        <div className="mt-10 flex flex-col items-center justify-center gap-4">
+          <MotionToggle />
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+            Built with React · Vite · Motion · Tailwind — designed for keyboard, screen readers & humans
+          </p>
+        </div>
+
+        <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
           © 2026 Jasmine Ndodo. Designed & built with intention.
         </p>
       </div>
@@ -1613,7 +1779,7 @@ function PlaygroundPiece({
         whileHover={{ scale: 1.07, y: -12, boxShadow: "0 34px 70px rgba(0,0,0,0.55)" }}
         whileTap={{ scale: 1.12 }}
         whileFocus={{ scale: 1.07, y: -12, boxShadow: "0 34px 70px rgba(0,0,0,0.55)" }}
-        data-cursor="hover"
+        data-cursor="drag"
         role="button"
         tabIndex={0}
         aria-label={`Open ${item.name} — ${item.kind}`}
@@ -1642,7 +1808,7 @@ function PlaygroundPiece({
 
 function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useSiteReducedMotion();
   useModalFocus(ref);
 
   useEffect(() => {
@@ -1822,6 +1988,43 @@ function Playground() {
   };
   const putItBack = () => setMessy(false);
 
+  // Scribble: draw directly on the wall.
+  const [scribble, setScribble] = useState(false);
+  const [strokes, setStrokes] = useState<{ pts: [number, number][] }[]>([]);
+  const drawing = useRef(false);
+  const wallRef = useRef<HTMLDivElement>(null);
+
+  const toLocal = (e: React.PointerEvent) => {
+    const r = (wallRef.current ?? canvasRef.current)!.getBoundingClientRect();
+    return [e.clientX - r.left, e.clientY - r.top] as [number, number];
+  };
+
+  const onScribbleDown = (e: React.PointerEvent<SVGSVGElement>) => {
+    if (!scribble) return;
+    drawing.current = true;
+    setStrokes((s) => [...s, { pts: [toLocal(e)] }]);
+  };
+  const onScribbleMove = (e: React.PointerEvent<SVGSVGElement>) => {
+    if (!scribble || !drawing.current) return;
+    const p = toLocal(e);
+    setStrokes((s) => {
+      const next = [...s];
+      const last = next[next.length - 1];
+      if (!last) return s;
+      last.pts = [...last.pts, p];
+      return next;
+    });
+  };
+  const onScribbleUp = () => {
+    drawing.current = false;
+  };
+
+  // Cursor trail: springs chained behind the pointer while on the wall.
+  const trail1 = useSpring(mx, { stiffness: 260, damping: 26 });
+  const trail2 = useSpring(trail1, { stiffness: 200, damping: 28 });
+  const trail3 = useSpring(trail2, { stiffness: 150, damping: 30 });
+  const trail4 = useSpring(trail3, { stiffness: 110, damping: 32 });
+
   return (
     <section
       id="playground"
@@ -1872,6 +2075,29 @@ function Playground() {
           >
             {messy ? "✕ Put it back" : "✦ Make a mess"}
           </button>
+          <button
+            type="button"
+            onClick={() => setScribble((s) => !s)}
+            data-cursor="hover"
+            aria-pressed={scribble}
+            className={`hidden shrink-0 whitespace-nowrap rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-widest transition-colors md:inline-flex ${
+              scribble
+                ? "border-transparent bg-accent text-accent-foreground"
+                : "border-border text-muted-foreground hover:border-accent hover:text-accent"
+            }`}
+          >
+            {scribble ? "✎ Scribbling…" : "✎ Scribble"}
+          </button>
+          {strokes.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setStrokes([])}
+              data-cursor="hover"
+              className="hidden shrink-0 whitespace-nowrap rounded-full border border-border px-4 py-2 font-mono text-[11px] uppercase tracking-widest text-muted-foreground transition-colors hover:border-accent hover:text-accent md:inline-flex"
+            >
+              Clear
+            </button>
+          )}
         </div>
       </div>
 
@@ -1918,28 +2144,64 @@ function Playground() {
             ✦ drag me around
           </span>
 
-          {PIECES.map((p) => {
-            const idx = visible.findIndex((v) => v.id === p.id);
-            const shown = idx !== -1;
-            const pos = messy && messRef.current[p.id]
-              ? messRef.current[p.id]
-              : filter === "All"
-                ? p.home
-                : shown
-                  ? curatedSlot(idx, visible.length)
-                  : p.home;
-            return (
-              <PlaygroundPiece
-                key={p.id}
-                item={p}
-                pos={pos}
-                shown={shown}
-                constraints={canvasRef}
-                onOpen={() => setOpenId(p.id)}
-                onInfo={setInfo}
+          {/* Cursor trail */}
+          {!isMobile &&
+            [trail1, trail2, trail3, trail4].map((t, i) => (
+              <motion.span
+                key={i}
+                className="pointer-events-none absolute left-0 top-0 z-[45] hidden size-2 rounded-full bg-accent md:block"
+                style={{ x: t, y: t, translateX: "-50%", translateY: "-50%", opacity: 0.5 - i * 0.1 }}
+                aria-hidden
               />
-            );
-          })}
+            ))}
+
+          <div ref={wallRef} className={`absolute inset-0 ${scribble ? "pointer-events-auto" : "pointer-events-none"}`}>
+            <svg
+              className={`absolute inset-0 size-full ${scribble ? "cursor-crosshair" : ""}`}
+              onPointerDown={onScribbleDown}
+              onPointerMove={onScribbleMove}
+              onPointerUp={onScribbleUp}
+              onPointerLeave={onScribbleUp}
+            >
+              {strokes.map((s, i) => (
+                <polyline
+                  key={i}
+                  points={s.pts.map((p) => p.join(",")).join(" ")}
+                  fill="none"
+                  stroke="var(--accent)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  opacity="0.9"
+                />
+              ))}
+            </svg>
+          </div>
+
+          <div className={scribble ? "pointer-events-none" : ""}>
+            {PIECES.map((p) => {
+              const idx = visible.findIndex((v) => v.id === p.id);
+              const shown = idx !== -1;
+              const pos = messy && messRef.current[p.id]
+                ? messRef.current[p.id]
+                : filter === "All"
+                  ? p.home
+                  : shown
+                    ? curatedSlot(idx, visible.length)
+                    : p.home;
+              return (
+                <PlaygroundPiece
+                  key={p.id}
+                  item={p}
+                  pos={pos}
+                  shown={shown}
+                  constraints={canvasRef}
+                  onOpen={() => setOpenId(p.id)}
+                  onInfo={setInfo}
+                />
+              );
+            })}
+          </div>
         </div>
       )}
 
@@ -1978,7 +2240,45 @@ function Playground() {
 /*  App                                                                */
 /* ------------------------------------------------------------------ */
 
+const CONFETTI_COLORS = ["#e8ff59", "#9b7bff", "#5ad1ff", "#ff8fd6", "#ff5c4d"];
+
+function useEasterEggs() {
+  useEffect(() => {
+    const KONAMI = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "arrowleft", "arrowright", "b", "a"];
+    let konamiIdx = 0;
+    let buffer = "";
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key.toLowerCase();
+
+      // Konami code → confetti
+      if (k === KONAMI[konamiIdx]) {
+        konamiIdx += 1;
+        if (konamiIdx === KONAMI.length) {
+          konamiIdx = 0;
+          confetti({ particleCount: 180, spread: 90, origin: { y: 0.25 }, colors: CONFETTI_COLORS });
+        }
+      } else {
+        konamiIdx = k === KONAMI[0] ? 1 : 0;
+      }
+
+      // Typing "hire me" → scroll to contact
+      buffer = (buffer + k).slice(-20);
+      if (buffer.endsWith("hireme") || buffer.endsWith("hire me")) {
+        buffer = "";
+        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+}
+
 export default function App() {
+  useEasterEggs();
+
   return (
     <>
       <a

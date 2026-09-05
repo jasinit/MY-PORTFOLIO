@@ -32,6 +32,15 @@ export default defineConfig({
     },
   },
 
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        '404': '404.html',
+      },
+    },
+  },
+
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
 })
