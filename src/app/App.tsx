@@ -1840,9 +1840,7 @@ function Playground() {
             </h2>
           </div>
           <p className="max-w-xs pb-3 text-sm leading-relaxed text-muted-foreground">
-            Selected Work shows how I solve product problems.
-            <br />
-            <span className="text-foreground">Playground shows how I think visually.</span>
+            A collection of things I made because I wanted to. Grab a piece, throw it around, open it up.
           </p>
         </div>
 
