@@ -2,6 +2,7 @@
 
 :root {
   --font-size: 16px;
+  color-scheme: dark;
 
   /* Near-black editorial ground with high-contrast off-white ink */
   --background: #080808;
@@ -50,6 +51,24 @@
   --sidebar-accent-foreground: #f4f2ee;
   --sidebar-border: rgba(244, 242, 238, 0.12);
   --sidebar-ring: #e8ff59;
+
+  /* Decorative tick idle colour */
+  --tick-idle: rgba(244, 242, 238, 0.2);
+
+  /* Project accent colours (work list + case studies) */
+  --proj-violet: #9b7bff;
+  --proj-sky: #5ad1ff;
+  --proj-lime: #e8ff59;
+  --proj-pink: #ff8fd6;
+  --proj-coral: #ff5c4d;
+
+  /* Playground piece colours */
+  --piece-pink: #ff8fd6;
+  --piece-violet: #9b7bff;
+  --piece-lime: #e8ff59;
+  --piece-sky: #5ad1ff;
+  --piece-coral: #ff5c4d;
+  --piece-ink: #f4f2ee;
 }
 
 /* The site is dark by design; keep .dark identical so the token contract holds. */
@@ -86,6 +105,74 @@
   --sidebar-accent-foreground: #f4f2ee;
   --sidebar-border: rgba(244, 242, 238, 0.12);
   --sidebar-ring: #e8ff59;
+  --tick-idle: rgba(244, 242, 238, 0.2);
+  --proj-violet: #9b7bff;
+  --proj-sky: #5ad1ff;
+  --proj-lime: #e8ff59;
+  --proj-pink: #ff8fd6;
+  --proj-coral: #ff5c4d;
+  --piece-pink: #ff8fd6;
+  --piece-violet: #9b7bff;
+  --piece-lime: #e8ff59;
+  --piece-sky: #5ad1ff;
+  --piece-coral: #ff5c4d;
+  --piece-ink: #f4f2ee;
+}
+
+/* Light mode: warm paper editorial with olive-lime accents. */
+.light {
+  color-scheme: light;
+  --background: #f5f1e8;
+  --foreground: #16130e;
+  --card: #fdfbf6;
+  --card-foreground: #16130e;
+  --popover: #fdfbf6;
+  --popover-foreground: #16130e;
+  --primary: #16130e;
+  --primary-foreground: #f5f1e8;
+  --secondary: #eae5d9;
+  --secondary-foreground: #16130e;
+  --muted: #eae5d9;
+  --muted-foreground: #6f685a;
+  --accent: #6f7d00;
+  --accent-foreground: #fbf9f2;
+  --destructive: #c22f1e;
+  --destructive-foreground: #fbf9f2;
+  --border: rgba(22, 19, 14, 0.14);
+  --input: transparent;
+  --input-background: #eae5d9;
+  --switch-background: #d5cfc0;
+  --ring: #6f7d00;
+  --pop-lime: #8ba000;
+  --pop-coral: #c33d2a;
+  --pop-violet: #6a4bd8;
+  --pop-sky: #0e97d9;
+  --pop-pink: #cf4d92;
+  --chart-1: #8ba000;
+  --chart-2: #6a4bd8;
+  --chart-3: #0e97d9;
+  --chart-4: #cf4d92;
+  --chart-5: #c33d2a;
+  --sidebar: #fdfbf6;
+  --sidebar-foreground: #16130e;
+  --sidebar-primary: #16130e;
+  --sidebar-primary-foreground: #f5f1e8;
+  --sidebar-accent: #eae5d9;
+  --sidebar-accent-foreground: #16130e;
+  --sidebar-border: rgba(22, 19, 14, 0.14);
+  --sidebar-ring: #6f7d00;
+  --tick-idle: rgba(22, 19, 14, 0.15);
+  --proj-violet: #6a4bd8;
+  --proj-sky: #0e97d9;
+  --proj-lime: #8ba000;
+  --proj-pink: #cf4d92;
+  --proj-coral: #c33d2a;
+  --piece-pink: #cf4d92;
+  --piece-violet: #6a4bd8;
+  --piece-lime: #8ba000;
+  --piece-sky: #0e97d9;
+  --piece-coral: #c33d2a;
+  --piece-ink: #171512;
 }
 
 @theme inline {

@@ -12,8 +12,8 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
-import { ArrowUpRight, ArrowDown, ArrowRight } from "lucide-react";
-import resumePdf from "../imports/FAVOUR_UPDATED_RESUME.pdf";
+import { ArrowUpRight, ArrowDown, ArrowRight, Sun, Moon } from "lucide-react";
+import resumePdf from "../imports/Favour+Ndodo.pdf";
 import villamCover from "../imports/6shots_so.png";
 import praizzCouture from "../imports/176shots_so.png";
 
@@ -68,7 +68,7 @@ const PROJECTS = [
     role: "Product Design · Prototyping",
     year: "2026",
     tags: ["Fintech", "App", "Design System"],
-    color: "#9b7bff",
+    color: "var(--proj-violet)",
     image: "1620641788421-7a1c342ea42e",
     gallery: ["1620641788421-7a1c342ea42e", "1659469377768-4f42f2f091c5"],
     caseStudy: {
@@ -114,7 +114,7 @@ const PROJECTS = [
     role: "UX · Visual Design",
     year: "2026",
     tags: ["Marketplace", "Mobile", "Brand"],
-    color: "#5ad1ff",
+    color: "var(--proj-sky)",
     image: "1659469377768-4f42f2f091c5",
     gallery: ["1659469377768-4f42f2f091c5", "1654198340681-a2e0fc449f1b"],
     caseStudy: {
@@ -162,7 +162,7 @@ const PROJECTS = [
     role: "Product Design · Frontend",
     year: "2025",
     tags: ["AgriTech", "Platform", "Systems"],
-    color: "#e8ff59",
+    color: "var(--proj-lime)",
     image: villamCover,
     gallery: [villamCover, "1620641788421-7a1c342ea42e"],
     caseStudy: {
@@ -208,7 +208,7 @@ const PROJECTS = [
     role: "Experience Design",
     year: "2025",
     tags: ["EdTech", "Web", "Content"],
-    color: "#ff8fd6",
+    color: "var(--proj-pink)",
     image: "1654198340681-a2e0fc449f1b",
     gallery: ["1654198340681-a2e0fc449f1b", "1709377058964-929af7f2d02f"],
     caseStudy: {
@@ -254,7 +254,7 @@ const PROJECTS = [
     role: "Product · Interaction",
     year: "2025",
     tags: ["Productivity", "Web", "Motion"],
-    color: "#ff5c4d",
+    color: "var(--proj-coral)",
     image: "1710438399422-2fca27686bcd",
     gallery: ["1710438399422-2fca27686bcd", "1655841439659-0afc60676b70"],
     caseStudy: {
@@ -357,6 +357,34 @@ function CustomCursor() {
 /*  Floating navigation                                                */
 /* ------------------------------------------------------------------ */
 
+function ThemeToggle() {
+  const [light, setLight] = useState(
+    () => typeof document !== "undefined" && document.documentElement.classList.contains("light"),
+  );
+
+  const toggle = () => {
+    const next = !light;
+    setLight(next);
+    document.documentElement.classList.toggle("light", next);
+    try {
+      localStorage.setItem("jasmine-theme", next ? "light" : "dark");
+    } catch {
+      /* private mode */
+    }
+  };
+
+  return (
+    <button
+      onClick={toggle}
+      data-cursor="hover"
+      aria-label={light ? "Switch to dark mode" : "Switch to light mode"}
+      className="flex size-9 shrink-0 items-center justify-center rounded-full border border-border bg-card/70 text-muted-foreground backdrop-blur transition-colors hover:border-accent hover:text-accent"
+    >
+      {light ? <Moon size={15} /> : <Sun size={15} />}
+    </button>
+  );
+}
+
 function FloatingNav() {
   const [active, setActive] = useState("home");
   const [hidden, setHidden] = useState(false);
@@ -433,6 +461,8 @@ function FloatingNav() {
         >
           favourndodo@gmail.com
         </a>
+
+        <ThemeToggle />
       </div>
     </motion.header>
   );
@@ -754,7 +784,7 @@ function Approach() {
             <div
               key={s.n}
               className="h-1 rounded-full transition-all duration-300"
-              style={{ width: i === index ? 40 : 16, background: i === index ? s.color : "rgba(244,242,238,0.2)" }}
+              style={{ width: i === index ? 40 : 16, background: i === index ? s.color : "var(--tick-idle)" }}
             />
           ))}
         </div>
@@ -1346,7 +1376,7 @@ const PIECES = [
     cat: "Social",
     year: "2025",
     role: "Art Direction · Social",
-    color: "#ff8fd6",
+    color: "var(--piece-pink)",
     desc: "A summer launch campaign for a coastal beverage brand, built as a cohesive social system spanning feed posts, stories, and out-of-home.",
     image: "1620641788421-7a1c342ea42e",
     home: { left: 5, top: 4, rot: -6, w: 320 },
@@ -1359,7 +1389,7 @@ const PIECES = [
     cat: "Branding",
     year: "2025",
     role: "Brand Design · Systems",
-    color: "#9b7bff",
+    color: "var(--piece-violet)",
     desc: "A fashion brand identity for Praizz Couture, spanning logotype, palette, and a flexible visual system.",
     image: praizzCouture,
     home: { left: 58, top: 3, rot: 5, w: 340 },
@@ -1372,7 +1402,7 @@ const PIECES = [
     cat: "Campaigns",
     year: "2024",
     role: "Art Direction · Print",
-    color: "#e8ff59",
+    color: "var(--piece-lime)",
     desc: "Identity and campaign for an independent spring music festival, spanning posters, wayfinding, merch, and a bold typographic key art.",
     image: "1654198340681-a2e0fc449f1b",
     home: { left: 33, top: 20, rot: -3, w: 300 },
@@ -1385,7 +1415,7 @@ const PIECES = [
     cat: "Graphic Design",
     year: "2024",
     role: "Typography · Editorial",
-    color: "#5ad1ff",
+    color: "var(--piece-sky)",
     desc: "A specimen and micro-site for an experimental variable display face, exploring how far one letterform can stretch.",
     image: "1655841439659-0afc60676b70",
     home: { left: 1, top: 44, rot: 4, w: 270 },
@@ -1398,7 +1428,7 @@ const PIECES = [
     cat: "Art Direction",
     year: "2025",
     role: "Art Direction · Photography",
-    color: "#ff5c4d",
+    color: "var(--piece-coral)",
     desc: "Art direction for an editorial fashion story: mood, styling references, and a restrained, filmic grade.",
     image: "1709377058964-929af7f2d02f",
     home: { left: 69, top: 38, rot: -7, w: 320 },
@@ -1411,7 +1441,7 @@ const PIECES = [
     cat: "Experiments",
     year: "2023",
     role: "Illustration",
-    color: "#9b7bff",
+    color: "var(--piece-violet)",
     desc: "A personal illustration series exploring imagined creatures, a place to play with texture and colour with no brief attached.",
     image: "1710438399422-2fca27686bcd",
     home: { left: 43, top: 50, rot: 6, w: 240 },
@@ -1424,7 +1454,7 @@ const PIECES = [
     cat: "Graphic Design",
     year: "2024",
     role: "Graphic Design · Print",
-    color: "#ff8fd6",
+    color: "var(--piece-pink)",
     desc: "A run of two-colour risograph posters for a local club night: grain, overprint, and happy accidents.",
     image: "1620641788421-7a1c342ea42e",
     home: { left: 19, top: 63, rot: -4, w: 280 },
@@ -1437,7 +1467,7 @@ const PIECES = [
     cat: "Branding",
     year: "2023",
     role: "Brand Design · Logos",
-    color: "#5ad1ff",
+    color: "var(--piece-sky)",
     desc: "A family of marks for a space-weather startup: one system, many orbits, scaling from favicon to signage.",
     image: "1659469377768-4f42f2f091c5",
     home: { left: 65, top: 65, rot: 8, w: 230 },
@@ -1450,7 +1480,7 @@ const PIECES = [
     cat: "Experiments",
     year: "2025",
     role: "Motion · Code",
-    color: "#e8ff59",
+    color: "var(--piece-lime)",
     desc: "A generative type experiment that feeds a single word through noise fields until it almost, but never quite, breaks.",
     image: "1654198340681-a2e0fc449f1b",
     home: { left: 47, top: 78, rot: -5, w: 260 },
@@ -1463,7 +1493,7 @@ const PIECES = [
     cat: "Graphic Design",
     year: "2024",
     role: "Editorial · Layout",
-    color: "#f4f2ee",
+    color: "var(--piece-ink)",
     desc: "A black-and-white zine on quiet design: a study in grids, margins, and letting the page breathe.",
     image: "1655841439659-0afc60676b70",
     home: { left: 3, top: 79, rot: 3, w: 250 },
@@ -1476,7 +1506,7 @@ const PIECES = [
     cat: "Campaigns",
     year: "2025",
     role: "Art Direction · Campaign",
-    color: "#5ad1ff",
+    color: "var(--piece-sky)",
     desc: "A launch campaign for a smart-lighting brand: key art, motion bumpers, and a full social rollout.",
     image: "1709377058964-929af7f2d02f",
     home: { left: 79, top: 14, rot: -9, w: 210 },
