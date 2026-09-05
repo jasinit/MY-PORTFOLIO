@@ -1082,7 +1082,7 @@ function CaseStudy({
         <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
           Case study 0{index + 1}
         </p>
-        <h2 className="display-xl mt-4 text-[clamp(3rem,13vw,10rem)] leading-[0.98]" style={{ color: project.color }}>
+        <h2 className="display-xl mt-4 text-[clamp(2.4rem,7vw,6.5rem)] leading-[0.98]" style={{ color: project.color }}>
           {project.title}
         </h2>
 
