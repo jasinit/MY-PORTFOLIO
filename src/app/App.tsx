@@ -22,10 +22,40 @@ import sirenOne from "../imports/sirenco playground/Siren(1).png";
 import sirenAyra from "../imports/sirenco playground/Ayra 2.png";
 import sirenWallpaper from "../imports/sirenco playground/Siren Wallpaper 1.png";
 import sirenGalentines from "../imports/sirenco playground/Sirenco galentines 8.png";
+import s0549 from "../imports/sirenco playground/0549F490-2E89-4D21-A119-82037EB38B50.jpg";
+import s2b from "../imports/sirenco playground/2(1).png";
+import s2 from "../imports/sirenco playground/2.png";
+import s5 from "../imports/sirenco playground/5.jpg";
+import s9 from "../imports/sirenco playground/9.jpg";
+import sBook10 from "../imports/sirenco playground/Book (10).png";
+import sBook7 from "../imports/sirenco playground/Book (7).png";
+import sDark3 from "../imports/sirenco playground/Dark 3.png";
+import sQueer from "../imports/sirenco playground/Exploring the intersection between queerness and feminism.jpg";
+import sFlyer4 from "../imports/sirenco playground/flyer (4).png";
+import sHappyIWD from "../imports/sirenco playground/HAPPYIWD.jpg";
+import s1023 from "../imports/sirenco playground/IMG_1023.png";
+import s1374 from "../imports/sirenco playground/IMG_1374.png";
+import s3108 from "../imports/sirenco playground/IMG_3108.png";
+import sIndependence from "../imports/sirenco playground/independence day.jpg";
+import sLight from "../imports/sirenco playground/Light.png";
+import sLight1 from "../imports/sirenco playground/Light1.png";
+import sNatasha from "../imports/sirenco playground/natasha march.png";
+import sRelaunch from "../imports/sirenco playground/relaunch anniversary 2.jpg";
+import sWordsearch from "../imports/sirenco playground/siren wordsearch_20241031_150349_0000.png";
 import herbodeOne from "../imports/herbode/1.png";
 import herbodeCover from "../imports/herbode/Cover (1).png";
 import herbodeIWD from "../imports/herbode/IWD Herbode Design.zip - 1.png";
 import herbodeWaves from "../imports/herbode/THE FIRST FOUR MAJOR WAVES OF FEMINISM.png.png";
+import herbode3 from "../imports/herbode/3 (1).png";
+import herbode6 from "../imports/herbode/6.png";
+import herbodeCoverBig from "../imports/herbode/Cover  (1).png";
+import herbodeCoverAlt from "../imports/herbode/Cover .png";
+import herbodeScience1 from "../imports/herbode/Herbode International day for women and girls in science.zip - 1.png";
+import herbodeScience3 from "../imports/herbode/Herbode International day for women and girls in science.zip - 3.png";
+import herbodeInfographic from "../imports/herbode/Infographic Instagram Carousel.zip - 1.png";
+import herbodeWaves2 from "../imports/herbode/THE FIRST FOUR MAJOR WAVES OF FEMINISM.zip - 2.png";
+import herbodeWaves5 from "../imports/herbode/THE FIRST FOUR MAJOR WAVES OF FEMINISM.zip - 5.png";
+import herbodeWaves6 from "../imports/herbode/THE FIRST FOUR MAJOR WAVES OF FEMINISM.zip - 6.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -1634,9 +1664,35 @@ const PIECES = [
     role: "Lead Brand Designer · Creative Director",
     color: "var(--piece-pink)",
     desc: "Brand identity, campaign, and social direction for Sirenco, spanning logos, key art, and a full social system.",
-    image: sirenLogo,
+    image: sirenOne,
     home: { left: 5, top: 4, rot: -6, w: 320 },
-    assets: [sirenLogo, sirenOne, sirenAyra, sirenWallpaper, sirenGalentines],
+    assets: [
+      sirenLogo,
+      sirenOne,
+      sirenAyra,
+      sirenWallpaper,
+      sirenGalentines,
+      s0549,
+      s2b,
+      s2,
+      s5,
+      s9,
+      sBook10,
+      sBook7,
+      sDark3,
+      sQueer,
+      sFlyer4,
+      sHappyIWD,
+      s1023,
+      s1374,
+      s3108,
+      sIndependence,
+      sLight,
+      sLight1,
+      sNatasha,
+      sRelaunch,
+      sWordsearch,
+    ],
   },
   {
     id: "herbode",
@@ -1647,9 +1703,24 @@ const PIECES = [
     role: "Lead Brand Designer · Creative Director",
     color: "var(--piece-lime)",
     desc: "Brand identity and campaign direction for Herbode, from logotype and palette to key visuals and rollout.",
-    image: herbodeOne,
+    image: herbodeCover,
     home: { left: 18, top: 33, rot: -5, w: 300 },
-    assets: [herbodeOne, herbodeCover, herbodeIWD, herbodeWaves],
+    assets: [
+      herbodeOne,
+      herbodeCover,
+      herbodeIWD,
+      herbodeWaves,
+      herbode3,
+      herbode6,
+      herbodeCoverBig,
+      herbodeCoverAlt,
+      herbodeScience1,
+      herbodeScience3,
+      herbodeInfographic,
+      herbodeWaves2,
+      herbodeWaves5,
+      herbodeWaves6,
+    ],
   },
   {
     id: "giaftech",
