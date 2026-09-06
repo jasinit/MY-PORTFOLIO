@@ -556,31 +556,18 @@ const HERO_LINES = [
   ["think,", "and", "feel."],
 ];
 
-const HERO_WORD_COUNT = HERO_LINES.reduce((n, line) => n + line.length, 0);
-
-/* Each word fades + lifts on its own staggered slice of the scroll,
-   spread across the full scroll range so the heading resolves exactly
-   as the hero leaves the viewport. */
+/* Words rise from a mask on load, staggered left to right. */
 function HeroWord({
   word,
   index,
-  total,
-  progress,
   accent,
   reduce,
 }: {
   word: string;
   index: number;
-  total: number;
-  progress: import("motion/react").MotionValue<number>;
   accent: boolean;
   reduce: boolean;
 }) {
-  const start = (index / total) * 0.85;
-  const end = start + 0.15;
-  const opacity = useTransform(progress, [start, end], [1, 0]);
-  const y = useTransform(progress, [start, end], [0, -60]);
-
   if (reduce) {
     return (
       <span className={`mr-[0.22em] inline-block ${accent ? "text-accent" : ""}`}>
@@ -590,7 +577,7 @@ function HeroWord({
   }
 
   return (
-    <motion.span style={{ opacity, y }} className="mr-[0.22em] inline-block">
+    <span className="mr-[0.22em] inline-block">
       <motion.span
         initial={{ y: "110%" }}
         animate={{ y: 0 }}
@@ -599,7 +586,7 @@ function HeroWord({
       >
         {word}
       </motion.span>
-    </motion.span>
+    </span>
   );
 }
 
@@ -608,6 +595,7 @@ function Hero() {
   const reduce = useSiteReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const yText = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const opacity = useTransform(scrollYProgress, [0.85, 1], [1, 0]);
   const indicatorOpacity = useTransform(scrollYProgress, [0.6, 1], [1, 0]);
 
   const mx = useMotionValue(0);
@@ -627,7 +615,7 @@ function Hero() {
     <section id="home" ref={ref} onMouseMove={onMove} style={{ position: "relative" }} className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-20 md:pt-24">
       <FloatingBlobs mx={smx} my={smy} />
 
-      <motion.div style={{ y: reduce ? 0 : yText }} className="relative z-10 mx-auto w-full max-w-6xl text-center">
+      <motion.div style={{ y: reduce ? 0 : yText, opacity }} className="relative z-10 mx-auto w-full max-w-6xl text-center">
         <motion.p
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -648,8 +636,6 @@ function Hero() {
                       key={word + i}
                       word={word}
                       index={i}
-                      total={HERO_WORD_COUNT}
-                      progress={scrollYProgress}
                       accent={word.startsWith("feel")}
                       reduce={reduce}
                     />
