@@ -318,6 +318,12 @@ const PROJECTS = [
 const INTERESTS = ["Design systems", "Internet culture", "Books", "Cats", "Pop culture", "Building things"];
 
 const NOW_ITEMS = [
+  "Building accessible products",
+  "Learning motion systems",
+  "Reading about typography",
+  "Listening to amapiano",
+  "Collecting fonts",
+  "Watering plants, digitally",
   "Listening to BTS",
   "Retail therapy",
   "Gisting with my friends",
