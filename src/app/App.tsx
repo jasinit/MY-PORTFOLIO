@@ -69,12 +69,8 @@ const PROJECTS = [
     image: "1659469377768-4f42f2f091c5",
     gallery: ["1659469377768-4f42f2f091c5", "1654198340681-a2e0fc449f1b"],
     caseStudy: {
-      opening: [
-        "Commerce doesn't always happen with a “Buy Now” button.",
-        "Sometimes it starts with “How much last?”",
-      ],
       intro:
-        "I designed the seller experience for Nkwado — a mobile-first marketplace built around negotiation, proximity, logistics, and trust.",
+        "I designed the seller experience for Nkwado, a mobile-first marketplace built around negotiation, proximity, logistics, and trust.",
       liveUrl: "https://www.nkwado.com",
       meta: {
         role: "Product (Design) Engineer",
@@ -84,11 +80,11 @@ const PROJECTS = [
       sections: [
         {
           title: "The Problem",
-          body: "Sellers needed more than a place to list products. They needed to negotiate, manage orders, coordinate delivery, and build trust — without losing the flexibility of how they already sell.",
+          body: "Sellers needed more than a place to list products. They needed to negotiate, manage orders, coordinate delivery, and build trust without losing the flexibility of how they already sell.",
         },
         {
           title: "My Role",
-          body: "I designed the seller experience end to end: storefronts, product listing, negotiation, orders, and fulfillment — while keeping the buyer and logistics experiences connected.",
+          body: "I designed the seller experience end to end: storefronts, product listing, negotiation, orders, and fulfillment, while keeping the buyer and logistics experiences connected.",
         },
         {
           title: "The Experience",
@@ -97,7 +93,7 @@ const PROJECTS = [
         },
         {
           title: "The Design Challenge",
-          body: "Negotiation. Price isn't fixed, so the product had to turn back-and-forth haggling into a clear, traceable flow — without turning it into a form.",
+          body: "Negotiation. Price isn't fixed, so the product had to turn back-and-forth haggling into a clear, traceable flow without turning it into a form.",
           steps: ["Buyer makes an offer", "Seller responds", "Price is agreed", "Cart updates", "Payment"],
         },
         {
@@ -110,7 +106,7 @@ const PROJECTS = [
         },
         {
           title: "Reflection",
-          body: "The best systems work when every role sees the same truth — and the interface gets out of the way.",
+          body: "The best systems work when every role sees the same truth, and the interface gets out of the way.",
         },
       ] as CaseStudySection[],
     } as CaseStudyData,
