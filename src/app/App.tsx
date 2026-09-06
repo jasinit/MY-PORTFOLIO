@@ -318,12 +318,10 @@ const PROJECTS = [
 const INTERESTS = ["Design systems", "Internet culture", "Books", "Cats", "Pop culture", "Building things"];
 
 const NOW_ITEMS = [
-  "Building accessible fintech",
-  "Learning motion systems",
-  "Reading about typography",
-  "Listening to amapiano",
-  "Collecting fonts",
-  "Watering plants, digitally",
+  "Listening to BTS",
+  "Retail therapy",
+  "Gisting with my friends",
+  "Collaborating with AI",
 ];
 
 const reduceMotion = () =>
@@ -1358,11 +1356,10 @@ function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="display-xl max-w-4xl text-[clamp(2.2rem,6.5vw,5.5rem)] leading-[1.02]"
+          className="display-xl max-w-4xl text-[clamp(2.4rem,7vw,6rem)] leading-[1.02]"
         >
-          Design thinking.<br />
-          Engineering thinking.<br />
-          <span className="text-accent">Human thinking.</span>
+          Connection is my goal.<br />
+          <span className="text-accent">Good design</span> is how I get there.
         </motion.h2>
 
         <div className="mt-14 grid gap-10 md:grid-cols-[1.4fr_1fr]">
@@ -1374,7 +1371,7 @@ function About() {
             className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg"
           >
             <p className="text-foreground">
-              I'm Jasmine — a Product (Design) Engineer. My background in engineering taught me how to think in systems. Design taught me how to think about people. Frontend training showed me the whole picture.
+              I'm Jasmine — a Product Engineer. My background in engineering taught me how to think in systems. Design taught me how to think about people. Frontend training showed me the whole picture.
             </p>
             <p>
               Now I sit somewhere between design and engineering, building products that are useful, accessible, and built to last.
