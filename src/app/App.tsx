@@ -649,15 +649,6 @@ function Hero() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: reduce ? 0.1 : 0.9 }}
-          className="mx-auto mt-6 max-w-sm text-balance font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground sm:tracking-[0.3em]"
-        >
-          Product · UX/UI · Systems · Accessibility · Frontend
-        </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
           transition={{ delay: reduce ? 0.1 : 1.1 }}
           className="mx-auto mt-6 max-w-md text-balance text-sm leading-relaxed text-muted-foreground md:text-base"
         >
