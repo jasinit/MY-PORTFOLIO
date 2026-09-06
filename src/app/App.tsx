@@ -1537,7 +1537,7 @@ function Contact() {
 /*  Playground: a freeform, draggable digital studio wall              */
 /* ------------------------------------------------------------------ */
 
-const PLAY_FILTERS = ["All", "Branding", "Social Media", "Graphic Design", "AI Builds"] as const;
+const PLAY_FILTERS = ["All", "Branding", "Social Media", "AI Builds"] as const;
 
 const PIECES = [
   {
