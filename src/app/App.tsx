@@ -624,15 +624,15 @@ function Hero() {
   let wordIndex = 0;
 
   return (
-    <section id="home" ref={ref} onMouseMove={onMove} style={{ position: "relative" }} className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-24">
+    <section id="home" ref={ref} onMouseMove={onMove} style={{ position: "relative" }} className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-20 md:pt-24">
       <FloatingBlobs mx={smx} my={smy} />
 
-      <motion.div style={{ y: reduce ? 0 : yText }} className="relative z-10 mx-auto max-w-6xl text-center">
+      <motion.div style={{ y: reduce ? 0 : yText }} className="relative z-10 mx-auto w-full max-w-6xl text-center">
         <motion.p
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-8 font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground"
+          className="mx-auto mb-6 max-w-md text-balance font-mono text-[11px] uppercase leading-relaxed tracking-[0.2em] text-muted-foreground sm:tracking-[0.35em]"
         >
           Your friendly neighborhood Product Engineer
         </motion.p>
@@ -664,7 +664,7 @@ function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: reduce ? 0.1 : 0.9 }}
-          className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground"
+          className="mx-auto mt-6 max-w-sm text-balance font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-muted-foreground sm:tracking-[0.3em]"
         >
           Product · UX/UI · Systems · Accessibility · Frontend
         </motion.p>
