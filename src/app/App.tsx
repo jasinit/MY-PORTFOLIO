@@ -73,7 +73,7 @@ const PROJECTS = [
         "I designed the seller experience for Nkwado, a mobile-first marketplace built around negotiation, proximity, logistics, and trust.",
       liveUrl: "https://www.nkwado.com",
       meta: {
-        role: "Product (Design) Engineer",
+        role: "Product Designer",
         focus: "Product Design · Seller Experience · UX · Systems",
         year: "2026",
       },
@@ -125,7 +125,7 @@ const PROJECTS = [
       intro:
         "Zenya is a fintech investment app redesign focused on making investing clearer, simpler, and more approachable.",
       meta: {
-        role: "Product (Design) Engineer",
+        role: "Product Designer",
         focus: "Product Design · UX/UI · Design Systems · Accessibility",
         year: "2026",
       },
@@ -226,7 +226,7 @@ const PROJECTS = [
       intro:
         "Villam Hub is an agri-tech platform connecting people with hydroponic farming, farm services, and tree planting — making sustainable agriculture easier to join.",
       meta: {
-        role: "Product (Design) Engineer",
+        role: "Product Designer",
         focus: "Product Design · UX/UI · Brand Design",
         year: "2025",
       },
