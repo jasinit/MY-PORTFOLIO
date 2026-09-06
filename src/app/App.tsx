@@ -1692,7 +1692,7 @@ const PIECES = [
     year: "2022–2024",
     role: "Brand Design · Social",
     color: "var(--piece-sky)",
-    desc: "Brand and social media design for CONVERSATION IN PYJAMAS PRODCAST, crafting a refined, confident presence across platforms.",
+    desc: "Brand and social media design for Conversations In Pyjamas Podcast, crafting a refined, confident presence across platforms.",
     image: "1709377058964-929af7f2d02f",
     home: { left: 8, top: 62, rot: 7, w: 250 },
     assets: ["1709377058964-929af7f2d02f", "1654198340681-a2e0fc449f1b", "1620641788421-7a1c342ea42e"],
