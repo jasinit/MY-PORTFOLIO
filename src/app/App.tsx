@@ -406,30 +406,40 @@ function CustomCursor() {
 
   if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) return null;
 
-  const ringSize = mode === "drag" ? 72 : mode === "hover" ? 56 : 30;
+  const ringSize = mode === "drag" ? 72 : mode === "hover" ? 52 : 34;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-[9999] hidden md:block" aria-hidden>
-      <motion.div
-        className="fixed left-0 top-0 rounded-full border border-accent"
-        style={{ x: ringX, y: ringY, opacity: visible ? 1 : 0 }}
-      >
+      {/* Orbiting ring: springs to the pointer, slowly rotates with a comet dot */}
+      <motion.div className="fixed left-0 top-0" style={{ x: ringX, y: ringY, opacity: visible ? 1 : 0 }}>
         <motion.div
-          className={`rounded-full ${mode === "drag" ? "border-accent bg-accent/10" : "border-accent"}`}
-          animate={{ width: ringSize, height: ringSize, opacity: mode ? 1 : 0.7 }}
+          className={`relative rounded-full border ${mode === "drag" ? "border-accent bg-accent/10" : "border-accent"}`}
+          animate={{ width: ringSize, height: ringSize }}
           transition={{ type: "spring", stiffness: 300, damping: 24 }}
           style={{ translateX: "-50%", translateY: "-50%" }}
         >
-          {mode === "drag" && (
-            <span className="flex size-full items-center justify-center text-base text-accent">✦</span>
-          )}
+          <motion.span
+            className="absolute inset-0"
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: mode === "drag" ? 1.6 : 7, ease: "linear" }}
+          >
+            <span className="absolute left-1/2 top-0 size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" />
+          </motion.span>
         </motion.div>
       </motion.div>
+      {/* Spinning star core */}
       <motion.div
-        className={`fixed left-0 top-0 rounded-full bg-accent ${mode === "drag" ? "size-3" : "size-1.5"}`}
-        animate={{ scale: mode === "drag" ? 1.2 : 1 }}
+        className="fixed left-0 top-0 text-accent"
         style={{ x, y, translateX: "-50%", translateY: "-50%", opacity: visible ? 1 : 0 }}
-      />
+      >
+        <motion.span
+          className={`block leading-none ${mode === "drag" ? "text-[15px]" : "text-[11px]"}`}
+          animate={{ rotate: 360 }}
+          transition={{ repeat: Infinity, duration: 9, ease: "linear" }}
+        >
+          ✦
+        </motion.span>
+      </motion.div>
     </div>
   );
 }
@@ -590,6 +600,28 @@ function HeroWord({
   );
 }
 
+/* Each line drifts at its own gentle speed while scrolling, so the
+   headline gets depth instead of word-by-word chaos. */
+function HeroLine({
+  li,
+  progress,
+  reduce,
+  children,
+}: {
+  li: number;
+  progress: import("motion/react").MotionValue<number>;
+  reduce: boolean;
+  children: React.ReactNode;
+}) {
+  const speeds = [16, 30, 44, 58];
+  const y = useTransform(progress, [0, 1], [0, -speeds[li]]);
+  return (
+    <motion.span style={{ y: reduce ? 0 : y }} className="block overflow-hidden py-[0.06em]">
+      {children}
+    </motion.span>
+  );
+}
+
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useSiteReducedMotion();
@@ -627,7 +659,7 @@ function Hero() {
 
         <h1 className="display-xl text-[clamp(2.9rem,10.5vw,10rem)] leading-[1.05] text-foreground">
           {HERO_LINES.map((line, li) => (
-            <span key={li} className="block overflow-hidden py-[0.06em]">
+            <HeroLine key={li} li={li} progress={scrollYProgress} reduce={reduce}>
               <span className="inline-block">
                 {line.map((word) => {
                   const i = wordIndex++;
@@ -642,7 +674,7 @@ function Hero() {
                   );
                 })}
               </span>
-            </span>
+            </HeroLine>
           ))}
         </h1>
 
@@ -658,7 +690,7 @@ function Hero() {
 
       <motion.div
         style={{ opacity: reduce ? 1 : indicatorOpacity }}
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 [@media(min-height:680px)]:block"
       >
         <motion.div
           initial={{ opacity: 0 }}
