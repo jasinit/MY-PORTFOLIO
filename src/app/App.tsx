@@ -1661,7 +1661,7 @@ const PIECES = [
     year: "2025",
     role: "Brand Design · Social",
     color: "var(--piece-violet)",
-    desc: "Brand and social media design for Giaftech, building a feed system that makes tech feel human.",
+    desc: "Brand and social media design for Giaftech. A bold, confident presence across platforms, with a focus on clarity and consistency.",
     image: "1659469377768-4f42f2f091c5",
     home: { left: 52, top: 26, rot: 6, w: 280 },
     assets: [
@@ -1679,7 +1679,7 @@ const PIECES = [
     year: "2024",
     role: "Brand Design · Social",
     color: "var(--piece-coral)",
-    desc: "Brand and social design for TBFB, translating a bold brand voice into consistent social presence.",
+    desc: "Brand and social design for TBFB,The Bitter Feminit Brand, a bold fashion brand translating a bold brand voice into consistent social presence.",
     image: "1710438399422-2fca27686bcd",
     home: { left: 36, top: 72, rot: -3, w: 260 },
     assets: ["1710438399422-2fca27686bcd", "1659469377768-4f42f2f091c5", "1620641788421-7a1c342ea42e"],
