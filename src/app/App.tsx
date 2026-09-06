@@ -17,6 +17,15 @@ import confetti from "canvas-confetti";
 import resumePdf from "../imports/Favour+Ndodo.pdf";
 import villamCover from "../imports/6shots_so.png";
 import praizzCouture from "../imports/176shots_so.png";
+import sirenLogo from "../imports/sirenco playground/Siren Co.jpg";
+import sirenOne from "../imports/sirenco playground/Siren(1).png";
+import sirenAyra from "../imports/sirenco playground/Ayra 2.png";
+import sirenWallpaper from "../imports/sirenco playground/Siren Wallpaper 1.png";
+import sirenGalentines from "../imports/sirenco playground/Sirenco galentines 8.png";
+import herbodeOne from "../imports/herbode/1.png";
+import herbodeCover from "../imports/herbode/Cover (1).png";
+import herbodeIWD from "../imports/herbode/IWD Herbode Design.zip - 1.png";
+import herbodeWaves from "../imports/herbode/THE FIRST FOUR MAJOR WAVES OF FEMINISM.png.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -1625,33 +1634,22 @@ const PIECES = [
     role: "Lead Brand Designer · Creative Director",
     color: "var(--piece-pink)",
     desc: "Brand identity, campaign, and social direction for Sirenco, spanning logos, key art, and a full social system.",
-    image: "1620641788421-7a1c342ea42e",
+    image: sirenLogo,
     home: { left: 5, top: 4, rot: -6, w: 320 },
-    assets: [
-      "1620641788421-7a1c342ea42e",
-      "1659469377768-4f42f2f091c5",
-      "1654198340681-a2e0fc449f1b",
-      "1710438399422-2fca27686bcd",
-      "1655841439659-0afc60676b70",
-    ],
+    assets: [sirenLogo, sirenOne, sirenAyra, sirenWallpaper, sirenGalentines],
   },
   {
     id: "herbode",
     name: "Herbode",
     kind: "Brand & Campaign",
     cat: "Branding",
-    year: "2022–2025",
+    year: "2024–2025",
     role: "Lead Brand Designer · Creative Director",
     color: "var(--piece-lime)",
     desc: "Brand identity and campaign direction for Herbode, from logotype and palette to key visuals and rollout.",
-    image: "1654198340681-a2e0fc449f1b",
+    image: herbodeOne,
     home: { left: 18, top: 33, rot: -5, w: 300 },
-    assets: [
-      "1654198340681-a2e0fc449f1b",
-      "1655841439659-0afc60676b70",
-      "1620641788421-7a1c342ea42e",
-      "1659469377768-4f42f2f091c5",
-    ],
+    assets: [herbodeOne, herbodeCover, herbodeIWD, herbodeWaves],
   },
   {
     id: "giaftech",
@@ -1689,7 +1687,7 @@ const PIECES = [
     name: "CIP",
     kind: "Social Campaign",
     cat: "Social Media",
-    year: "2022–2024",
+    year: "2023–2024",
     role: "Brand Design · Social",
     color: "var(--piece-sky)",
     desc: "Brand and social media design for Conversations In Pyjamas Podcast, crafting a refined, confident presence across platforms.",
