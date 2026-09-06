@@ -38,7 +38,12 @@ const NAV = [
 const STEPS = [
   { n: "01", word: "Listen", body: "Understand the people before designing for them.", color: "var(--pop-lime)" },
   { n: "02", word: "Question", body: "Challenge assumptions. Find the real problem.", color: "var(--pop-sky)" },
-  { n: "03", word: "Design", body: "Turn complexity into something people can actually use.", color: "var(--pop-coral)" },
+  {
+    n: "03",
+    word: "Design",
+    body: "Turn complexity into something people can actually use.",
+    color: "var(--pop-coral)",
+  },
   { n: "04", word: "Build", body: "Make it real. Test it. Break it. Improve it.", color: "var(--pop-violet)" },
   { n: "05", word: "Care", body: "Accessibility isn't an afterthought.", color: "var(--pop-pink)" },
 ];
@@ -331,8 +336,7 @@ const NOW_ITEMS = [
 ];
 
 const reduceMotion = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* ------------------------------------------------------------------ */
 /*  Motion preference: OS setting + an on-site override.               */
@@ -461,7 +465,7 @@ function FloatingNav() {
           if (e.isIntersecting) setActive(e.target.id);
         });
       },
-      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
     );
     sections.forEach((s) => obs.observe(s));
     return () => obs.disconnect();
@@ -510,7 +514,9 @@ function FloatingNav() {
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
-              <span className={`relative z-10 ${active === n.id ? "text-background" : "text-muted-foreground hover:text-foreground"}`}>
+              <span
+                className={`relative z-10 ${active === n.id ? "text-background" : "text-muted-foreground hover:text-foreground"}`}
+              >
                 {n.label}
               </span>
             </button>
@@ -533,7 +539,15 @@ function FloatingNav() {
 /*  Magnetic wrapper                                                   */
 /* ------------------------------------------------------------------ */
 
-function Magnetic({ children, strength = 0.4, className = "" }: { children: React.ReactNode; strength?: number; className?: string }) {
+function Magnetic({
+  children,
+  strength = 0.4,
+  className = "",
+}: {
+  children: React.ReactNode;
+  strength?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -546,7 +560,10 @@ function Magnetic({ children, strength = 0.4, className = "" }: { children: Reac
     x.set((e.clientX - (r.left + r.width / 2)) * strength);
     y.set((e.clientY - (r.top + r.height / 2)) * strength);
   };
-  const reset = () => { x.set(0); y.set(0); };
+  const reset = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
     <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={reset} style={{ x: sx, y: sy }} className={className}>
@@ -567,23 +584,9 @@ const HERO_LINES = [
 ];
 
 /* Words rise from a mask on load, staggered left to right. */
-function HeroWord({
-  word,
-  index,
-  accent,
-  reduce,
-}: {
-  word: string;
-  index: number;
-  accent: boolean;
-  reduce: boolean;
-}) {
+function HeroWord({ word, index, accent, reduce }: { word: string; index: number; accent: boolean; reduce: boolean }) {
   if (reduce) {
-    return (
-      <span className={`mr-[0.22em] inline-block ${accent ? "text-accent" : ""}`}>
-        {word}
-      </span>
-    );
+    return <span className={`mr-[0.22em] inline-block ${accent ? "text-accent" : ""}`}>{word}</span>;
   }
 
   return (
@@ -644,10 +647,19 @@ function Hero() {
   let wordIndex = 0;
 
   return (
-    <section id="home" ref={ref} onMouseMove={onMove} style={{ position: "relative" }} className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-20 md:pt-24">
+    <section
+      id="home"
+      ref={ref}
+      onMouseMove={onMove}
+      style={{ position: "relative" }}
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 pt-20 md:pt-24"
+    >
       <FloatingBlobs mx={smx} my={smy} />
 
-      <motion.div style={{ y: reduce ? 0 : yText, opacity }} className="relative z-10 mx-auto w-full max-w-6xl text-center">
+      <motion.div
+        style={{ y: reduce ? 0 : yText, opacity }}
+        className="relative z-10 mx-auto w-full max-w-6xl text-center"
+      >
         <motion.p
           initial={reduce ? { opacity: 0 } : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -664,13 +676,7 @@ function Hero() {
                 {line.map((word) => {
                   const i = wordIndex++;
                   return (
-                    <HeroWord
-                      key={word + i}
-                      word={word}
-                      index={i}
-                      accent={word.startsWith("feel")}
-                      reduce={reduce}
-                    />
+                    <HeroWord key={word + i} word={word} index={i} accent={word.startsWith("feel")} reduce={reduce} />
                   );
                 })}
               </span>
@@ -711,14 +717,26 @@ function FloatingBlobs({ mx, my }: { mx: MotionValue<number>; my: MotionValue<nu
 
   return (
     <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-      <motion.div style={{ x: t1x, y: t1y }} className="absolute left-[8%] top-[22%] size-40 rounded-full bg-pop-violet/20 blur-3xl md:size-72" />
-      <motion.div style={{ x: t2x, y: t2y }} className="absolute right-[10%] top-[28%] size-40 rounded-full bg-accent/10 blur-3xl md:size-72" />
-      <motion.div style={{ x: t3x, y: t3y }} className="absolute bottom-[14%] left-[40%] size-36 rounded-full bg-pop-sky/15 blur-3xl md:size-64" />
+      <motion.div
+        style={{ x: t1x, y: t1y }}
+        className="absolute left-[8%] top-[22%] size-40 rounded-full bg-pop-violet/20 blur-3xl md:size-72"
+      />
+      <motion.div
+        style={{ x: t2x, y: t2y }}
+        className="absolute right-[10%] top-[28%] size-40 rounded-full bg-accent/10 blur-3xl md:size-72"
+      />
+      <motion.div
+        style={{ x: t3x, y: t3y }}
+        className="absolute bottom-[14%] left-[40%] size-36 rounded-full bg-pop-sky/15 blur-3xl md:size-64"
+      />
 
       <motion.div style={{ x: t2x, y: t2y }} className="absolute right-[14%] top-[24%] hidden md:block">
         <div className="size-3 rounded-full bg-accent" />
       </motion.div>
-      <motion.div style={{ x: t1x, y: t1y }} className="absolute left-[16%] bottom-[26%] hidden font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground md:block">
+      <motion.div
+        style={{ x: t1x, y: t1y }}
+        className="absolute left-[16%] bottom-[26%] hidden font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground md:block"
+      >
         ✦ ux · ui · systems
       </motion.div>
     </div>
@@ -809,7 +827,10 @@ function Approach() {
             {STEPS.map((step) => (
               <div key={step.word} className="flex flex-col items-center text-center">
                 <span className="font-mono text-[11px] tracking-[0.3em] text-muted-foreground">{step.n} / 05</span>
-                <h2 className="display-xl mt-4 text-[clamp(3rem,14vw,10rem)] leading-none" style={{ color: step.color }}>
+                <h2
+                  className="display-xl mt-4 text-[clamp(3rem,14vw,10rem)] leading-none"
+                  style={{ color: step.color }}
+                >
                   {step.word}
                 </h2>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">{step.body}</p>
@@ -822,7 +843,12 @@ function Approach() {
   }
 
   return (
-    <section id="approach" ref={ref} style={{ height: `${STEPS.length * 100}vh`, position: "relative" }} className="relative">
+    <section
+      id="approach"
+      ref={ref}
+      style={{ height: `${STEPS.length * 100}vh`, position: "relative" }}
+      className="relative"
+    >
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         {/* progress bar */}
         <div className="absolute left-0 top-0 h-1 w-full bg-border/40">
@@ -877,7 +903,9 @@ function Work() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-4">
           <h2 className="display-xl text-[clamp(2.6rem,9vw,8rem)] leading-[0.98]">
-            Selected<br />Work
+            Selected
+            <br />
+            Work
           </h2>
           <p className="max-w-xs pb-3 text-sm leading-relaxed text-muted-foreground">
             Real products. Real problems. Real people.
@@ -916,12 +944,20 @@ function Work() {
               <div className="ml-8 flex flex-col gap-3 md:ml-0 md:max-w-md md:flex-row md:items-center md:justify-end md:gap-6">
                 {/* mobile inline preview */}
                 <div className="h-40 w-full overflow-hidden rounded-xl bg-muted md:hidden">
-                  <img src={img(p.image, 800)} alt={`${p.title} preview`} className="size-full object-cover" loading="lazy" />
+                  <img
+                    src={img(p.image, 800)}
+                    alt={`${p.title} preview`}
+                    className="size-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground md:hidden">{p.desc}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {p.tags.map((t) => (
-                    <span key={t} className="rounded-full border border-border px-2.5 py-1 font-mono text-[10px] text-muted-foreground">
+                    <span
+                      key={t}
+                      className="rounded-full border border-border px-2.5 py-1 font-mono text-[10px] text-muted-foreground"
+                    >
                       {t}
                     </span>
                   ))}
@@ -929,9 +965,15 @@ function Work() {
                 <div className="flex items-center gap-4 font-mono text-[11px] text-muted-foreground">
                   <span className="hidden md:inline">{p.role}</span>
                   <span>{p.year}</span>
-                  <span className="inline-flex items-center gap-1 whitespace-nowrap transition-colors group-hover:text-foreground" style={{ color: hovered === i ? p.color : undefined }}>
+                  <span
+                    className="inline-flex items-center gap-1 whitespace-nowrap transition-colors group-hover:text-foreground"
+                    style={{ color: hovered === i ? p.color : undefined }}
+                  >
                     Case study
-                    <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+                    <ArrowUpRight
+                      size={16}
+                      className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+                    />
                   </span>
                 </div>
               </div>
@@ -953,7 +995,10 @@ function Work() {
             className="pointer-events-none fixed left-0 top-0 z-50 hidden aspect-[4/3] w-[26rem] overflow-hidden rounded-2xl md:block"
           >
             <img src={img(PROJECTS[hovered].image, 900)} alt="" className="size-full object-cover" />
-            <div className="absolute inset-0 mix-blend-overlay" style={{ background: PROJECTS[hovered].color, opacity: 0.35 }} />
+            <div
+              className="absolute inset-0 mix-blend-overlay"
+              style={{ background: PROJECTS[hovered].color, opacity: 0.35 }}
+            />
           </motion.div>
         )}
       </AnimatePresence>
@@ -990,9 +1035,7 @@ function useModalFocus(ref: React.RefObject<HTMLDivElement>) {
     main?.setAttribute("inert", "");
 
     const focusables = () =>
-      Array.from(
-        el.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
-      );
+      Array.from(el.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'));
 
     (focusables()[0] ?? el).focus();
 
@@ -1105,70 +1148,80 @@ function CaseStudy({
 
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">{cs.intro}</p>
 
-            {cs.liveUrl && (
-              <a
-                href={cs.liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                data-cursor="hover"
-                className="mt-8 inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-accent hover:text-accent"
-              >
-                View live site
-                <ArrowUpRight size={16} />
-              </a>
-            )}
+        {cs.liveUrl && (
+          <a
+            href={cs.liveUrl}
+            target="_blank"
+            rel="noreferrer"
+            data-cursor="hover"
+            className="mt-8 inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-accent hover:text-accent"
+          >
+            View live site
+            <ArrowUpRight size={16} />
+          </a>
+        )}
 
-            {/* meta */}
-            <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-3">
-              <Meta label="Role" value={cs.meta.role} />
-              <Meta label="Focus" value={cs.meta.focus} />
-              <Meta label="Year" value={cs.meta.year} />
-            </div>
+        {/* meta */}
+        <div className="mt-10 grid grid-cols-2 gap-6 border-y border-border py-8 md:grid-cols-3">
+          <Meta label="Role" value={cs.meta.role} />
+          <Meta label="Focus" value={cs.meta.focus} />
+          <Meta label="Year" value={cs.meta.year} />
+        </div>
 
-            {/* hero image */}
-            <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
-              <img src={img(project.gallery[0], 1600)} alt={`${project.title} key visual`} className="size-full object-cover" />
-            </div>
+        {/* hero image */}
+        <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
+          <img
+            src={img(project.gallery[0], 1600)}
+            alt={`${project.title} key visual`}
+            className="size-full object-cover"
+          />
+        </div>
 
-            {/* sections */}
-            <div className="mt-16 space-y-20">
-              {cs.sections.map((section, si) => (
-                <div key={section.title}>
-                  <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">{section.title}</h3>
-                  <p className="mt-4 max-w-3xl text-lg leading-relaxed text-foreground md:text-2xl">{section.body}</p>
+        {/* sections */}
+        <div className="mt-16 space-y-20">
+          {cs.sections.map((section, si) => (
+            <div key={section.title}>
+              <h3 className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+                {section.title}
+              </h3>
+              <p className="mt-4 max-w-3xl text-lg leading-relaxed text-foreground md:text-2xl">{section.body}</p>
 
-                  {section.flow && (
-                    <div className="mt-8 flex flex-wrap items-center gap-2">
-                      {section.flow.map((f, i) => (
-                        <Fragment key={f}>
-                          {i > 0 && <ArrowRight size={14} className="shrink-0 text-muted-foreground" aria-hidden />}
-                          <span className="rounded-full border border-border bg-card px-3.5 py-2 font-mono text-[11px] uppercase tracking-widest text-foreground">
-                            {f}
-                          </span>
-                        </Fragment>
-                      ))}
-                    </div>
-                  )}
-
-                  {section.steps && (
-                    <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-                      {section.steps.map((s, i) => (
-                        <li key={s} className="rounded-xl border border-border p-4">
-                          <span className="font-mono text-[10px] uppercase tracking-widest text-accent">0{i + 1}</span>
-                          <p className="mt-2 text-sm leading-snug text-foreground">{s}</p>
-                        </li>
-                      ))}
-                    </ol>
-                  )}
-
-                  {si === 4 && (
-                    <div className="mt-10 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
-                      <img src={img(project.gallery[1], 1400)} alt={`${project.title} detail`} className="size-full object-cover" />
-                    </div>
-                  )}
+              {section.flow && (
+                <div className="mt-8 flex flex-wrap items-center gap-2">
+                  {section.flow.map((f, i) => (
+                    <Fragment key={f}>
+                      {i > 0 && <ArrowRight size={14} className="shrink-0 text-muted-foreground" aria-hidden />}
+                      <span className="rounded-full border border-border bg-card px-3.5 py-2 font-mono text-[11px] uppercase tracking-widest text-foreground">
+                        {f}
+                      </span>
+                    </Fragment>
+                  ))}
                 </div>
-              ))}
+              )}
+
+              {section.steps && (
+                <ol className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                  {section.steps.map((s, i) => (
+                    <li key={s} className="rounded-xl border border-border p-4">
+                      <span className="font-mono text-[10px] uppercase tracking-widest text-accent">0{i + 1}</span>
+                      <p className="mt-2 text-sm leading-snug text-foreground">{s}</p>
+                    </li>
+                  ))}
+                </ol>
+              )}
+
+              {si === 4 && (
+                <div className="mt-10 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
+                  <img
+                    src={img(project.gallery[1], 1400)}
+                    alt={`${project.title} detail`}
+                    className="size-full object-cover"
+                  />
+                </div>
+              )}
             </div>
+          ))}
+        </div>
 
         <div className="mt-14 flex flex-wrap items-center justify-between gap-4">
           <button
@@ -1228,7 +1281,13 @@ const STICKERS: Sticker[] = [
   { c: "▲", x: "34%", y: "82%", r: -18, depth: 55, kind: "shape" },
   { c: "🐱", x: "62%", y: "44%", r: -6, depth: 28 },
 ];
-const STICKER_COLORS = ["var(--pop-lime)", "var(--pop-coral)", "var(--pop-violet)", "var(--pop-sky)", "var(--pop-pink)"];
+const STICKER_COLORS = [
+  "var(--pop-lime)",
+  "var(--pop-coral)",
+  "var(--pop-violet)",
+  "var(--pop-sky)",
+  "var(--pop-pink)",
+];
 
 function StickerWall() {
   const mx = useMotionValue(0);
@@ -1255,7 +1314,8 @@ function StickerWall() {
       ))}
       <div className="relative z-10 mx-auto flex min-h-[60vh] max-w-3xl items-center justify-center text-center">
         <p className="text-balance font-display text-2xl uppercase leading-tight tracking-tight text-foreground md:text-4xl">
-          Design is serious work.<br />
+          Design is serious work.
+          <br />
           <span className="text-muted-foreground">I just don't think the process always has to look serious.</span>
         </p>
       </div>
@@ -1329,7 +1389,9 @@ function ParallaxSticker({
             {s.c}
           </span>
         ) : (
-          <span className="text-4xl md:text-6xl" style={{ color }}>{s.c}</span>
+          <span className="text-4xl md:text-6xl" style={{ color }}>
+            {s.c}
+          </span>
         )}
       </motion.span>
     </motion.div>
@@ -1347,7 +1409,12 @@ function About() {
   const scale = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
 
   return (
-    <section id="about" ref={ref} style={{ position: "relative" }} className="relative min-h-screen overflow-hidden border-t border-border">
+    <section
+      id="about"
+      ref={ref}
+      style={{ position: "relative" }}
+      className="relative min-h-screen overflow-hidden border-t border-border"
+    >
       <motion.div style={{ scale: reduce ? 1 : scale }} className="absolute inset-0 z-0">
         <img
           src={img("1709377058964-929af7f2d02f", 1600)}
@@ -1366,7 +1433,8 @@ function About() {
           transition={{ duration: 0.6 }}
           className="display-xl max-w-4xl text-[clamp(2.4rem,7vw,6rem)] leading-[1.02]"
         >
-          Connection is my goal.<br />
+          Connection is my goal.
+          <br />
           <span className="text-accent">Good design</span> is how I get there.
         </motion.h2>
 
@@ -1379,10 +1447,12 @@ function About() {
             className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg"
           >
             <p className="text-foreground">
-              I'm Jasmine — a Product Engineer. My background in engineering taught me how to think in systems. Design taught me how to think about people. Frontend training showed me the whole picture.
+              I'm Jasmine — a Product Engineer. My background in engineering taught me how to think in systems. Design
+              taught me how to think about people. Frontend training showed me the whole picture.
             </p>
             <p>
-              Now I sit somewhere between design and engineering, building products that are useful, accessible, and built to last.
+              Now I sit somewhere between design and engineering, building products that are useful, accessible, and
+              built to last.
             </p>
           </motion.div>
 
@@ -1395,7 +1465,10 @@ function About() {
             <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Off the clock</p>
             <div className="flex flex-wrap gap-2">
               {INTERESTS.map((it) => (
-                <span key={it} className="rounded-full border border-border bg-card/60 px-3.5 py-2 text-sm text-foreground backdrop-blur">
+                <span
+                  key={it}
+                  className="rounded-full border border-border bg-card/60 px-3.5 py-2 text-sm text-foreground backdrop-blur"
+                >
                   {it}
                 </span>
               ))}
@@ -1513,7 +1586,10 @@ function Contact() {
               className="group inline-flex items-center gap-1.5 font-mono text-sm uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
             >
               {l.label}
-              <ArrowUpRight size={14} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              <ArrowUpRight
+                size={14}
+                className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
             </a>
           ))}
         </div>
@@ -1551,7 +1627,13 @@ const PIECES = [
     desc: "Brand identity, campaign, and social direction for Sirenco, spanning logos, key art, and a full social system.",
     image: "1620641788421-7a1c342ea42e",
     home: { left: 5, top: 4, rot: -6, w: 320 },
-    assets: ["1620641788421-7a1c342ea42e", "1659469377768-4f42f2f091c5", "1654198340681-a2e0fc449f1b", "1710438399422-2fca27686bcd", "1655841439659-0afc60676b70"],
+    assets: [
+      "1620641788421-7a1c342ea42e",
+      "1659469377768-4f42f2f091c5",
+      "1654198340681-a2e0fc449f1b",
+      "1710438399422-2fca27686bcd",
+      "1655841439659-0afc60676b70",
+    ],
   },
   {
     id: "herbode",
@@ -1564,27 +1646,37 @@ const PIECES = [
     desc: "Brand identity and campaign direction for Herbode, from logotype and palette to key visuals and rollout.",
     image: "1654198340681-a2e0fc449f1b",
     home: { left: 18, top: 33, rot: -5, w: 300 },
-    assets: ["1654198340681-a2e0fc449f1b", "1655841439659-0afc60676b70", "1620641788421-7a1c342ea42e", "1659469377768-4f42f2f091c5"],
+    assets: [
+      "1654198340681-a2e0fc449f1b",
+      "1655841439659-0afc60676b70",
+      "1620641788421-7a1c342ea42e",
+      "1659469377768-4f42f2f091c5",
+    ],
   },
   {
     id: "giaftech",
     name: "Giaftech",
     kind: "Social Campaign",
     cat: "Social Media",
-    year: "2022–2025",
+    year: "2025",
     role: "Brand Design · Social",
     color: "var(--piece-violet)",
     desc: "Brand and social media design for Giaftech, building a feed system that makes tech feel human.",
     image: "1659469377768-4f42f2f091c5",
     home: { left: 52, top: 26, rot: 6, w: 280 },
-    assets: ["1659469377768-4f42f2f091c5", "1620641788421-7a1c342ea42e", "1709377058964-929af7f2d02f", "1655841439659-0afc60676b70"],
+    assets: [
+      "1659469377768-4f42f2f091c5",
+      "1620641788421-7a1c342ea42e",
+      "1709377058964-929af7f2d02f",
+      "1655841439659-0afc60676b70",
+    ],
   },
   {
     id: "tbfb",
     name: "TBFB",
     kind: "Brand & Social",
     cat: "Social Media",
-    year: "2022–2025",
+    year: "2024",
     role: "Brand Design · Social",
     color: "var(--piece-coral)",
     desc: "Brand and social design for TBFB, translating a bold brand voice into consistent social presence.",
@@ -1597,10 +1689,10 @@ const PIECES = [
     name: "CIP",
     kind: "Social Campaign",
     cat: "Social Media",
-    year: "2022–2025",
+    year: "2022–2024",
     role: "Brand Design · Social",
     color: "var(--piece-sky)",
-    desc: "Brand and social media design for CIP, crafting a calm, confident presence across platforms.",
+    desc: "Brand and social media design for CONVERSATION IN PYJAMAS PRODCAST, crafting a refined, confident presence across platforms.",
     image: "1709377058964-929af7f2d02f",
     home: { left: 8, top: 62, rot: 7, w: 250 },
     assets: ["1709377058964-929af7f2d02f", "1654198340681-a2e0fc449f1b", "1620641788421-7a1c342ea42e"],
@@ -1792,10 +1884,7 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
         className="mx-auto max-w-6xl px-5 py-16 md:px-10 md:py-24"
       >
         <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">{item.kind}</p>
-        <h2
-          className="display-xl mt-5 text-[clamp(3rem,13vw,11rem)] leading-[0.9]"
-          style={{ color: item.color }}
-        >
+        <h2 className="display-xl mt-5 text-[clamp(3rem,13vw,11rem)] leading-[0.9]" style={{ color: item.color }}>
           {item.name}
         </h2>
 
@@ -1830,8 +1919,8 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
               i === 0
                 ? "col-span-2 md:col-span-4"
                 : i % 3 === 0
-                ? "col-span-2 md:col-span-4"
-                : "col-span-1 md:col-span-2";
+                  ? "col-span-2 md:col-span-4"
+                  : "col-span-1 md:col-span-2";
             return (
               <motion.div
                 key={a + i}
@@ -1976,7 +2065,9 @@ function Playground() {
             </h2>
           </div>
           <p className="pb-3 text-sm leading-relaxed text-muted-foreground">
-            <span className="md:hidden">A collection of things I made because I wanted to. Tap a piece, take a peek.</span>
+            <span className="md:hidden">
+              A collection of things I made because I wanted to. Tap a piece, take a peek.
+            </span>
             <span className="hidden md:inline md:whitespace-nowrap">
               A collection of things I made because I wanted to. Grab a piece, throw it around, open it up.
             </span>
@@ -2068,10 +2159,7 @@ function Playground() {
         </div>
       ) : (
         /* Desktop: the freeform, draggable wall */
-        <div
-          ref={canvasRef}
-          className="relative mx-auto mt-12 h-[1000px] max-w-6xl md:h-[840px]"
-        >
+        <div ref={canvasRef} className="relative mx-auto mt-12 h-[1000px] max-w-6xl md:h-[840px]">
           {/* Decorative floating fragments */}
           <span className="pointer-events-none absolute right-[4%] top-[6%] hidden -rotate-12 font-script text-4xl text-accent/70 md:block">
             made with love
@@ -2118,13 +2206,14 @@ function Playground() {
             {PIECES.map((p) => {
               const idx = visible.findIndex((v) => v.id === p.id);
               const shown = idx !== -1;
-              const pos = messy && messRef.current[p.id]
-                ? messRef.current[p.id]
-                : filter === "All"
-                  ? p.home
-                  : shown
-                    ? curatedSlot(idx, visible.length)
-                    : p.home;
+              const pos =
+                messy && messRef.current[p.id]
+                  ? messRef.current[p.id]
+                  : filter === "All"
+                    ? p.home
+                    : shown
+                      ? curatedSlot(idx, visible.length)
+                      : p.home;
               return (
                 <PlaygroundPiece
                   key={p.id}
@@ -2180,7 +2269,18 @@ const CONFETTI_COLORS = ["#e8ff59", "#9b7bff", "#5ad1ff", "#ff8fd6", "#ff5c4d"];
 
 function useEasterEggs() {
   useEffect(() => {
-    const KONAMI = ["arrowup", "arrowup", "arrowdown", "arrowdown", "arrowleft", "arrowright", "arrowleft", "arrowright", "b", "a"];
+    const KONAMI = [
+      "arrowup",
+      "arrowup",
+      "arrowdown",
+      "arrowdown",
+      "arrowleft",
+      "arrowright",
+      "arrowleft",
+      "arrowright",
+      "b",
+      "a",
+    ];
     let konamiIdx = 0;
     let buffer = "";
 
