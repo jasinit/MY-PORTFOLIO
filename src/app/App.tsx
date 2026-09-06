@@ -1532,14 +1532,14 @@ function Contact() {
 /*  Playground: a freeform, draggable digital studio wall              */
 /* ------------------------------------------------------------------ */
 
-const PLAY_FILTERS = ["All", "Branding", "Social", "Campaigns", "Graphic Design", "Art Direction", "Experiments"] as const;
+const PLAY_FILTERS = ["All", "Branding", "Social Media", "Graphic Design", "AI Builds"] as const;
 
 const PIECES = [
   {
     id: "sirenco",
     name: "Sirenco",
     kind: "Social Campaign",
-    cat: "Social",
+    cat: "Social Media",
     year: "2025",
     role: "Art Direction · Social",
     color: "var(--piece-pink)",
@@ -1565,7 +1565,7 @@ const PIECES = [
     id: "bloomfest",
     name: "Bloom Fest",
     kind: "Event Branding",
-    cat: "Campaigns",
+    cat: "Social Media",
     year: "2024",
     role: "Art Direction · Print",
     color: "var(--piece-lime)",
@@ -1591,7 +1591,7 @@ const PIECES = [
     id: "halcyon",
     name: "Halcyon",
     kind: "Art Direction",
-    cat: "Art Direction",
+    cat: "Graphic Design",
     year: "2025",
     role: "Art Direction · Photography",
     color: "var(--piece-coral)",
@@ -1604,7 +1604,7 @@ const PIECES = [
     id: "fauna",
     name: "Fauna",
     kind: "Illustration",
-    cat: "Experiments",
+    cat: "Graphic Design",
     year: "2023",
     role: "Illustration",
     color: "var(--piece-violet)",
@@ -1643,7 +1643,7 @@ const PIECES = [
     id: "static",
     name: "Static",
     kind: "Visual Experiment",
-    cat: "Experiments",
+    cat: "AI Builds",
     year: "2025",
     role: "Motion · Code",
     color: "var(--piece-lime)",
@@ -1669,7 +1669,7 @@ const PIECES = [
     id: "lumen",
     name: "Lumen",
     kind: "Brand Campaign",
-    cat: "Campaigns",
+    cat: "Social Media",
     year: "2025",
     role: "Art Direction · Campaign",
     color: "var(--piece-sky)",
@@ -1817,7 +1817,7 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
     };
   }, [onClose]);
 
-  const isCampaign = item.cat === "Campaigns" || item.cat === "Social";
+  const isCampaign = item.cat === "Social Media";
 
   return createPortal(
     <motion.div
