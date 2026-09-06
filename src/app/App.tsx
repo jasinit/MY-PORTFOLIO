@@ -56,6 +56,16 @@ import herbodeInfographic from "../imports/herbode/Infographic Instagram Carouse
 import herbodeWaves2 from "../imports/herbode/THE FIRST FOUR MAJOR WAVES OF FEMINISM.zip - 2.png";
 import herbodeWaves5 from "../imports/herbode/THE FIRST FOUR MAJOR WAVES OF FEMINISM.zip - 5.png";
 import herbodeWaves6 from "../imports/herbode/THE FIRST FOUR MAJOR WAVES OF FEMINISM.zip - 6.png";
+import tbfbJpeg from "../imports/tbfb/3698AC2E-98D1-4F83-BC11-9B8A726323DA.jpeg";
+import tbfb2C4B from "../imports/tbfb/2C4BA841-10E6-42BF-B006-FE74B57BFDD4.png";
+import tbfb3BC1 from "../imports/tbfb/3BC1F788-D453-4B57-95F2-A4D17792825C.png";
+import tbfb626B from "../imports/tbfb/626B2943-C0BD-4B43-AE55-EBC1EEF285AA.png";
+import tbfb789A from "../imports/tbfb/789A6859-3CC8-4358-9F8A-B3675DFF52A5.png";
+import tbfb8E15 from "../imports/tbfb/8E15B712-2A67-4ACA-8951-B6073D93DF23.png";
+import tbfbB5C1 from "../imports/tbfb/B5C11AD4-69E0-4784-893B-8A6A79233D35.png";
+import tbfbC1BF from "../imports/tbfb/C1BFEC82-8291-48E3-B469-DD8A64EFA46A.png";
+import tbfbC40B from "../imports/tbfb/C40BBB5A-9891-4415-9009-36637D594575.png";
+import tbfbFA09 from "../imports/tbfb/FA09C83B-ACBB-4EC3-B4B8-27FF77A7790B.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -1749,9 +1759,9 @@ const PIECES = [
     role: "Brand Design · Social",
     color: "var(--piece-coral)",
     desc: "Brand and social design for TBFB,The Bitter Feminit Brand, a bold fashion brand translating a bold brand voice into consistent social presence.",
-    image: "1710438399422-2fca27686bcd",
+    image: tbfbJpeg,
     home: { left: 36, top: 72, rot: -3, w: 260 },
-    assets: ["1710438399422-2fca27686bcd", "1659469377768-4f42f2f091c5", "1620641788421-7a1c342ea42e"],
+    assets: [tbfbJpeg, tbfb2C4B, tbfb3BC1, tbfb626B, tbfb789A, tbfb8E15, tbfbB5C1, tbfbC1BF, tbfbC40B, tbfbFA09],
   },
   {
     id: "cip",
