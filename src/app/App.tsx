@@ -1999,11 +1999,7 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
                 transition={{ duration: 0.5, delay: (i % 3) * 0.05 }}
                 className={`${span} overflow-hidden rounded-xl border border-border bg-card`}
               >
-                <img
-                  src={img(a, 1200)}
-                  alt={`${item.name} asset ${i + 1}`}
-                  className="block aspect-[4/3] w-full object-cover"
-                />
+                <img src={img(a, 1200)} alt={`${item.name} asset ${i + 1}`} className="block w-full" />
               </motion.div>
             );
           })}
