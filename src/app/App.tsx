@@ -686,17 +686,10 @@ function Hero() {
         >
           I design and build digital products that are useful, accessible, and built to last.
         </motion.p>
-      </motion.div>
 
-      <motion.div
-        style={{ opacity: reduce ? 1 : indicatorOpacity }}
-        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 [@media(min-height:680px)]:block"
-      >
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: reduce ? 0.2 : 1.3 }}
-          className="flex flex-col items-center gap-2 text-muted-foreground"
+          style={{ opacity: reduce ? 1 : indicatorOpacity }}
+          className="mt-10 flex flex-col items-center gap-2 text-muted-foreground"
         >
           <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
           <motion.span animate={reduce ? undefined : { y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>
