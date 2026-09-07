@@ -73,6 +73,11 @@ import afyher27 from "../imports/afyher/Frame 27.png";
 import afyher35 from "../imports/afyher/Frame 35.png";
 import afyher46 from "../imports/afyher/Frame 46.png";
 import afyher52 from "../imports/afyher/Frame 52.png";
+import giaf1 from "../imports/giaf/1.png";
+import giaf108 from "../imports/giaf/Frame 108.png";
+import giaf78 from "../imports/giaf/Frame 78.png";
+import giafInsta7 from "../imports/giaf/Instagram post - 7.png";
+import giafNewYear from "../imports/giaf/Red and White Modern Illustrative New Year Instagram Post.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -1748,14 +1753,9 @@ const PIECES = [
     role: "Brand Design · Social",
     color: "var(--piece-violet)",
     desc: "Brand and social media design for Giaftech. A bold, confident presence across platforms, with a focus on clarity and consistency.",
-    image: "1659469377768-4f42f2f091c5",
+    image: giaf1,
     home: { left: 52, top: 26, rot: 6, w: 280 },
-    assets: [
-      "1659469377768-4f42f2f091c5",
-      "1620641788421-7a1c342ea42e",
-      "1709377058964-929af7f2d02f",
-      "1655841439659-0afc60676b70",
-    ],
+    assets: [giaf1, giaf108, giaf78, giafInsta7, giafNewYear],
   },
   {
     id: "tbfb",
