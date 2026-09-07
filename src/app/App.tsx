@@ -92,6 +92,10 @@ import zenya306 from "../imports/zenya/306shots_so.png";
 import zenya900 from "../imports/zenya/900shots_so.png";
 import zenya656 from "../imports/zenya/656shots_so.png";
 import zenya103 from "../imports/zenya/103shots_so.png";
+import zenya303 from "../imports/zenya/303shots_so.png";
+import zenya467 from "../imports/zenya/467shots_so.png";
+import zenya545 from "../imports/zenya/545shots_so.png";
+import zenya912 from "../imports/zenya/912shots_so.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -199,7 +203,7 @@ const PROJECTS = [
     tags: ["Fintech", "App", "Accessibility"],
     color: "var(--proj-violet)",
     image: zenya306,
-    gallery: [zenya306, zenya900, zenya656, zenya103],
+    gallery: [zenya306, zenya900, zenya656, zenya103, zenya303, zenya467, zenya545, zenya912],
     caseStudy: {
       opening: ["Investing shouldn't feel like learning a new language."],
       intro:
