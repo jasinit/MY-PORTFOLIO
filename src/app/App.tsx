@@ -16,7 +16,9 @@ import { ArrowUpRight, ArrowDown, ArrowRight } from "lucide-react";
 import confetti from "canvas-confetti";
 import resumePdf from "../imports/Favour+Ndodo.pdf";
 import villamCover from "../imports/6shots_so.png";
-import praizzCouture from "../imports/176shots_so.png";
+import praizz645 from "../imports/praizz couture/645shots_so.png";
+import praizz528 from "../imports/praizz couture/528shots_so.png";
+import praizz624 from "../imports/praizz couture/624shots_so.png";
 import sirenLogo from "../imports/sirenco playground/Siren Co.jpg";
 import sirenOne from "../imports/sirenco playground/Siren(1).png";
 import sirenAyra from "../imports/sirenco playground/Ayra 2.png";
@@ -304,8 +306,8 @@ const PROJECTS = [
     year: "2025",
     tags: ["Fashion", "Web", "E-commerce"],
     color: "var(--proj-violet)",
-    image: praizzCouture,
-    gallery: [praizzCouture],
+    image: praizz645,
+    gallery: [praizz645, praizz528, praizz624],
     caseStudy: {
       intro:
         "I designed the web and mobile experience for Praizz Couture, translating the brand's luxury aesthetic into a digital space that feels just as considered as the clothes themselves.",
