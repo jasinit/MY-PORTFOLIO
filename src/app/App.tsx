@@ -66,6 +66,13 @@ import tbfbB5C1 from "../imports/tbfb/B5C11AD4-69E0-4784-893B-8A6A79233D35.png";
 import tbfbC1BF from "../imports/tbfb/C1BFEC82-8291-48E3-B469-DD8A64EFA46A.png";
 import tbfbC40B from "../imports/tbfb/C40BBB5A-9891-4415-9009-36637D594575.png";
 import tbfbFA09 from "../imports/tbfb/FA09C83B-ACBB-4EC3-B4B8-27FF77A7790B.png";
+import afyher17 from "../imports/afyher/Frame 17.png";
+import afyher2 from "../imports/afyher/Frame 2.png";
+import afyher20 from "../imports/afyher/Frame 20.png";
+import afyher27 from "../imports/afyher/Frame 27.png";
+import afyher35 from "../imports/afyher/Frame 35.png";
+import afyher46 from "../imports/afyher/Frame 46.png";
+import afyher52 from "../imports/afyher/Frame 52.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -1785,9 +1792,9 @@ const PIECES = [
     role: "Solo Creative · Brand Designer",
     color: "var(--piece-pink)",
     desc: "Brand identity for Afyher, a women's health focused online community that teaches and informs women about themselves.",
-    image: "1655841439659-0afc60676b70",
+    image: afyher35,
     home: { left: 60, top: 52, rot: -4, w: 270 },
-    assets: ["1655841439659-0afc60676b70", "1654198340681-a2e0fc449f1b", "1659469377768-4f42f2f091c5"],
+    assets: [afyher35, afyher2, afyher17, afyher20, afyher27, afyher46, afyher52],
   },
   {
     id: "praizz-couture",
