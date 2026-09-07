@@ -1835,6 +1835,7 @@ const PIECES = [
     home: { left: 8, top: 62, rot: 7, w: 250 },
     assets: [cipShot],
     link: "https://www.instagram.com/cipthepodcast",
+    linkLabel: "View on Instagram",
   },
   {
     id: "afyher",
@@ -1861,6 +1862,66 @@ const PIECES = [
     image: villamCover,
     home: { left: 58, top: 3, rot: 5, w: 340 },
     assets: [villamCover],
+  },
+  {
+    id: "jasbuilds",
+    name: "Jasbuilds",
+    kind: "Web App",
+    cat: "AI Builds",
+    year: "2026",
+    role: "Design · Code · AI",
+    color: "var(--piece-lime)",
+    desc: "A public build log with daily streaks and a heatmap. My work doesn't show up as commits, so I built somewhere it does.",
+    image: "",
+    home: { left: 30, top: 8, rot: -3, w: 280 },
+    assets: [],
+    link: "https://jasinit.github.io/MY-BUILDS/",
+    linkLabel: "Open live build",
+  },
+  {
+    id: "hospital-portal",
+    name: "Patient Portal",
+    kind: "Web App",
+    cat: "AI Builds",
+    year: "2026",
+    role: "Design · Code · AI",
+    color: "var(--piece-sky)",
+    desc: "A hospital patient portal, designed and built end to end.",
+    image: "",
+    home: { left: 75, top: 30, rot: 4, w: 250 },
+    assets: [],
+    link: "https://jasinit.github.io/TASK-7--HOSIPITAL-PATIENT-PORTAL/",
+    linkLabel: "Open live build",
+  },
+  {
+    id: "discount-calculator",
+    name: "Discount Calculator",
+    kind: "Web Tool",
+    cat: "AI Builds",
+    year: "2026",
+    role: "Design · Code · AI",
+    color: "var(--piece-coral)",
+    desc: "A small, friendly tool that does one thing well: works out the discount.",
+    image: "",
+    home: { left: 44, top: 42, rot: -5, w: 240 },
+    assets: [],
+    link: "https://jasinit.github.io/simple-discount-calculator/",
+    linkLabel: "Open live build",
+  },
+  {
+    id: "color-generator",
+    name: "Color Generator",
+    kind: "Web Tool",
+    cat: "AI Builds",
+    year: "2026",
+    role: "Design · Code · AI",
+    color: "var(--piece-violet)",
+    desc: "A playful color palette generator for when inspiration is running late.",
+    image: "",
+    home: { left: 24, top: 50, rot: 6, w: 250 },
+    assets: [],
+    link: "https://jasinit.github.io/color-generator/",
+    linkLabel: "Open live build",
   },
 ] as const;
 
@@ -1966,12 +2027,20 @@ function PlaygroundPiece({
         style={{ rotateX: rX, rotateY: rY, transformPerspective: 900 }}
         className="group relative cursor-grab overflow-hidden rounded-xl border border-border bg-card shadow-lg outline-none focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing"
       >
-        <img
-          src={img(item.image, 700)}
-          alt={item.name}
-          draggable={false}
-          className="pointer-events-none block w-full select-none"
-        />
+        {item.image ? (
+          <img
+            src={img(item.image, 700)}
+            alt={item.name}
+            draggable={false}
+            className="pointer-events-none block w-full select-none"
+          />
+        ) : (
+          <div className="flex aspect-square items-center justify-center p-5 text-center">
+            <span className="font-display text-2xl uppercase leading-tight" style={{ color: item.color }}>
+              {item.name}
+            </span>
+          </div>
+        )}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 bg-gradient-to-t from-black/85 via-black/30 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <div>
             <p className="font-display text-lg leading-none" style={{ color: item.color }}>
@@ -2066,7 +2135,7 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
                     data-cursor="hover"
                     className="inline-flex items-center gap-1.5 text-foreground transition-colors hover:text-accent"
                   >
-                    View on Instagram <ArrowUpRight size={12} />
+                    {"linkLabel" in item && item.linkLabel ? item.linkLabel : "View more"} <ArrowUpRight size={12} />
                   </a>
                 </dd>
               </div>
@@ -2081,28 +2150,34 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
         )}
 
         {/* Visual archive: varied sizes for a curated, non-uniform layout. */}
-        <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-6">
-          {item.assets.map((a, i) => {
-            const span =
-              i === 0
-                ? "col-span-2 md:col-span-4"
-                : i % 3 === 0
+        {item.assets.length > 0 ? (
+          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-6 md:gap-6">
+            {item.assets.map((a, i) => {
+              const span =
+                i === 0
                   ? "col-span-2 md:col-span-4"
-                  : "col-span-1 md:col-span-2";
-            return (
-              <motion.div
-                key={a + i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.05 }}
-                className={`${span} self-start overflow-hidden rounded-xl border border-border bg-card`}
-              >
-                <img src={img(a, 1200)} alt={`${item.name} asset ${i + 1}`} className="block w-full" />
-              </motion.div>
-            );
-          })}
-        </div>
+                  : i % 3 === 0
+                    ? "col-span-2 md:col-span-4"
+                    : "col-span-1 md:col-span-2";
+              return (
+                <motion.div
+                  key={a + i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.5, delay: (i % 3) * 0.05 }}
+                  className={`${span} self-start overflow-hidden rounded-xl border border-border bg-card`}
+                >
+                  <img src={img(a, 1200)} alt={`${item.name} asset ${i + 1}`} className="block w-full" />
+                </motion.div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="mt-8 rounded-xl border border-dashed border-border p-8 text-center">
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Screenshots coming soon</p>
+          </div>
+        )}
 
         <div className="mt-20 flex justify-center">
           <button
@@ -2308,7 +2383,15 @@ function Playground() {
                 transition={{ type: "spring", stiffness: 220, damping: 26 }}
                 className="relative overflow-hidden rounded-xl border border-border bg-card text-left"
               >
-                <img src={img(p.image, 600)} alt={p.name} className="block aspect-[4/5] w-full object-cover" />
+                {p.image ? (
+                  <img src={img(p.image, 600)} alt={p.name} className="block aspect-[4/5] w-full object-cover" />
+                ) : (
+                  <div className="flex aspect-[4/5] items-center justify-center p-4 text-center">
+                    <span className="font-display text-lg uppercase leading-tight" style={{ color: p.color }}>
+                      {p.name}
+                    </span>
+                  </div>
+                )}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent p-3">
                   <p className="font-display text-base leading-none" style={{ color: p.color }}>
                     {p.name}
