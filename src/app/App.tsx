@@ -79,6 +79,10 @@ import giaf78 from "../imports/giaf/Frame 78.png";
 import giafInsta7 from "../imports/giaf/Instagram post - 7.png";
 import giafNewYear from "../imports/giaf/Red and White Modern Illustrative New Year Instagram Post.png";
 import cipShot from "../imports/cip/Screenshot 2026-09-07 102236.png";
+import gghubDashboard from "../imports/gghub/dashboard.png";
+import gghubSitemap from "../imports/gghub/sitemap.png";
+import gghubSitemap3 from "../imports/gghub/sitemap 3.png";
+import gghubSitemaps2 from "../imports/gghub/sitemaps 2.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -236,8 +240,8 @@ const PROJECTS = [
     year: "2025",
     tags: ["EdTech", "Web", "Content"],
     color: "var(--proj-pink)",
-    image: "1654198340681-a2e0fc449f1b",
-    gallery: ["1654198340681-a2e0fc449f1b", "1709377058964-929af7f2d02f"],
+    image: gghubDashboard,
+    gallery: [gghubDashboard, gghubSitemap, gghubSitemap3, gghubSitemaps2],
     caseStudy: {
       opening: ["What if learning about governance didn't feel like reading a government document?"],
       intro:
@@ -1284,6 +1288,22 @@ function CaseStudy({
             </div>
           ))}
         </div>
+
+        {project.gallery.length > 2 && (
+          <div className="mt-20">
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">More from this project</p>
+            <div className="mt-6 grid gap-4 sm:grid-cols-2">
+              {project.gallery.slice(2).map((g) => (
+                <img
+                  key={g}
+                  src={img(g, 1200)}
+                  alt={`${project.title} supporting visual`}
+                  className="block w-full rounded-xl border border-border bg-muted"
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-14 flex flex-wrap items-center justify-between gap-4">
           <button
