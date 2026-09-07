@@ -88,6 +88,10 @@ import focus335 from "../imports/focusflow/335shots_so.png";
 import focus689 from "../imports/focusflow/689shots_so.png";
 import focus190 from "../imports/focusflow/190shots_so.png";
 import focus759 from "../imports/focusflow/759shots_so.png";
+import zenya306 from "../imports/zenya/306shots_so.png";
+import zenya900 from "../imports/zenya/900shots_so.png";
+import zenya656 from "../imports/zenya/656shots_so.png";
+import zenya103 from "../imports/zenya/103shots_so.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -194,8 +198,8 @@ const PROJECTS = [
     year: "2026",
     tags: ["Fintech", "App", "Accessibility"],
     color: "var(--proj-violet)",
-    image: "1620641788421-7a1c342ea42e",
-    gallery: ["1620641788421-7a1c342ea42e", "1659469377768-4f42f2f091c5"],
+    image: zenya306,
+    gallery: [zenya306, zenya900, zenya656, zenya103],
     caseStudy: {
       opening: ["Investing shouldn't feel like learning a new language."],
       intro:
