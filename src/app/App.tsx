@@ -78,6 +78,7 @@ import giaf108 from "../imports/giaf/Frame 108.png";
 import giaf78 from "../imports/giaf/Frame 78.png";
 import giafInsta7 from "../imports/giaf/Instagram post - 7.png";
 import giafNewYear from "../imports/giaf/Red and White Modern Illustrative New Year Instagram Post.png";
+import cipShot from "../imports/cip/Screenshot 2026-09-07 102236.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -1779,9 +1780,10 @@ const PIECES = [
     role: "Brand Design · Social",
     color: "var(--piece-sky)",
     desc: "Brand and social media design for Conversations In Pyjamas Podcast, crafting a refined, confident presence across platforms.",
-    image: "1709377058964-929af7f2d02f",
+    image: cipShot,
     home: { left: 8, top: 62, rot: 7, w: 250 },
-    assets: ["1709377058964-929af7f2d02f", "1654198340681-a2e0fc449f1b", "1620641788421-7a1c342ea42e"],
+    assets: [cipShot],
+    link: "https://www.instagram.com/cipthepodcast",
   },
   {
     id: "afyher",
@@ -2002,6 +2004,22 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
               <dt className="text-muted-foreground">Role</dt>
               <dd className="mt-1 text-foreground">{item.role}</dd>
             </div>
+            {"link" in item && item.link && (
+              <div className="col-span-2">
+                <dt className="text-muted-foreground">More</dt>
+                <dd className="mt-1">
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-cursor="hover"
+                    className="inline-flex items-center gap-1.5 text-foreground transition-colors hover:text-accent"
+                  >
+                    View on Instagram <ArrowUpRight size={12} />
+                  </a>
+                </dd>
+              </div>
+            )}
           </dl>
         </div>
 
