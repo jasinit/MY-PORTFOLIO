@@ -1264,11 +1264,11 @@ function CaseStudy({
           </div>
         ) : (
           <div className="mt-10 rounded-2xl border-2 border-dashed border-accent/70 bg-accent/5 p-10 text-center md:p-14">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">✦ Under NDA</p>
-            <p className="mx-auto mt-4 max-w-md text-base leading-relaxed text-foreground">
+            <p className="font-mono text-sm uppercase tracking-[0.3em] text-accent">✦ Under NDA</p>
+            <p className="mx-auto mt-5 max-w-xl text-balance text-xl leading-relaxed text-foreground md:text-2xl">
               This product is still under wraps, so the visuals can't be shared yet.
             </p>
-            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+            <p className="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
               The story is here — the screens will follow.
             </p>
           </div>
