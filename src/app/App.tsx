@@ -299,20 +299,19 @@ const PROJECTS = [
   },
   {
     title: "Praizz Couture",
-    desc: "A website experience for Praizz Couture, translating luxury fashion into a digital space as considered as the clothes themselves.",
-    role: "Website · UX/UI",
+    desc: "A web and mobile experience for Praizz Couture, translating luxury fashion into a digital space as considered as the clothes themselves.",
+    role: "Web & Mobile · UX/UI",
     year: "2025",
     tags: ["Fashion", "Web", "E-commerce"],
     color: "var(--proj-violet)",
     image: praizzCouture,
     gallery: [praizzCouture],
     caseStudy: {
-      opening: ["What happens when couture meets the screen?"],
       intro:
-        "I designed the website experience for Praizz Couture, translating the brand's luxury aesthetic into a digital space that feels just as considered as the clothes themselves.",
+        "I designed the web and mobile experience for Praizz Couture, translating the brand's luxury aesthetic into a digital space that feels just as considered as the clothes themselves.",
       meta: {
         role: "Product Designer",
-        focus: "Website · UX/UI · E-commerce",
+        focus: "Web & Mobile · UX/UI · E-commerce",
         year: "2025",
       },
       sections: [
