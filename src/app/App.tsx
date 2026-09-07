@@ -1263,11 +1263,13 @@ function CaseStudy({
             />
           </div>
         ) : (
-          <div className="mt-10 rounded-2xl border border-dashed border-border p-10 text-center md:p-14">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Under NDA</p>
-            <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
-              This product is still under wraps, so the visuals can't be shared yet. The story is here — the screens will
-              follow.
+          <div className="mt-10 rounded-2xl border-2 border-dashed border-accent/70 bg-accent/5 p-10 text-center md:p-14">
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-accent">✦ Under NDA</p>
+            <p className="mx-auto mt-4 max-w-md text-base leading-relaxed text-foreground">
+              This product is still under wraps, so the visuals can't be shared yet.
+            </p>
+            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              The story is here — the screens will follow.
             </p>
           </div>
         )}
