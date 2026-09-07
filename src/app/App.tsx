@@ -83,6 +83,11 @@ import gghubDashboard from "../imports/gghub/dashboard.png";
 import gghubSitemap from "../imports/gghub/sitemap.png";
 import gghubSitemap3 from "../imports/gghub/sitemap 3.png";
 import gghubSitemaps2 from "../imports/gghub/sitemaps 2.png";
+import focusIphone from "../imports/focusflow/iPhone 15 Pro Max Front.png";
+import focus335 from "../imports/focusflow/335shots_so.png";
+import focus689 from "../imports/focusflow/689shots_so.png";
+import focus190 from "../imports/focusflow/190shots_so.png";
+import focus759 from "../imports/focusflow/759shots_so.png";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -341,8 +346,8 @@ const PROJECTS = [
     year: "2025",
     tags: ["Productivity", "Web", "Motion"],
     color: "var(--proj-coral)",
-    image: "1710438399422-2fca27686bcd",
-    gallery: ["1710438399422-2fca27686bcd", "1655841439659-0afc60676b70"],
+    image: focusIphone,
+    gallery: [focusIphone, focus335, focus689, focus190, focus759],
     caseStudy: {
       intro:
         "FocusFlow is a productivity landing page designed to help people organize their tasks, focus on what matters, and make progress without the overwhelm.",
