@@ -298,51 +298,54 @@ const PROJECTS = [
     } as CaseStudyData,
   },
   {
-    title: "Villam Hub",
-    desc: "An agri-tech platform connecting people with hydroponic farming, farm services, and tree planting.",
-    role: "Product & Brand Design",
+    title: "Praizz Couture",
+    desc: "A website experience for Praizz Couture, translating luxury fashion into a digital space as considered as the clothes themselves.",
+    role: "Website · UX/UI",
     year: "2025",
-    tags: ["AgriTech", "Platform", "Brand"],
-    color: "var(--proj-lime)",
-    image: villamCover,
-    gallery: [villamCover, "1620641788421-7a1c342ea42e"],
+    tags: ["Fashion", "Web", "E-commerce"],
+    color: "var(--proj-violet)",
+    image: praizzCouture,
+    gallery: [praizzCouture],
     caseStudy: {
+      opening: ["What happens when couture meets the screen?"],
       intro:
-        "Villam Hub is an agri-tech platform connecting people with hydroponic farming, farm services, and tree planting — making sustainable agriculture easier to join.",
+        "I designed the website experience for Praizz Couture, translating the brand's luxury aesthetic into a digital space that feels just as considered as the clothes themselves.",
       meta: {
         role: "Product Designer",
-        focus: "Product Design · UX/UI · Brand Design",
+        focus: "Website · UX/UI · E-commerce",
         year: "2025",
       },
       sections: [
         {
-          title: "The Problem",
-          body: "Sustainable agriculture can feel technical and out of reach. Villam Hub needed to make it approachable — without losing credibility with people who know the land.",
+          title: "The Challenge",
+          body: "A fashion brand's website has to do more than display beautiful clothes. It needs to communicate identity, quality, and desire, while still making it easy for someone to explore, discover, and shop. The challenge was to create a digital experience that could balance editorial storytelling with e-commerce functionality.",
         },
         {
           title: "My Role",
-          body: "Product and brand: shaping the visual identity and translating the concept into a digital experience.",
+          body: "I worked on the website experience across information architecture, UX/UI, responsive design, product pages, navigation, and visual direction.",
+          flow: ["Information Architecture", "UX/UI", "Responsive Design", "Product Pages", "Navigation", "Visual Direction"],
         },
         {
           title: "The Experience",
-          body: "From interest to action — simple, approachable, and clear.",
-          flow: ["Discover", "Choose", "Get Started", "Grow"],
+          body: "The experience was designed to move users naturally from the brand story into the collection, without making the shopping experience feel transactional.",
+          flow: ["Discover", "Explore", "Fall in love", "Add To Cart"],
         },
         {
-          title: "The Design Challenge",
-          body: "An identity that feels earthy, modern, and optimistic — without falling into agricultural clichés.",
+          title: "Designing the Digital Atelier",
+          body: "The website was treated less like a catalogue and more like an extension of the fashion house. Large imagery, considered typography, spacious layouts, and editorial compositions give the pieces room to speak for themselves. The goal was simple: let the clothes be the loudest thing on the screen.",
         },
         {
-          title: "The Solution",
-          body: "Colours, type, and interface designed to connect technology with nature — one system from the first landing page to the last growing tip.",
+          title: "The Details",
+          body: "I designed key experiences across the site. Each page had to feel connected while serving a different purpose: product pages focused on the decision to buy, the Lookbook focused on inspiration, the About page focused on storytelling, and the supporting pages focused on building confidence in the purchase.",
+          flow: ["Home", "Collections", "Product Pages", "Lookbook", "About", "Shipping & Returns", "Contact"],
         },
         {
           title: "The Result",
-          body: "A digital experience that positions agriculture as something people can participate in, not just observe.",
+          body: "A fashion website designed to bring Praizz Couture's visual world into the digital space, while keeping the experience intuitive and easy to navigate.",
         },
         {
           title: "Reflection",
-          body: "When brand and product speak the same language, trust comes built in.",
+          body: "Good e-commerce shouldn't make you choose between beautiful and usable.",
         },
       ] as CaseStudySection[],
     } as CaseStudyData,
@@ -1289,7 +1292,7 @@ function CaseStudy({
                 </ol>
               )}
 
-              {si === 4 && (
+              {si === 4 && project.gallery[1] && (
                 <div className="mt-10 aspect-[16/10] overflow-hidden rounded-2xl bg-muted">
                   <img
                     src={img(project.gallery[1], 1400)}
@@ -1832,17 +1835,17 @@ const PIECES = [
     assets: [afyher35, afyher2, afyher17, afyher20, afyher27, afyher46, afyher52],
   },
   {
-    id: "praizz-couture",
-    name: "Praizz Couture",
-    kind: "Brand Identity",
+    id: "villam-hub",
+    name: "Villam Hub",
+    kind: "Brand & Product",
     cat: "Branding",
     year: "2025",
-    role: "Brand Design · Systems",
-    color: "var(--piece-violet)",
-    desc: "A fashion brand identity for Praizz Couture, spanning logotype, palette, and a flexible visual system.",
-    image: praizzCouture,
+    role: "Product & Brand Design",
+    color: "var(--piece-lime)",
+    desc: "Agri-tech platform connecting people with hydroponic farming, farm services, and tree planting — product experience and brand identity.",
+    image: villamCover,
     home: { left: 58, top: 3, rot: 5, w: 340 },
-    assets: [praizzCouture, "1655841439659-0afc60676b70", "1709377058964-929af7f2d02f", "1620641788421-7a1c342ea42e"],
+    assets: [villamCover],
   },
 ] as const;
 
