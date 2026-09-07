@@ -81,6 +81,8 @@ import giaf78 from "../imports/giaf/Frame 78.png";
 import giafInsta7 from "../imports/giaf/Instagram post - 7.png";
 import giafNewYear from "../imports/giaf/Red and White Modern Illustrative New Year Instagram Post.png";
 import cipShot from "../imports/cip/Screenshot 2026-09-07 102236.png";
+import jasBuilds from "../imports/jas builds.png";
+import jasBuildLog2 from "../imports/jas build log 2.png";
 import gghubDashboard from "../imports/gghub/dashboard.png";
 import gghubSitemap from "../imports/gghub/sitemap.png";
 import gghubSitemap3 from "../imports/gghub/sitemap 3.png";
@@ -1872,9 +1874,9 @@ const PIECES = [
     role: "Design · Code · AI",
     color: "var(--piece-lime)",
     desc: "A public build log with daily streaks and a heatmap. My work doesn't show up as commits, so I built somewhere it does.",
-    image: "",
+    image: jasBuilds,
     home: { left: 30, top: 8, rot: -3, w: 280 },
-    assets: [],
+    assets: [jasBuilds, jasBuildLog2],
     link: "https://jasinit.github.io/MY-BUILDS/",
     linkLabel: "Open live build",
   },
