@@ -202,8 +202,8 @@ const PROJECTS = [
     year: "2026",
     tags: ["Fintech", "App", "Accessibility"],
     color: "var(--proj-violet)",
-    image: zenya900,
-    gallery: [zenya900, zenya306, zenya656, zenya103, zenya303, zenya467, zenya545, zenya912],
+    image: zenya467,
+    gallery: [zenya467, zenya900, zenya306, zenya656, zenya103, zenya303, zenya545, zenya912],
     caseStudy: {
       opening: ["Investing shouldn't feel like learning a new language."],
       intro:
