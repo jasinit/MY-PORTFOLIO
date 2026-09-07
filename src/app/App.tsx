@@ -1054,9 +1054,9 @@ function Work() {
             exit={{ opacity: 0, scale: 0.85 }}
             transition={{ type: "spring", stiffness: 240, damping: 24 }}
             style={{ x: spx, y: spy, translateX: "-50%", translateY: "-50%" }}
-            className="pointer-events-none fixed left-0 top-0 z-50 hidden aspect-[4/3] w-[26rem] overflow-hidden rounded-2xl md:block"
+            className="pointer-events-none fixed left-0 top-0 z-50 hidden aspect-[4/3] w-[26rem] overflow-hidden rounded-2xl bg-muted md:block"
           >
-            <img src={img(PROJECTS[hovered].image, 900)} alt="" className="size-full object-cover" />
+            <img src={img(PROJECTS[hovered].image, 900)} alt="" className="size-full object-contain" />
             <div
               className="absolute inset-0 mix-blend-overlay"
               style={{ background: PROJECTS[hovered].color, opacity: 0.35 }}
@@ -1235,7 +1235,7 @@ function CaseStudy({
           <img
             src={img(project.gallery[0], 1600)}
             alt={`${project.title} key visual`}
-            className="size-full object-cover"
+            className="size-full object-contain"
           />
         </div>
 
@@ -1277,7 +1277,7 @@ function CaseStudy({
                   <img
                     src={img(project.gallery[1], 1400)}
                     alt={`${project.title} detail`}
-                    className="size-full object-cover"
+                    className="size-full object-contain"
                   />
                 </div>
               )}
@@ -2045,7 +2045,7 @@ function PlaygroundView({ item, onClose }: { item: Piece; onClose: () => void })
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.05 }}
-                className={`${span} overflow-hidden rounded-xl border border-border bg-card`}
+                className={`${span} self-start overflow-hidden rounded-xl border border-border bg-card`}
               >
                 <img src={img(a, 1200)} alt={`${item.name} asset ${i + 1}`} className="block w-full" />
               </motion.div>
