@@ -152,8 +152,8 @@ const PROJECTS = [
     year: "2026",
     tags: ["Marketplace", "Mobile", "Systems"],
     color: "var(--proj-sky)",
-    image: "1659469377768-4f42f2f091c5",
-    gallery: ["1659469377768-4f42f2f091c5", "1654198340681-a2e0fc449f1b"],
+    image: "",
+    gallery: [],
     caseStudy: {
       intro:
         "I designed the seller experience for Nkwado, a mobile-first marketplace built around negotiation, proximity, logistics, and trust.",
@@ -1026,14 +1026,16 @@ function Work() {
 
               <div className="ml-8 flex flex-col gap-3 md:ml-0 md:max-w-md md:flex-row md:items-center md:justify-end md:gap-6">
                 {/* mobile inline preview */}
-                <div className="h-40 w-full overflow-hidden rounded-xl bg-muted md:hidden">
-                  <img
-                    src={img(p.image, 800)}
-                    alt={`${p.title} preview`}
-                    className="size-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
+                {p.image && (
+                  <div className="h-40 w-full overflow-hidden rounded-xl bg-muted md:hidden">
+                    <img
+                      src={img(p.image, 800)}
+                      alt={`${p.title} preview`}
+                      className="size-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
                 <p className="text-sm leading-relaxed text-muted-foreground md:hidden">{p.desc}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {p.tags.map((t) => (
@@ -1067,7 +1069,7 @@ function Work() {
 
       {/* desktop cursor-following preview */}
       <AnimatePresence>
-        {hovered !== null && selected === null && (
+        {hovered !== null && selected === null && PROJECTS[hovered].image && (
           <motion.div
             key="preview"
             initial={{ opacity: 0, scale: 0.85 }}
@@ -1251,14 +1253,24 @@ function CaseStudy({
           <Meta label="Year" value={cs.meta.year} />
         </div>
 
-        {/* hero image */}
-        <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
-          <img
-            src={img(project.gallery[0], 1600)}
-            alt={`${project.title} key visual`}
-            className="size-full object-contain"
-          />
-        </div>
+        {/* hero image (or NDA notice when visuals can't be shared) */}
+        {project.gallery[0] ? (
+          <div className="mt-10 aspect-[16/9] overflow-hidden rounded-2xl bg-muted">
+            <img
+              src={img(project.gallery[0], 1600)}
+              alt={`${project.title} key visual`}
+              className="size-full object-contain"
+            />
+          </div>
+        ) : (
+          <div className="mt-10 rounded-2xl border border-dashed border-border p-10 text-center md:p-14">
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Under NDA</p>
+            <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">
+              This product is still under wraps, so the visuals can't be shared yet. The story is here — the screens will
+              follow.
+            </p>
+          </div>
+        )}
 
         {/* sections */}
         <div className="mt-16 space-y-20">
