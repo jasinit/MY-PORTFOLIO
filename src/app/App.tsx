@@ -405,8 +405,6 @@ const PROJECTS = [
   },
 ];
 
-const INTERESTS = ["Design systems", "Internet culture", "Books", "Cats", "Pop culture", "Building things"];
-
 const NOW_ITEMS = [
   "Building accessible products",
   "Learning motion systems",
@@ -1517,78 +1515,324 @@ function ParallaxSticker({
 /*  About                                                              */
 /* ------------------------------------------------------------------ */
 
-function About() {
-  const ref = useRef<HTMLDivElement>(null);
+/* The two questions I bounce between all day. */
+const MINDSETS = [
+  { text: "What if we designed this differently?", color: "var(--pop-sky)", who: "the designer in me" },
+  { text: "Okay, but can we actually build it?", color: "var(--accent)", who: "the builder in me" },
+];
+
+/* Flips between the two mindsets. Auto-cycles, pauses while hovered,
+   and settles into a static stack for reduced-motion users. */
+function MindsetFlip() {
   const reduce = useSiteReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1.15, 1]);
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (reduce || paused) return;
+    const t = window.setInterval(() => setIdx((i) => (i + 1) % MINDSETS.length), 4200);
+    return () => window.clearInterval(t);
+  }, [reduce, paused]);
+
+  if (reduce) {
+    return (
+      <div className="mt-6 space-y-4">
+        {MINDSETS.map((m) => (
+          <p key={m.text} className="display-xl text-[clamp(1.9rem,5.5vw,4.6rem)] leading-[1.02]" style={{ color: m.color }}>
+            {m.text}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
+  const m = MINDSETS[idx];
 
   return (
-    <section
-      id="about"
-      ref={ref}
-      style={{ position: "relative" }}
-      className="relative min-h-screen overflow-hidden border-t border-border"
+    <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+      <button
+        type="button"
+        onClick={() => setIdx((i) => (i + 1) % MINDSETS.length)}
+        data-cursor="hover"
+        className="mt-6 block w-full text-left"
+        aria-label="Flip between my two mindsets"
+      >
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={idx}
+            initial={{ opacity: 0, y: 26 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -26 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="display-xl block text-[clamp(1.9rem,6vw,5rem)] leading-[1.02]"
+            style={{ color: m.color }}
+          >
+            {m.text}
+          </motion.span>
+        </AnimatePresence>
+      </button>
+      <div className="mt-5 flex items-center gap-4">
+        <span className="font-script text-2xl text-muted-foreground">— {m.who}</span>
+        <div className="flex gap-1.5">
+          {MINDSETS.map((item, i) => (
+            <button
+              key={item.text}
+              type="button"
+              onClick={() => setIdx(i)}
+              data-cursor="hover"
+              aria-label={`Show mindset ${i + 1}`}
+              className="h-1.5 rounded-full transition-all duration-300"
+              style={{ width: i === idx ? 28 : 8, background: i === idx ? item.color : "var(--tick-idle)" }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Sticky notes for the things I like — tilt toward the cursor. */
+const LIKES = [
+  { text: "Messy problems", color: "var(--pop-coral)", rot: -3 },
+  { text: "Figuring things out", color: "var(--pop-violet)", rot: 2 },
+  { text: "Making complicated things feel obvious", color: "var(--pop-sky)", rot: -2 },
+  { text: "Products that are useful beyond the pitch deck", color: "var(--pop-pink)", rot: 3 },
+];
+
+function LikeNote({ item }: { item: (typeof LIKES)[number] }) {
+  const reduce = useSiteReducedMotion();
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+  const rX = useSpring(tiltX, { stiffness: 150, damping: 15 });
+  const rY = useSpring(tiltY, { stiffness: 150, damping: 15 });
+
+  const onMove = (e: React.MouseEvent) => {
+    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    tiltY.set(px * 12);
+    tiltX.set(-py * 12);
+  };
+
+  return (
+    <motion.div
+      onMouseMove={reduce ? undefined : onMove}
+      onMouseLeave={() => {
+        tiltX.set(0);
+        tiltY.set(0);
+      }}
+      whileHover={reduce ? undefined : { y: -8, scale: 1.03 }}
+      data-cursor="hover"
+      style={{ rotateX: rX, rotateY: rY, transformPerspective: 700, rotate: item.rot, background: item.color }}
+      className="relative flex h-full flex-col rounded-2xl p-5 shadow-lg"
     >
-      <motion.div style={{ scale: reduce ? 1 : scale }} className="absolute inset-0 z-0">
-        <img
-          src={img("1709377058964-929af7f2d02f", 1600)}
-          alt="Abstract flowing texture"
-          className="size-full object-cover"
-          loading="lazy"
-        />
-      </motion.div>
-      <div className="absolute inset-0 z-10 bg-background/80" />
+      <span className="pointer-events-none absolute -top-2.5 left-1/2 h-5 w-20 -translate-x-1/2 -rotate-2 rounded-sm bg-white/25" aria-hidden />
+      <span className="font-script text-2xl text-[#080808]/70">i like</span>
+      <span className="mt-2 font-display text-2xl uppercase leading-tight text-[#080808]">{item.text}</span>
+    </motion.div>
+  );
+}
 
-      <div className="relative z-20 mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-5 py-32">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="display-xl max-w-4xl text-[clamp(2.4rem,7vw,6rem)] leading-[1.02]"
+/* The toolkit: drawers you open, tools with opinions. */
+const TOOLBOX = [
+  {
+    id: "design",
+    label: "Design",
+    color: "var(--pop-pink)",
+    blurb: "where every idea starts",
+    tools: [
+      { name: "Figma", quip: "where the magic starts" },
+      { name: "FigJam", quip: "where the mess happens first" },
+      { name: "Canva", quip: "for the quick ones" },
+      { name: "Google Stitch", quip: "new to the bench, already loved" },
+    ],
+  },
+  {
+    id: "code",
+    label: "Code",
+    color: "var(--pop-sky)",
+    blurb: "where the ideas become real",
+    tools: [
+      { name: "HTML", quip: "the skeleton" },
+      { name: "CSS", quip: "the glow-up" },
+      { name: "JavaScript", quip: "where it gets real" },
+      { name: "React", quip: "my happy place" },
+      { name: "TypeScript", quip: "the safety net" },
+      { name: "Git", quip: "we've had our moments" },
+    ],
+  },
+  {
+    id: "ai",
+    label: "AI + Creative",
+    color: "var(--pop-violet)",
+    blurb: "my favourite collaborators",
+    tools: [
+      { name: "Claude", quip: "my thinking buddy" },
+      { name: "Midjourney", quip: "the visual daydreamer" },
+      { name: "Google AI Studio", quip: "the idea pressure cooker" },
+      { name: "OpenCode", quip: "pair programmer, zero ego" },
+    ],
+  },
+  {
+    id: "bench",
+    label: "The Workbench",
+    color: "var(--pop-lime)",
+    blurb: "where the hours disappear",
+    tools: [
+      { name: "CLI Tools", quip: "where I feel like a hacker" },
+      { name: "VS Code", quip: "my second home" },
+      { name: "Terminal", quip: "where the real fun is" },
+    ],
+  },
+];
+
+function ToolkitDrawer({ cat }: { cat: (typeof TOOLBOX)[number] }) {
+  const [open, setOpen] = useState(false);
+  const [quip, setQuip] = useState<string | null>(null);
+  const readout = quip ?? cat.blurb;
+
+  return (
+    <div className="border-b border-border">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        data-cursor="hover"
+        aria-expanded={open}
+        aria-controls={`toolbox-${cat.id}`}
+        className="group flex w-full items-center gap-4 py-5 text-left"
+      >
+        <span className="size-3 shrink-0 rounded-full" style={{ background: cat.color }} aria-hidden />
+        <span className="font-display text-2xl uppercase tracking-tight transition-colors group-hover:text-foreground md:text-4xl">
+          {cat.label}
+        </span>
+        <span className="hidden font-mono text-[11px] uppercase tracking-widest text-muted-foreground sm:block">
+          {cat.tools.length} tools
+        </span>
+        <span
+          aria-hidden
+          className="ml-auto font-mono text-2xl leading-none text-muted-foreground transition-all duration-300 group-hover:text-accent"
+          style={{ transform: open ? "rotate(45deg)" : "none" }}
         >
-          Connection is my goal.
-          <br />
-          <span className="text-accent">Good design</span> is how I get there.
-        </motion.h2>
-
-        <div className="mt-14 grid gap-10 md:grid-cols-[1.4fr_1fr]">
+          +
+        </span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg"
+            id={`toolbox-${cat.id}`}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
           >
-            <p className="text-foreground">
-              I'm Jasmine — a Product Engineer. My background in engineering taught me how to think in systems. Design
-              taught me how to think about people. Frontend training showed me the whole picture.
-            </p>
-            <p>
-              Now I sit somewhere between design and engineering, building products that are useful, accessible, and
-              built to last.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Off the clock</p>
-            <div className="flex flex-wrap gap-2">
-              {INTERESTS.map((it) => (
+            <div className="flex flex-wrap gap-2 pb-4">
+              {cat.tools.map((t) => (
                 <span
-                  key={it}
-                  className="rounded-full border border-border bg-card/60 px-3.5 py-2 text-sm text-foreground backdrop-blur"
+                  key={t.name}
+                  tabIndex={0}
+                  data-cursor="hover"
+                  onMouseEnter={() => setQuip(t.quip)}
+                  onMouseLeave={() => setQuip(null)}
+                  onFocus={() => setQuip(t.quip)}
+                  onBlur={() => setQuip(null)}
+                  className="rounded-full border border-border px-3.5 py-2 text-sm text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:border-accent"
                 >
-                  {it}
+                  {t.name}
                 </span>
               ))}
             </div>
+            <p className="pb-6 font-script text-xl md:text-2xl" style={{ color: cat.color }} aria-live="polite">
+              {readout}
+            </p>
           </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <section id="about" className="relative overflow-hidden border-t border-border px-5 py-24 md:py-32">
+      <div className="mx-auto max-w-6xl">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">✦ Nice to meet you</p>
+            <h2 className="display-xl mt-4 text-[clamp(2.8rem,9vw,8rem)] leading-[0.95]">
+              Hi, I'm <span className="font-script normal-case tracking-normal text-accent">Jasmine</span>.
+            </h2>
+          </div>
+          <p className="pb-3 font-script text-2xl text-muted-foreground md:text-3xl">the human behind the pixels</p>
+        </div>
+
+        <div className="mt-14 grid gap-10 md:mt-16 md:grid-cols-[1.3fr_1fr] md:items-end">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg"
+          >
+            <p className="text-foreground">
+              I'm a Product Engineer with four years of designing digital experiences. I started in brand &amp; graphics
+              design, found my way into product design — genuinely life-changing — then got curious about what happens{" "}
+              <span className="font-script text-2xl text-accent">after the Figma file</span>. So I learned to build,
+              too.
+            </p>
+            <p>
+              I design products, build interfaces, question assumptions, and care an{" "}
+              <span className="text-foreground">unreasonable amount</span> about accessibility.
+            </p>
+          </motion.div>
+
+          <div className="flex md:justify-end">
+            <span className="inline-block -rotate-3 rounded-lg border-2 border-accent px-4 py-3 text-center font-mono text-[11px] uppercase leading-relaxed tracking-[0.25em] text-accent">
+              4 years of
+              <br />
+              design + build
+              <br />
+              · asking why ·
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-20 border-t border-border pt-14 md:mt-24">
+          <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">The big idea</p>
+          <p className="mt-4 font-script text-3xl text-accent md:text-4xl">i live somewhere between</p>
+          <MindsetFlip />
+        </div>
+
+        <div className="mt-20 md:mt-24">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">✦ The likes</p>
+              <p className="mt-4 font-script text-4xl text-foreground md:text-5xl">things I like</p>
+            </div>
+            <p className="pb-2 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+              <span className="text-accent">✦</span> hover to jiggle them
+            </p>
+          </div>
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {LIKES.map((item) => (
+              <LikeNote key={item.text} item={item} />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-24">
+          <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">✦ My toolkit</p>
+          <h3 className="display-xl mt-4 text-[clamp(2.2rem,6vw,5.5rem)] leading-[0.98]">
+            The things I make <span className="text-accent">things</span> with.
+          </h3>
+          <p className="mt-4 font-script text-2xl text-muted-foreground md:text-3xl">
+            not a skills list, i promise — open the drawers
+          </p>
+          <div className="mt-10 border-t border-border">
+            {TOOLBOX.map((cat) => (
+              <ToolkitDrawer key={cat.id} cat={cat} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
