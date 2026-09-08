@@ -2307,10 +2307,10 @@ function Playground() {
           </div>
           <p className="pb-3 text-sm leading-relaxed text-muted-foreground">
             <span className="md:hidden">
-              A collection of things I made because I wanted to. Tap a piece, take a peek.
+              A collection of passion projects I made because I wanted to. Tap a piece, take a peek.
             </span>
             <span className="hidden md:inline md:whitespace-nowrap">
-              A collection of things I made because I wanted to. Grab a piece, throw it around, open it up.
+              A collection of passion projects I made because I wanted to. Grab a piece, throw it around, open it up.
             </span>
           </p>
         </div>
