@@ -1638,11 +1638,13 @@ function LikeNote({ item }: { item: (typeof LIKES)[number] }) {
         aria-hidden
         loading="lazy"
         draggable={false}
-        className="pointer-events-none absolute inset-0 size-full select-none object-cover opacity-40"
+        className="pointer-events-none absolute inset-0 size-full select-none object-cover opacity-25"
       />
       <span className="pointer-events-none absolute -top-2.5 left-1/2 h-5 w-20 -translate-x-1/2 -rotate-2 rounded-sm bg-white/25" aria-hidden />
-      <span className="relative font-script text-2xl text-[#080808]/70">i like</span>
-      <span className="relative mt-2 font-display text-2xl uppercase leading-tight text-[#080808]">{item.text}</span>
+      <div className="relative mt-auto rounded-xl p-3" style={{ background: item.color }}>
+        <span className="font-script text-2xl text-[#080808]/70">i like</span>
+        <span className="mt-1 block font-display text-2xl uppercase leading-tight text-[#080808]">{item.text}</span>
+      </div>
     </motion.div>
   );
 }
@@ -1837,7 +1839,7 @@ function About() {
         <div className="mt-24">
           <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">✦ My toolkit</p>
           <h3 className="display-xl mt-4 text-[clamp(2.2rem,6vw,5.5rem)] leading-[0.98]">
-            The things I make <span className="text-accent">things</span> with.
+            Here is what's in my creative <span className="text-accent">arsenal</span>.
           </h3>
           <p className="mt-4 font-script text-2xl text-muted-foreground md:text-3xl">
             not a skills list, i promise. open the drawers
