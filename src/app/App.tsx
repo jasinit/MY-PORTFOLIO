@@ -100,6 +100,10 @@ import zenya303 from "../imports/zenya/303shots_so.png";
 import zenya467 from "../imports/zenya/467shots_so.png";
 import zenya545 from "../imports/zenya/545shots_so.png";
 import zenya912 from "../imports/zenya/912shots_so.png";
+import patternA from "../imports/colorful pattern images/a0ae5a330d0cf457f475efd795f00c4b.jpg";
+import patternB from "../imports/colorful pattern images/aa463585e7a23f55d6f56725215a328d.jpg";
+import patternC from "../imports/colorful pattern images/bcaffbe83c2c398f97ef1dad4a513555.jpg";
+import patternD from "../imports/colorful pattern images/de4146a32241092e8c9ff4b7a0233282.jpg";
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -1572,7 +1576,7 @@ function MindsetFlip() {
         </AnimatePresence>
       </button>
       <div className="mt-5 flex items-center gap-4">
-        <span className="font-script text-2xl text-muted-foreground">— {m.who}</span>
+        <span className="font-script text-2xl text-muted-foreground">{m.who}</span>
         <div className="flex gap-1.5">
           {MINDSETS.map((item, i) => (
             <button
@@ -1591,12 +1595,14 @@ function MindsetFlip() {
   );
 }
 
-/* Sticky notes for the things I like — tilt toward the cursor. */
+/* Sticky notes for the things I like — tilt toward the cursor. Each
+   note keeps a solid colour base for contrast and wears a pattern
+   image at ~40% opacity on top, so the text never fights the texture. */
 const LIKES = [
-  { text: "Messy problems", color: "var(--pop-coral)", rot: -3 },
-  { text: "Figuring things out", color: "var(--pop-violet)", rot: 2 },
-  { text: "Making complicated things feel obvious", color: "var(--pop-sky)", rot: -2 },
-  { text: "Products that are useful beyond the pitch deck", color: "var(--pop-pink)", rot: 3 },
+  { text: "Messy problems", color: "var(--pop-coral)", rot: -3, pattern: patternA },
+  { text: "Figuring things out", color: "var(--pop-violet)", rot: 2, pattern: patternB },
+  { text: "Making complicated things feel obvious", color: "var(--pop-sky)", rot: -2, pattern: patternC },
+  { text: "Products that are useful beyond the pitch deck", color: "var(--pop-pink)", rot: 3, pattern: patternD },
 ];
 
 function LikeNote({ item }: { item: (typeof LIKES)[number] }) {
@@ -1624,11 +1630,19 @@ function LikeNote({ item }: { item: (typeof LIKES)[number] }) {
       whileHover={reduce ? undefined : { y: -8, scale: 1.03 }}
       data-cursor="hover"
       style={{ rotateX: rX, rotateY: rY, transformPerspective: 700, rotate: item.rot, background: item.color }}
-      className="relative flex h-full flex-col rounded-2xl p-5 shadow-lg"
+      className="relative flex h-full flex-col overflow-hidden rounded-2xl p-5 shadow-lg"
     >
+      <img
+        src={item.pattern}
+        alt=""
+        aria-hidden
+        loading="lazy"
+        draggable={false}
+        className="pointer-events-none absolute inset-0 size-full select-none object-cover opacity-40"
+      />
       <span className="pointer-events-none absolute -top-2.5 left-1/2 h-5 w-20 -translate-x-1/2 -rotate-2 rounded-sm bg-white/25" aria-hidden />
-      <span className="font-script text-2xl text-[#080808]/70">i like</span>
-      <span className="mt-2 font-display text-2xl uppercase leading-tight text-[#080808]">{item.text}</span>
+      <span className="relative font-script text-2xl text-[#080808]/70">i like</span>
+      <span className="relative mt-2 font-display text-2xl uppercase leading-tight text-[#080808]">{item.text}</span>
     </motion.div>
   );
 }
@@ -1776,7 +1790,7 @@ function About() {
           >
             <p className="text-foreground">
               I'm a Product Engineer with four years of designing digital experiences. I started in brand &amp; graphics
-              design, found my way into product design — genuinely life-changing — then got curious about what happens{" "}
+              design, found my way into product design, which was genuinely life-changing, then got curious about what happens{" "}
               <span className="font-script text-2xl text-accent">after the Figma file</span>. So I learned to build,
               too.
             </p>
@@ -1809,7 +1823,7 @@ function About() {
               <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-muted-foreground">✦ The likes</p>
               <p className="mt-4 font-script text-4xl text-foreground md:text-5xl">things I like</p>
             </div>
-            <p className="pb-2 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+            <p className="hidden pb-2 font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground md:block">
               <span className="text-accent">✦</span> hover to jiggle them
             </p>
           </div>
@@ -1826,7 +1840,7 @@ function About() {
             The things I make <span className="text-accent">things</span> with.
           </h3>
           <p className="mt-4 font-script text-2xl text-muted-foreground md:text-3xl">
-            not a skills list, i promise — open the drawers
+            not a skills list, i promise. open the drawers
           </p>
           <div className="mt-10 border-t border-border">
             {TOOLBOX.map((cat) => (
