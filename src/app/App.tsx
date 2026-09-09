@@ -205,7 +205,7 @@ const PROJECTS = [
   },
   {
     title: "Zenya",
-    desc: "A multi-currency wallet for Nigeria — dashboard, send money flow, and virtual card surface.",
+    desc: "A multi-currency wallet for Nigeria: dashboard, send money flow, and virtual card surface.",
     role: "Product Design · Fintech",
     year: "2026",
     tags: ["Fintech", "Wallet", "Systems"],
@@ -215,7 +215,7 @@ const PROJECTS = [
     caseStudy: {
       opening: ["Every currency deserves a front seat."],
       intro:
-        "Zenya is a multi-currency wallet for the Nigerian market — transfers, bills, airtime, and cross-currency spending in one product, stress-tested against real Nigerian fintech behaviour.",
+        "Zenya is a multi-currency wallet for the Nigerian market: transfers, bills, airtime, and cross-currency spending in one product, stress-tested against real Nigerian fintech behaviour.",
       meta: {
         role: "Product Designer",
         focus: "Fintech · Dashboard · Send Money Flow · Virtual Card",
@@ -224,13 +224,12 @@ const PROJECTS = [
       sections: [
         {
           title: "The Problem",
-          body: "Nigerians pay in USD, transfer in NGN, and talk to contacts in GBP — often in the same day. Most wallets bury multi-currency in settings, with no currency context where decisions actually happen. The opportunity: make currency a first-class part of the dashboard without punishing users who only ever use NGN.",
+          body: "Nigerians pay in USD, transfer in NGN, and talk to contacts in GBP, often in the same day. Most wallets bury multi-currency in settings, with no currency context where decisions actually happen. The opportunity: make currency a first-class part of the dashboard without punishing users who only ever use NGN.",
         },
         {
           title: "Design Decisions",
-          body: "Five decisions carry the whole experience — each one stress-tested against how Nigerians actually move money.",
+          body: "Four decisions carry the whole experience. Each one stress-tested against how Nigerians actually move money.",
           steps: [
-            "Dark balance card",
             "Fund · Send · Receive",
             "Flag badges",
             "Recipient-first flow",
@@ -238,31 +237,26 @@ const PROJECTS = [
           ],
         },
         {
-          title: "Balance Card",
-          body: "The balance got lost on a flat white background, so it moved into a dark card (#10210f) with a deliberate scale: 8px label-to-amount, 20px to actions, 20–24px outer padding, radius tuned to the padding. It reads as the anchor of the screen without being the biggest element. Spacing stayed on an 8px base (8 tight / 16 groupings / 24 between sections) — naming it caught a stray 2px gap late in the process.",
-        },
-        {
           title: "Action Buttons",
-          body: "Fund, Send, Receive — an in/out/share model. Receive earns a primary slot because getting paid via account number or QR is high-frequency in Nigeria, and Convert lives elsewhere. Icons are directional: fund points in, send up-right, receive down-left — each reinforcing its label without words.",
+          body: "Fund, Send, Receive: an in/out/share model. Receive earns a primary slot because getting paid via account number or QR is high-frequency in Nigeria, and Convert lives elsewhere. Icons are directional: fund points in, send up-right, receive down-left, each reinforcing its label without words.",
         },
         {
           title: "Flag Badges",
-          body: "Every quick-transfer contact wears a small country flag on a notched ring. It does three jobs at once: sells multi-currency at dashboard level, reminds users which contact uses which currency, and sets the expectation that a transfer will honour that currency — which the send flow then delivers.",
+          body: "Every quick-transfer contact wears a small country flag on a notched ring. It does three jobs at once: sells multi-currency at dashboard level, reminds users which contact uses which currency, and sets the expectation that a transfer will honour that currency, which the send flow then delivers.",
         },
         {
           title: "Send Money Flow",
-          body: "Recipient first, always. The numpad stays locked and the Send button muted (“Select a recipient to continue”) until a contact is confirmed — money apps can't afford ambiguity after you've typed an amount. The recipient card slides in with name, bank, and masked account number, and the currency auto-switches to the contact's flag, with manual override available.",
+          body: "Recipient first, always. The numpad stays locked and the Send button muted (“Select a recipient to continue”) until a contact is confirmed. Money apps can't afford ambiguity after you've typed an amount. The recipient card slides in with name, bank, and masked account number, and the currency auto-switches to the contact's flag, with manual override available.",
           flow: ["Recipient", "Amount", "Confirm"],
         },
         {
           title: "Virtual Card Banner",
-          body: "The banner sits between actions and transactions — visible, not interrupting. “Shop global. Pay local.” captures the entire multi-currency pitch in six words, aimed squarely at Nigerians spending abroad while managing a naira wallet.",
+          body: "The banner sits between actions and transactions, visible but not interrupting. “Shop global. Pay local.” captures the entire multi-currency pitch in six words, aimed squarely at Nigerians spending abroad while managing a naira wallet.",
         },
         {
           title: "Iteration Highlights",
           body: "Small changes, big reasons. A few of the swaps made along the way:",
           steps: [
-            "Balance padding: ~12px → 20–24px (hierarchy was flat)",
             "Buttons: 4 incl. Top-Up/More → 3 (Fund/Send/Receive)",
             "Add contact: outline → solid dark green (too weak vs avatars)",
             "Send flow: amount first → recipient first (less ambiguity)",
@@ -272,7 +266,7 @@ const PROJECTS = [
         },
         {
           title: "The Outcome",
-          body: "Multi-currency becomes something users can see and feel — from the flag on a contact to the currency auto-switch mid-transfer. The design stays calm and structured, letting financial data breathe and actions stay fast.",
+          body: "Multi-currency becomes something users can see and feel, from the flag on a contact to the currency auto-switch mid-transfer. The design stays calm and structured, letting financial data breathe and actions stay fast.",
         },
       ] as CaseStudySection[],
     } as CaseStudyData,
@@ -302,7 +296,7 @@ const PROJECTS = [
         },
         {
           title: "My Role",
-          body: "UX research and experience design — turning user needs and complex content structures into a clearer learning experience.",
+          body: "UX research and experience design, turning user needs and complex content structures into a clearer learning experience.",
         },
         {
           title: "The Experience",
@@ -315,7 +309,7 @@ const PROJECTS = [
         },
         {
           title: "The Solution",
-          body: "Clear information hierarchy, progressive disclosure, and straightforward navigation — informed by research with real learners.",
+          body: "Clear information hierarchy, progressive disclosure, and straightforward navigation, informed by research with real learners.",
         },
         {
           title: "The Result",
@@ -323,7 +317,7 @@ const PROJECTS = [
         },
         {
           title: "Reflection",
-          body: "Complex doesn't have to feel complicated — clarity is a design decision.",
+          body: "Complex doesn't have to feel complicated. Clarity is a design decision.",
         },
       ] as CaseStudySection[],
     } as CaseStudyData,
@@ -400,11 +394,11 @@ const PROJECTS = [
       sections: [
         {
           title: "The Problem",
-          body: "Productivity tools often add more to manage instead of helping you get things done. FocusFlow needed to feel calm and intentional — with enough structure to stay on track.",
+          body: "Productivity tools often add more to manage instead of helping you get things done. FocusFlow needed to feel calm and intentional, with enough structure to stay on track.",
         },
         {
           title: "My Role",
-          body: "Product experience and interaction design — from information architecture and flows to the interface itself.",
+          body: "Product experience and interaction design, from information architecture and flows to the interface itself.",
         },
         {
           title: "The Experience",
@@ -417,7 +411,7 @@ const PROJECTS = [
         },
         {
           title: "The Solution",
-          body: "Clear hierarchy, intentional spacing, and considered interaction states — motion that signals, never nags.",
+          body: "Clear hierarchy, intentional spacing, and considered interaction states. Motion that signals, never nags.",
         },
         {
           title: "The Result",
@@ -425,7 +419,7 @@ const PROJECTS = [
         },
         {
           title: "Reflection",
-          body: "Good interface design is often invisible — calm is a feature.",
+          body: "Good interface design is often invisible. Calm is a feature.",
         },
       ] as CaseStudySection[],
     } as CaseStudyData,
@@ -1296,7 +1290,7 @@ function CaseStudy({
               This product is still under wraps, so the visuals can't be shared yet.
             </p>
             <p className="mt-4 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              The story is here — the screens will follow.
+              The story is here. The screens will follow.
             </p>
           </div>
         )}
@@ -1995,7 +1989,7 @@ function Contact() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4">
           <MotionToggle />
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-            Built with React · Vite · Motion · Tailwind — designed for keyboard, screen readers & humans
+            Built with React · Vite · Motion · Tailwind, designed for keyboard, screen readers & humans
           </p>
         </div>
 
@@ -2143,7 +2137,7 @@ const PIECES = [
     year: "2025",
     role: "Product & Brand Design",
     color: "var(--piece-lime)",
-    desc: "Agri-tech platform connecting people with hydroponic farming, farm services, and tree planting — product experience and brand identity.",
+    desc: "Agri-tech platform connecting people with hydroponic farming, farm services, and tree planting: product experience and brand identity.",
     image: villamCover,
     home: { left: 58, top: 3, rot: 5, w: 340 },
     assets: [villamCover],
