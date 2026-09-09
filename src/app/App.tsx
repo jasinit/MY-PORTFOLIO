@@ -14,7 +14,7 @@ import {
 } from "motion/react";
 import { ArrowUpRight, ArrowDown, ArrowRight } from "lucide-react";
 import confetti from "canvas-confetti";
-import resumePdf from "../imports/Favour+Ndodo.pdf";
+import resumePdf from "../imports/favour_ndodo_resume (1).pdf";
 import villamCover from "../imports/6shots_so.png";
 import praizz645 from "../imports/praizz couture/645shots_so.png";
 import praizz528 from "../imports/praizz couture/528shots_so.png";
